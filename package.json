@@ -1,0 +1,24 @@
+{
+  "name": "geargoober",
+  "version": "1.0.0",
+  "description": "Manage Equipment Reservations, Check-ins, and Check-outs. Ideal for University AV Equipment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PocketOfWeird/GearGoober.git"
+  },
+  "author": "Nathan Hartzler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PocketOfWeird/GearGoober/issues"
+  },
+  "homepage": "https://github.com/PocketOfWeird/GearGoober#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "helmet": "^2.1.2",
+    "mongodb": "^2.2.5"
+  }
+}
