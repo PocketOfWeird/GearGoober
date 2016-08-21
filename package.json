@@ -17,11 +17,14 @@
   },
   "homepage": "https://github.com/PocketOfWeird/GearGoober#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "grapnel": "^0.6.4",
     "helmet": "^2.1.2",
+    "jsonwebtoken": "^7.1.9",
     "later": "^1.2.0",
     "mongodb": "^2.2.5",
-    "mongoose": "^4.5.9"
+    "mongoose": "^4.5.9",
+    "morgan": "^1.7.0"
   }
 }
