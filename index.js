@@ -50,8 +50,16 @@ var Schema = mongoose.Schema;
 /**********************************************************  
  * Models */
 
+// tennant
+var Tennant = mongoose.model('Tennant', new Schema({
+    name: String,
+    subdomain: String,
+    colorTheme: String
+}));
+
 // user
 var User = mongoose.model('User', new Schema({
+    tennantId: String,
     email: String,
     firstName: String,
     lastName: String,
@@ -65,38 +73,52 @@ var User = mongoose.model('User', new Schema({
     zip: String,
     password: String,
     admin: Boolean,
-    instructor: Boolean,
-    labWorker: Boolean
+    manager: Boolean,
+    labAssistant: Boolean
 }));
 
 /**********************************************************  
  * Routes */
 app.get('/setup', function (req, res) {
     
-    // create sample user
-    var bob = new User({
-        email: 'bob@demo.edu',
-        firstName: 'Bob',
-        lastName: 'Smith',
-        title: 'Systems Administrator',
-        imageUrl: 'https://randomuser.me/api/portraits/men/78.jpg',
-        phoneNumber: '555-123-4567',
-        addressOne: '901 S. Sunshine Ave.',
-        addressTwo: 'Suite 1B',
-        city: 'Middleton',
-        state: 'MO',
-        zip: '62892',
-        password: 'password',
-        admin: true,
-        instructor: false,
-        labWorker: false
+    // create sample tennant
+    var demoU = new Tennant({
+        name: 'Demo Univeristy',
+        subdomain: 'demo',
+        colorTheme: 'blue'
     });
 
-    bob.save(function(err) {
+    demoU.save(function(err, tennant){
         if (err) throw err;
+        console.log('tennant save successfully. _id is: ' + tennant._id);
+        
+        // create sample user
+        var bob = new User({
+            tennantId: tennant._id,
+            email: 'bob@demo.edu',
+            firstName: 'Bob',
+            lastName: 'Smith',
+            title: 'Systems Administrator',
+            imageUrl: 'https://randomuser.me/api/portraits/men/78.jpg',
+            phoneNumber: '555-123-4567',
+            addressOne: '901 S. Sunshine Ave.',
+            addressTwo: 'Suite 1B',
+            city: 'Middleton',
+            state: 'MO',
+            zip: '62892',
+            password: 'password',
+            admin: true,
+            manager: false,
+            labAssistant: false
+        });
 
-        console.log('User saved successfully');
-        res.json({ success: true });
+        bob.save(function(err, user) {
+            if (err) throw err;
+
+            console.log('User saved successfully: ' + user._id + '. tennantId is: ' + user.tennantId);
+            res.json({ success: true, message: 'demo tennant and user created. tennantId = ' + user.tennantId });
+        });
+
     });
 
 });
