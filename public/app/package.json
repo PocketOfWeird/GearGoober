@@ -5,9 +5,9 @@
   "author": "Nathan Hartzler",
   "license": "MIT",
   "dependencies": {
-    "aja": "^0.4.1",
-    "cookies-js": "^1.2.2",
-    "grapnel": "^0.6.4",
-    "later": "^1.2.0"
+    "aja": "^0.4.1", // AJAX Requests
+    "cookies-js": "^1.2.2", // Cookie manager
+    "grapnel": "^0.6.4", // Router
+    "later": "^1.2.0" // Handles future and repeat scheduling 
   }
 }
