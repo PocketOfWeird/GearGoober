@@ -1,4 +1,18 @@
+
+/** 
+ * Requires:
+ *      ../node_modules/cookies-js/dist/cookies.min.js
+ *      ../node_modules/grapnel/dist/grapnel.min.js
+ *      ./cookie-setup.js
+ *      ../lib/transparency.min.js
+ *      ./api.js
+ */
 gearGoob = {
+
+
+    observedDomElements: [
+        ''
+    ],
 
     templateImageDirectives: {
         image: {
@@ -8,11 +22,16 @@ gearGoob = {
         }
     },
 
-    applySettings: function(tennant, user) {
+    applyInitialSettings: function(tennant, user) {
         $('.logo').render(tennant);
         $('.user').render(user, this.templateImageDirectives);
     },
 
+    logout: function() {
+        for (name in cookieNames) {
+            Cookies.expire(name);
+        }
+    }
     
 };
 
@@ -24,7 +43,7 @@ function main() {
     // get current user from stored cookie
     var user = JSON.parse(Cookies.get('user'));
     // apply settings
-    gearGoob.applySettings(tennant, user);
+    gearGoob.applyInitialSettings(tennant, user);
 
 };
 

@@ -1,11 +1,18 @@
+/** 
+ * Requires:
+ *      ../node_modules/cookies-js/dist/cookies.min.js
+ *      ./cookie-setup.js
+ *      ../node_modules/aja/aja.min.js
+ */
 api = {
     /// Tennant
-    getTennant: function (tennantId, token) {
+    getAndSetTennant: function (tennantId, token) {
         aja()
             .method('get')
             .url('/api/tennant/' + tennantId + '?token=' + token)
             .on('200', function(response) {
-                Cookies.set('tennant', JSON.stringify(response.tennant));
+                // Set tennant cookie
+                Cookies.set(cookieNames.tennant, JSON.stringify(response.tennant));
             })
             .on('400', function(response) {
                 console.log(response + ' ' + response.message);
@@ -22,9 +29,13 @@ api = {
             .url('/api/auth')
             .body({ email: email, password: password })
             .on('200', function(response) {
-                Cookies.set('jwt', response.token);
-                api.getTennant(response.user.tennantId, response.token);  
-                Cookies.set('user', JSON.stringify(response.user));
+                // Set token cookie
+                Cookies.set(cookieNames.token, response.token);
+                // Get and Set tennant cookie
+                api.getAndSetTennant(response.user.tennantId, response.token);
+                // Set user cookie
+                Cookies.set(cookieNames.user, JSON.stringify(response.user));
+                // Redirect to app
                 window.location.href = '/app'
             })
             .on('400', function(response) {

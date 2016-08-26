@@ -4,3 +4,9 @@ Cookies.defaults = {
     expires: 86400, // expires in 24 hours
     //TODO: secure: true // requires https
 }
+
+cookieNames = {
+    token: 'jwt',
+    user: 'user',
+    tennant: 'tennant'
+}
