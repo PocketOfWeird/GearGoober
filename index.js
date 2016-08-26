@@ -150,7 +150,7 @@ apiRoutes.post('/auth', function(req, res) {
                 });
 
                 // return the information including token as JSON
-                res.json({
+                return res.json({
                     success: true,
                     message: 'Enjoy your token!',
                     token: token,
@@ -165,7 +165,7 @@ apiRoutes.post('/auth', function(req, res) {
 apiRoutes.use(function(req, res, next) {
 
     // check header for token
-    var token = req.headers['x-access-token'];
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
     //decode token
     if (token) {
@@ -178,11 +178,13 @@ apiRoutes.use(function(req, res, next) {
             } else {
                 // if everything is good, save to request for use in other routes
                 req.decoded = decodedToken;
+                console.log("Recieved a JWT for this request");
                 next();
             }
         });
     } else {
         // there is no token
+        console.log('token: ' + token);
         return res.status(401).send({ success: false, message: 'The request has not been authenticated'});
     }
 
@@ -192,12 +194,25 @@ apiRoutes.use(function(req, res, next) {
 apiRoutes.get('/', function(req, res) {
     res.json({ message: 'Welcome to the GearGoober API!' });
 });
+//////// Tennant //////////
+// route to return all users (GET http://localhost:3000/api/tennant)
+apiRoutes.get('/tennant/:id', function(req, res) {
+    Tennant.findOne({'_id': req.params.id }, function(err, tennant){
+        if (err) {
+            console.log(err);
+            return res.status(500).send({ success: false, message: 'Server error'});
+        }
+        if (!tennant) return res.status(500).send({ success: false, message: 'Did not find tennant'});
 
+        return res.json({success: true, tennant: tennant});
+
+    });
+});
 //////// Users //////////
 // route to return all users (GET http://localhost:3000/api/users)
 apiRoutes.get('/users', function(req, res) {
     User.find({}, function(err, users) {
-        res.json(users);
+        return res.json(users);
     });
 });
 
