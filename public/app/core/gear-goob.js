@@ -1,20 +1,32 @@
 gearGoob = {
 
-    applyUserSettings: function(user) {
+    templateImageDirectives: {
+        image: {
+            src: function(params) {
+                return this.imageUrl;
+            }
+        }
+    },
 
-        $('.user > .photo > img').attr('src', user.imageUrl);
-
+    applySettings: function(tennant, user) {
+        $('.logo').render(tennant);
+        $('.user').render(user, this.templateImageDirectives);
     },
 
     
 };
 
-// main function
-(function(params) {
+// entry function
+function main() {
     
+    // get current tennant from stored cookie
+    var tennant = JSON.parse(Cookies.get('tennant'));
     // get current user from stored cookie
     var user = JSON.parse(Cookies.get('user'));
-    // apply user settings
-    gearGoob.applyUserSettings(user)
+    // apply settings
+    gearGoob.applySettings(tennant, user);
 
-})();
+};
+
+// call main to start exectution
+main();
