@@ -12,7 +12,7 @@ api = {
             .url('/api/tennant/' + tennantId + '?token=' + token)
             .on('200', function(response) {
                 // Set tennant cookie
-                Cookies.set(cookieNames.tennant, JSON.stringify(response.tennant));
+                Cookies.set('tennant', JSON.stringify(response.tennant));
             })
             .on('400', function(response) {
                 console.log(response + ' ' + response.message);
@@ -30,11 +30,11 @@ api = {
             .body({ email: email, password: password })
             .on('200', function(response) {
                 // Set token cookie
-                Cookies.set(cookieNames.token, response.token);
+                Cookies.set('jwt', response.token);
                 // Get and Set tennant cookie
                 api.getAndSetTennant(response.user.tennantId, response.token);
                 // Set user cookie
-                Cookies.set(cookieNames.user, JSON.stringify(response.user));
+                Cookies.set('user', JSON.stringify(response.user));
                 // Redirect to app
                 window.location.href = '/app'
             })
