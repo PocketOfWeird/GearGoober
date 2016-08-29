@@ -42,12 +42,19 @@ function app() {
                 Cookies.expire(localCookies[cookie]);
                 window.location.reload();
             }
-        }
+        },
+        pageLoader: function (req) {
+            console.log('requested page: ' + req.params.page);
+            // Load page's html
+            aja().url(req.params.page + '/index.html').into('#portal');
+            
+        } 
     };
 
     // setup router
     Grapnel.listen({
-        'logout': handlers.logout
+        'logout': handlers.logout,
+        ':page': handlers.pageLoader
     });
 
 };
