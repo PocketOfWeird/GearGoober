@@ -9,7 +9,7 @@
  */
 
 // entry function
-function main() {
+function app() {
     
     // all cookies
     var localCookies = {
@@ -53,4 +53,4 @@ function main() {
 };
 
 // call main to start exectution
-main();
+app();
