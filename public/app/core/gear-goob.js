@@ -25,12 +25,6 @@ gearGoob = {
     applyInitialSettings: function(tennant, user) {
         $('.logo').render(tennant);
         $('.user').render(user, this.templateImageDirectives);
-    },
-
-    logout: function() {
-        for (name in cookieNames) {
-            Cookies.expire(name);
-        }
     }
     
 };
@@ -38,12 +32,28 @@ gearGoob = {
 // entry function
 function main() {
     
+    // all cookies
+    var localCookies = {
+        auth: 'jwt',
+        tennant: 'tennant',
+        user: 'user'
+    }; 
+
     // get current tennant from stored cookie
-    var tennant = JSON.parse(Cookies.get('tennant'));
+    var tennant = JSON.parse(Cookies.get(localCookies.tennant));
     // get current user from stored cookie
-    var user = JSON.parse(Cookies.get('user'));
+    var user = JSON.parse(Cookies.get(localCookies.user));
     // apply settings
     gearGoob.applyInitialSettings(tennant, user);
+    // setup router
+    Grapnel.listen({
+        'logout': function (req) {
+            for (cookie in localCookies) {
+                Cookies.expire(localCookies[cookie]);
+                window.location.reload();
+            }
+        }
+    });
 
 };
 
