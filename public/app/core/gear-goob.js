@@ -7,27 +7,6 @@
  *      ../lib/transparency.min.js
  *      ./api.js
  */
-gearGoob = {
-
-
-    observedDomElements: [
-        ''
-    ],
-
-    templateImageDirectives: {
-        image: {
-            src: function(params) {
-                return this.imageUrl;
-            }
-        }
-    },
-
-    applyInitialSettings: function(tennant, user) {
-        $('.logo').render(tennant);
-        $('.user').render(user, this.templateImageDirectives);
-    }
-    
-};
 
 // entry function
 function main() {
@@ -37,22 +16,38 @@ function main() {
         auth: 'jwt',
         tennant: 'tennant',
         user: 'user'
-    }; 
+    };
+
+    // template rendering directives
+    var directives = {
+        image: {
+            src: function(params) {
+                return this.imageUrl;
+            }
+        }
+    };
 
     // get current tennant from stored cookie
     var tennant = JSON.parse(Cookies.get(localCookies.tennant));
     // get current user from stored cookie
     var user = JSON.parse(Cookies.get(localCookies.user));
-    // apply settings
-    gearGoob.applyInitialSettings(tennant, user);
-    // setup router
-    Grapnel.listen({
-        'logout': function (req) {
+    // apply user and tennant settings
+    $('.logo').render(tennant);
+    $('.user').render(user, directives);
+
+    // setup router handlers
+    var handlers = {
+        logout: function (req) {
             for (cookie in localCookies) {
                 Cookies.expire(localCookies[cookie]);
                 window.location.reload();
             }
         }
+    };
+
+    // setup router
+    Grapnel.listen({
+        'logout': handlers.logout
     });
 
 };
