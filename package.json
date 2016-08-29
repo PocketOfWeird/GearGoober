@@ -17,13 +17,14 @@
   },
   "homepage": "https://github.com/PocketOfWeird/GearGoober#readme",
   "dependencies": {
-    "bluebird": "^3.4.1", // Promises
-    "body-parser": "^1.15.2", // Parses requests from clients
-    "express": "^4.14.0", // Node App framework
-    "helmet": "^2.1.2", // Basic security for Express
-    "jsonwebtoken": "^7.1.9", // Auth Token Provider
-    "mongodb": "^2.2.5", // Database connector
-    "mongoose": "^4.5.9", // Modeling framework for database
-    "morgan": "^1.7.0" // Console logger
+    "bluebird": "^3.4.1",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-subdomain-handler": "^0.1.0",
+    "helmet": "^2.1.2",
+    "jsonwebtoken": "^7.1.9",
+    "mongodb": "^2.2.5",
+    "mongoose": "^4.5.9",
+    "morgan": "^1.7.0"
   }
 }
