@@ -1,11 +1,11 @@
 
 /** 
  * Requires:
- *      ../node_modules/cookies-js/dist/cookies.min.js
- *      ../node_modules/grapnel/dist/grapnel.min.js
- *      ./cookie-setup.js
- *      ../lib/transparency.min.js
- *      ./api.js
+ *      node_modules/cookies-js/dist/cookies.min.js
+ *      node_modules/grapnel/dist/grapnel.min.js
+ *      core/cookie-setup.js
+ *      lib/transparency.min.js
+ *      core/api.js
  */
 
 // entry function
