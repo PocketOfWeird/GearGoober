@@ -18,8 +18,8 @@ function app() {
         user: 'user'
     };
 
-    // all views
-    var views = [
+    // all side-nav views
+    var sideNavLinks = [
         'equipment',
         'reservations',
         'groups',
@@ -75,10 +75,11 @@ function app() {
                 .into('#portal')
                 .on('200', function(request){
                     // Switch Nav-Link-Highlight to selected view
-                    for (i=0; i < views.length; i++) {
-                        $("#nav-link-" + views[i]).removeClass("active");
+                    for (i=0; i < sideNavLinks.length; i++) {
+                        $("#nav-link-" + sideNavLinks[i]).removeClass("active");
                     }
                     $("#nav-link-" + view).addClass("active");
+                    aja().url('views/' + view + '.js').type('script').go();
                 })
                 .on('404', function(request){
                     // Load 'not found' view
