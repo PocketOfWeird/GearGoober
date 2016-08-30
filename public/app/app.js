@@ -8,93 +8,94 @@
  *      core/api.js
  */
 
-// entry function
-function app() {
-    
-    // all cookies
-    var localCookies = {
-        auth: 'jwt',
-        tennant: 'tennant',
-        user: 'user'
-    };
 
-    // all side-nav views
-    var sideNavLinks = [
-        'equipment',
-        'reservations',
-        'groups',
-        'users',
-        'settings'
-    ];
+app = {};
 
-    // template rendering directives
-    var directives = {
-        image: {
-            src: function(params) {
-                return this.imageUrl;
-            }
+// all cookies
+app.localCookies = {
+    auth: 'jwt',
+    tennant: 'tennant',
+    user: 'user'
+};
+
+// all side-nav views
+app.sideNavLinks = [
+    'equipment',
+    'reservations',
+    'groups',
+    'users',
+    'settings'
+];
+
+// template rendering directives
+app.directives = {
+    image: {
+        src: function(params) {
+            return this.imageUrl;
         }
-    };
-
-    // utility functions
-    function refresh() {
-        window.location.reload();
     }
-    function rerouteTo(page) {
-        window.location.href = page;
-    }
+};
 
-    // get current tennant and user from stored cookie
-    var tennantCookie = Cookies.get(localCookies.tennant);
-    if (!tennantCookie) rerouteTo('/login');
-    var tennant = JSON.parse(tennantCookie);
-    // get current user from stored cookie
-    var userCookie = Cookies.get(localCookies.user);
-    if (!userCookie) rerouteTo('/login');
-    var user = JSON.parse(userCookie);
+// utility functions
+app.refresh = function () {
+    window.location.reload();
+}
+app.rerouteTo = function (page) {
+    window.location.href = page;
+}
+
+// get current tennant and user from stored cookie
+var tennantCookie = Cookies.get(app.localCookies.tennant);
+if (!tennantCookie) app.rerouteTo('/login');
+app.tennant = JSON.parse(tennantCookie);
+// get current user from stored cookie
+var userCookie = Cookies.get(app.localCookies.user);
+if (!userCookie) app.rerouteTo('/login');
+app.user = JSON.parse(userCookie);
+
+// setup router handlers
+app.handlers = {
+    logout: function (req) {
+        for (cookie in app.localCookies) {
+            Cookies.expire(app.localCookies[cookie]);
+            app.refresh();
+        }
+    },
+    viewLoader: function (req) {
+        
+        var view = req.params.view;
+        var notFoundPage = aja().url('views/404.html').into('#portal');
+
+        // Load view's html
+        aja()
+            .url('views/' + view + '.html')
+            .into('#portal')
+            .on('200', function(request){
+                // Switch Nav-Link-Highlight to selected view
+                for (i=0; i < app.sideNavLinks.length; i++) {
+                    $("#nav-link-" + app.sideNavLinks[i]).removeClass("active");
+                }
+                $("#nav-link-" + view).addClass("active");
+                aja().url('views/' + view + '.js').type('script').go();
+            })
+            .on('404', function(request){
+                // Load 'not found' view
+                notFoundPage.go();
+            })
+            .go();
+    } 
+};
+
+app.start = function() {
     // apply user and tennant settings
-    $('.logo').render(tennant);
-    $('.user').render(user, directives);
-    
-    // setup router handlers
-    var handlers = {
-        logout: function (req) {
-            for (cookie in localCookies) {
-                Cookies.expire(localCookies[cookie]);
-                refresh();
-            }
-        },
-        viewLoader: function (req) {
-            
-            var view = req.params.view;
-            var notFoundPage = aja().url('views/404.html').into('#portal');
-
-            // Load view's html
-            aja()
-                .url('views/' + view + '.html')
-                .into('#portal')
-                .on('200', function(request){
-                    // Switch Nav-Link-Highlight to selected view
-                    for (i=0; i < sideNavLinks.length; i++) {
-                        $("#nav-link-" + sideNavLinks[i]).removeClass("active");
-                    }
-                    $("#nav-link-" + view).addClass("active");
-                    aja().url('views/' + view + '.js').type('script').go();
-                })
-                .on('404', function(request){
-                    // Load 'not found' view
-                    notFoundPage.go();
-                })
-                .go();
-        } 
-    };
+    $('.logo').render(app.tennant);
+    $('.user').render(app.user, app.directives);
 
     // setup router
     router = new Grapnel();
-    router.get('logout', handlers.logout);
-    router.get('v/:view', handlers.viewLoader);
-
+    router.get('logout', app.handlers.logout);
+    router.get('v/:view', app.handlers.viewLoader);
 };
 
-// call main to start exectution
-app();
+// call startup exectution
+app.start();
