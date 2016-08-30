@@ -52,22 +52,21 @@ function app() {
         logout: function (req) {
             for (cookie in localCookies) {
                 Cookies.expire(localCookies[cookie]);
-                
+                refresh();
             }
         },
-        pageLoader: function (req) {
-            console.log('requested page: ' + req.params.page);
-            // Load page's html
-            aja().url('views/' + req.params.page + '.html').into('#portal').go();
+        viewLoader: function (req) {
+            console.log('requested view: ' + req.params.view);
+            // Load view's html
+            aja().url('views/' + req.params.view + '.html').into('#portal').go();
             
         } 
     };
 
     // setup router
-    Grapnel.listen({
-        'logout': handlers.logout,
-        ':page': handlers.pageLoader
-    });
+    router = new Grapnel();
+    router.get('logout', handlers.logout);
+    router.get('v/:view', handlers.viewLoader);
 
 };
 
