@@ -46,7 +46,7 @@ function app() {
         pageLoader: function (req) {
             console.log('requested page: ' + req.params.page);
             // Load page's html
-            aja().url(req.params.page + '/' + req.params.page + '.html').into('#portal');
+            aja().url('views/' + req.params.page + '.html').into('#portal');
             
         } 
     };
