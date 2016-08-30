@@ -18,6 +18,12 @@ function app() {
         user: 'user'
     };
 
+    // all views
+    var views = [
+        'equipment',
+        'reservations'
+    ];
+
     // template rendering directives
     var directives = {
         image: {
@@ -46,7 +52,7 @@ function app() {
     // apply user and tennant settings
     $('.logo').render(tennant);
     $('.user').render(user, directives);
-
+    
     // setup router handlers
     var handlers = {
         logout: function (req) {
@@ -56,13 +62,24 @@ function app() {
             }
         },
         viewLoader: function (req) {
-            console.log('requested view: ' + req.params.view);
+            
+            var view = req.params.view;
+            var notFoundPage = aja().url('views/404.html').into('#portal');
+
             // Load view's html
             aja()
-                .url('views/' + req.params.view + '.html')
+                .url('views/' + view + '.html')
                 .into('#portal')
+                .on('200', function(request){
+                    // Switch Nav-Link-Highlight to selected view
+                    for (i=0; i < views.length; i++) {
+                        $("#nav-link-" + views[i]).removeClass("active");
+                    }
+                    $("#nav-link-" + view).addClass("active");
+                })
                 .on('404', function(request){
-                    aja().url('views/404.html').into('#portal').go();
+                    // Load 'not found' view
+                    notFoundPage.go();
                 })
                 .go();
         } 
