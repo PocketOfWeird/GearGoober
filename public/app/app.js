@@ -21,7 +21,10 @@ function app() {
     // all views
     var views = [
         'equipment',
-        'reservations'
+        'reservations',
+        'groups',
+        'users',
+        'settings'
     ];
 
     // template rendering directives
