@@ -27,10 +27,22 @@ function app() {
         }
     };
 
-    // get current tennant from stored cookie
-    var tennant = JSON.parse(Cookies.get(localCookies.tennant));
+    // utility functions
+    function refresh() {
+        window.location.reload();
+    }
+    function rerouteTo(page) {
+        window.location.href = page;
+    }
+
+    // get current tennant and user from stored cookie
+    var tennantCookie = Cookies.get(localCookies.tennant);
+    if (!tennantCookie) rerouteTo('/login');
+    var tennant = JSON.parse(tennantCookie);
     // get current user from stored cookie
-    var user = JSON.parse(Cookies.get(localCookies.user));
+    var userCookie = Cookies.get(localCookies.user);
+    if (!userCookie) rerouteTo('/login');
+    var user = JSON.parse(userCookie);
     // apply user and tennant settings
     $('.logo').render(tennant);
     $('.user').render(user, directives);
@@ -40,7 +52,7 @@ function app() {
         logout: function (req) {
             for (cookie in localCookies) {
                 Cookies.expire(localCookies[cookie]);
-                window.location.reload();
+                
             }
         },
         pageLoader: function (req) {
