@@ -58,8 +58,13 @@ function app() {
         viewLoader: function (req) {
             console.log('requested view: ' + req.params.view);
             // Load view's html
-            aja().url('views/' + req.params.view + '.html').into('#portal').go();
-            
+            aja()
+                .url('views/' + req.params.view + '.html')
+                .into('#portal')
+                .on('404', function(request){
+                    aja().url('views/404.html').into('#portal').go();
+                })
+                .go();
         } 
     };
 
