@@ -50,14 +50,14 @@ var Schema = mongoose.Schema;
 /**********************************************************  
  * Models */
 
-// tennant
+// tennant model
 var Tennant = mongoose.model('Tennant', new Schema({
     name: String,
     subdomain: String,
     colorTheme: String
 }));
 
-// user
+// user model
 var User = mongoose.model('User', new Schema({
     tennantId: String,
     email: String,
@@ -75,6 +75,23 @@ var User = mongoose.model('User', new Schema({
     admin: Boolean,
     manager: Boolean,
     labAssistant: Boolean
+}));
+
+// equipment
+var Equipment = mongoose.model('Equipment', new Schema({
+    tennantId: String,
+    name: String,
+    mfg: String,
+    model: String,
+    price: Number,
+    qty: Number,
+    barcodes: [{
+        barcode: String,
+        checkedIn: Boolean,
+        checkedOut: Boolean,
+        damaged: Boolean,
+        missing: Boolean
+    }]
 }));
 
 /**********************************************************  
@@ -99,7 +116,7 @@ app.get('/setup', function (req, res) {
             firstName: 'Bob',
             lastName: 'Smith',
             title: 'Systems Administrator',
-            imageUrl: 'https://randomuser.me/api/portraits/men/78.jpg',
+            imageUrl: '/app/assets/faces/face-8.jpg',
             phoneNumber: '555-123-4567',
             addressOne: '901 S. Sunshine Ave.',
             addressTwo: 'Suite 1B',
@@ -114,9 +131,6 @@ app.get('/setup', function (req, res) {
 
         bob.save(function(err, user) {
             if (err) throw err;
-
-            console.log('User saved successfully: ' + user._id + '. tennantId is: ' + user.tennantId);
-            res.json({ success: true, message: 'demo tennant and user created. tennantId = ' + user.tennantId });
         });
 
     });
