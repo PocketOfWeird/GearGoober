@@ -107,18 +107,17 @@ app.get('/setup', function (req, res) {
 
     demoU.save(function (err, tennant){
         if (err) throw err;
-        console.log('tennant save successfully.');
         
         // create sample user
         var bob = new User(demoDataUser);
         bob.tennantId = tennant._id;
         
         bob.save(function (err) {
-            if (err) throw err;
+            if (err) throw err;    
         });
 
         // create sample equipment
-        for (e=0; e < demoDataEquipment.length; e++) {
+        for (e=0; e < demoDataEquipment["data"].length; e++) {
             var pieceOfEquipment = new Equipment(demoDataEquipment["data"][e]);
             pieceOfEquipment.tennantId = tennant._id;
 
