@@ -33,6 +33,11 @@ app.directives = {
         src: function(params) {
             return this.imageUrl;
         }
+    },
+    restrictedToLabAssistant: {
+        class: function(params) {
+            if (!this.labAssistant) return 'hidden'; 
+        }    
     }
 };
 
