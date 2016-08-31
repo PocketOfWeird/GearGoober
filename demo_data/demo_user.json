@@ -2,7 +2,7 @@
     "email": "bob@demo.edu",
     "firstName": "Bob",
     "lastName": "Smith",
-    "imageUrl": "/app/assets/faces/face-8.jpg",
+    "imageUrl": "/app/assets/img/faces/face-8.jpg",
     "phoneNumber": "555-123-4567",
     "addressOne": "901 S. Sunshine Ave.",
     "addressTwo": "Suite 1B",
