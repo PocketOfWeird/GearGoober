@@ -80,6 +80,7 @@ var User = mongoose.model('User', new Schema({
 var Equipment = mongoose.model('Equipment', new Schema({
     tennantId: String,
     name: String,
+    imageUrl: String,
     mfg: String,
     model: String,
     price: Number,
@@ -87,7 +88,6 @@ var Equipment = mongoose.model('Equipment', new Schema({
     barcodes: [{
         barcode: String,
         checkedIn: Boolean,
-        checkedOut: Boolean,
         damaged: Boolean,
         missing: Boolean
     }]
@@ -97,40 +97,37 @@ var Equipment = mongoose.model('Equipment', new Schema({
  * Routes */
 app.get('/setup', function (req, res) {
     
-    // create sample tennant
-    var demoU = new Tennant({
-        name: 'Demo Univeristy',
-        subdomain: 'demo',
-        colorTheme: 'blue'
-    });
+    // load demo data into memory
+    var demoDataTennant = require('./demo_data/demo_tennant.json');
+    var demoDataUser = require('./demo_data/demo_user.json');
+    var demoDataEquipment = require('./demo_data/demo_equipment.json'); // an array of equipment models: {"data":[...]}
 
-    demoU.save(function(err, tennant){
+    // create sample tennant
+    var demoU = new Tennant(demoDataTennant);
+
+    demoU.save(function (err, tennant){
         if (err) throw err;
-        console.log('tennant save successfully. _id is: ' + tennant._id);
+        console.log('tennant save successfully.');
         
         // create sample user
-        var bob = new User({
-            tennantId: tennant._id,
-            email: 'bob@demo.edu',
-            firstName: 'Bob',
-            lastName: 'Smith',
-            imageUrl: '/app/assets/faces/face-8.jpg',
-            phoneNumber: '555-123-4567',
-            addressOne: '901 S. Sunshine Ave.',
-            addressTwo: 'Suite 1B',
-            city: 'Middleton',
-            state: 'MO',
-            zip: '62892',
-            password: 'password',
-            admin: true,
-            manager: false,
-            labAssistant: false
-        });
-
-        bob.save(function(err, user) {
+        var bob = new User(demoDataUser);
+        bob.tennantId = tennant._id;
+        
+        bob.save(function (err) {
             if (err) throw err;
         });
 
+        // create sample equipment
+        for (e=0; e < demoDataEquipment.length; e++) {
+            var pieceOfEquipment = new Equipment(demoDataEquipment["data"][e]);
+            pieceOfEquipment.tennantId = tennant._id;
+
+            pieceOfEquipment.save(function (err) {
+                if (err) throw err;
+            });
+        }
+
+        res.json({ success: true, message: "Demo Data has been populated in the db" });
     });
 
 });
