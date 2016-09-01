@@ -80,11 +80,14 @@ var User = mongoose.model('User', new Schema({
 var Equipment = mongoose.model('Equipment', new Schema({
     tennantId: String,
     name: String,
+    catgeory: String,
+    subCategory: String,
     imageUrl: String,
     mfg: String,
     model: String,
     price: Number,
     qty: Number,
+    inKit: Boolean,
     barcodes: [{
         barcode: String,
         checkedIn: Boolean,
