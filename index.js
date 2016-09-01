@@ -80,8 +80,8 @@ var User = mongoose.model('User', new Schema({
 var Equipment = mongoose.model('Equipment', new Schema({
     tennantId: String,
     name: String,
-    catgeory: String,
-    subCategory: String,
+    cat: String,
+    subCat: String,
     imageUrl: String,
     mfg: String,
     model: String,
