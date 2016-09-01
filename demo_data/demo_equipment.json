@@ -2,11 +2,14 @@
     "data":[
         {
             "name": "Canon EOS 70D DSLR Camera with 18-55mm f/3.5-5.6 STM Lens",
+            "category": "Cameras",
+            "subCategory": "",
             "imageUrl": "https://www.bhphotovideo.com/images/images1000x1000/canon_8469b009_canon_eos_70d_dslr_986390.jpg",
             "mfg": "Canon",
             "model": "EOS 70D",
             "price": 1099.00,
             "qty": 6,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "123456",
@@ -48,11 +51,14 @@
         },
         {
             "name": "Sony PXW-FS7 XDCAM Super 35 Camera System",
+            "category": "Cameras",
+            "subCategory": "",
             "imageUrl": "https://www.bhphotovideo.com/images/images500x500/sony_pxw_fs7_compact_4k_xdcam_with_1082825.jpg",
             "mfg": "Sony",
             "model": "PXW-FS7",
             "price": 7999.00,
             "qty": 2,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "35268",
@@ -70,6 +76,8 @@
         },
         {
             "name": "Sony FE PZ 28-135mm f/4 G OSS Lens",
+            "category": "Cameras",
+            "subCategory": "Lenses",
             "imageUrl": "https://www.bhphotovideo.com/images/images2500x2500/sony_selp28135g_e_pz_28_135mm_f_4_1082051.jpg",
             "mfg": "Sony",
             "model": "FE PZ 28-135mm",
@@ -92,11 +100,14 @@
         },
         {
             "name": "Manfrotto 526,545BK Professional Video Tripod System with 526 Head",
+            "category": "Cameras",
+            "subCategory": "Camera Support",
             "imageUrl": "https://www.bhphotovideo.com/images/images500x500/Manfrotto_526_545BK_526_545BK_Professional_Video_Tripod_589954.jpg",
             "mfg": "Manfrotto",
             "model": "526,545BK",
             "price": 1899.00,
             "qty": 2,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "35405",
@@ -114,11 +125,14 @@
         },
         {
             "name": "Audio-Technica AT875R Line and Gradient Condenser Microphone",
+            "category": "Audio",
+            "subCategory": "Microphones",
             "imageUrl": "https://www.bhphotovideo.com/images/images2500x2500/Audio_Technica_AT875R_AT875_Short_Condenser_Shotgun_495302.jpg",
             "mfg": "Audio-Technica",
             "model": "AT875R",
             "price": 169.00,
             "qty": 3,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "37004",
@@ -142,11 +156,14 @@
         },
         {
             "name": "Windshield for Shotgun Microphones",
+            "category": "Audio",
+            "subCategory": "Accessories",
             "imageUrl": "https://www.bhphotovideo.com/images/images2500x2500/auray_wss_2012_pro_matrixwindsheild_20mm_di_850316.jpg",
             "mfg": "Auray",
             "model": "WSS-2012",
             "price": 89.00,
             "qty": 3,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "432158",
@@ -170,11 +187,14 @@
         },
         {
             "name": "Angled XLR Microphone Cable 10ft",
+            "category": "Audio",
+            "subCategory": "Cables",
             "imageUrl": "https://www.bhphotovideo.com/images/images2500x2500/Kopul_m4001_5r_Kopul_Studio_Elite_4000_845563.jpg",
             "mfg": "Kopul",
             "model": "M4010R",
             "price": 29.95,
             "qty": 3,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "44252",
@@ -198,11 +218,14 @@
         },
         {
             "name": "Shockmount for Shotgun Microphones",
+            "category": "Audio",
+            "subCategory": "Accessories",
             "imageUrl": "https://www.bhphotovideo.com/images/images2000x2000/auray_shm_socam_1075739.jpg",
             "mfg": "Auray",
             "model": "SHM-SOCAM",
             "price": 24.95,
             "qty": 3,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "47892",
@@ -226,11 +249,14 @@
         },
         {
             "name": "Boom Pole",
+            "category": "Audio",
+            "subCategory": "Accessories",
             "imageUrl": "https://www.bhphotovideo.com/images/images500x500/Rode_MICRO_BOOMPOLE_Micro_Boompole_3_Section_757123.jpg",
             "mfg": "Rode",
             "model": "MICRO BOOMPOLE",
             "price": 49.00,
             "qty": 3,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "41237",
@@ -254,11 +280,14 @@
         },
         {
             "name": "Pelican 1400 Case",
+            "category": "Cases",
+            "subCategory": "",
             "imageUrl": "https://www.bhphotovideo.com/images/images2000x2000/Pelican_1400_000_110_1400_Case_with_Foam_40651.jpg",
             "mfg": "Pelican",
             "model": "1400-000-110",
             "price": 71.66,
             "qty": 3,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "42887",
@@ -282,11 +311,14 @@
         },
         {
             "name": "Apple 16GB iPad Air (Wi-Fi Only, Space Gray)",
+            "category": "Computers",
+            "subCategory": "Tablets",
             "imageUrl": "https://www.bhphotovideo.com/images/images1000x1000/apple_md785ll_b_ipad_air_16gb_ipad_1091793.jpg",
             "mfg": "Apple",
             "model": "MD785LL/B",
             "price": 479.00,
             "qty": 2,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "APP110",
@@ -304,11 +336,14 @@
         },
         {
             "name": "Case for iPads",
+            "category": "Cases",
+            "subCategory": "",
             "imageUrl": "https://www.bhphotovideo.com/images/images2500x2500/Xuma_sn_112b_Neoprene_Foam_Sleeve_For_866541.jpg",
             "mfg": "Xuma",
             "model": "SN-112B",
             "price": 4.95,
             "qty": 2,
+            "inKit": false,
             "barcodes": [
                 {
                     "barcode": "812450",
