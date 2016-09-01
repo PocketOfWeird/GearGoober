@@ -1,3 +1,3 @@
 (function () {
-    $('#userProfile').render(app.user);
+    $('#userProfile').render(Gear.user);
 })();

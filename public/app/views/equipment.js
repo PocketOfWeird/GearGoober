@@ -1,3 +1,3 @@
 (function () {
-    $('#equipmentTabs').render(app.user, app.directives);
+    $('#equipmentTabs').render(Gear.user, Gear.directives);
 })();
