@@ -9,17 +9,17 @@
  */
 
 
-app = {};
+Gear = {};
 
 // all cookies
-app.localCookies = {
+Gear.localCookies = {
     auth: 'jwt',
     tennant: 'tennant',
     user: 'user'
 };
 
 // all side-nav views
-app.sideNavLinks = [
+Gear.sideNavLinks = [
     'equipment',
     'reservations',
     'groups',
@@ -28,7 +28,7 @@ app.sideNavLinks = [
 ];
 
 // template rendering directives
-app.directives = {
+Gear.directives = {
     image: {
         src: function(params) {
             return this.imageUrl;
@@ -42,28 +42,28 @@ app.directives = {
 };
 
 // utility functions
-app.refresh = function () {
+Gear.refresh = function () {
     window.location.reload();
 }
-app.rerouteTo = function (page) {
+Gear.rerouteTo = function (page) {
     window.location.href = page;
 }
 
 // get current tennant and user from stored cookie
-var tennantCookie = Cookies.get(app.localCookies.tennant);
-if (!tennantCookie) app.rerouteTo('/login');
-app.tennant = JSON.parse(tennantCookie);
+var tennantCookie = Cookies.get(Gear.localCookies.tennant);
+if (!tennantCookie) Gear.rerouteTo('/login');
+Gear.tennant = JSON.parse(tennantCookie);
 // get current user from stored cookie
-var userCookie = Cookies.get(app.localCookies.user);
-if (!userCookie) app.rerouteTo('/login');
-app.user = JSON.parse(userCookie);
+var userCookie = Cookies.get(Gear.localCookies.user);
+if (!userCookie) Gear.rerouteTo('/login');
+Gear.user = JSON.parse(userCookie);
 
 // setup router handlers
-app.handlers = {
+Gear.handlers = {
     logout: function (req) {
-        for (cookie in app.localCookies) {
-            Cookies.expire(app.localCookies[cookie]);
-            app.refresh();
+        for (cookie in Gear.localCookies) {
+            Cookies.expire(Gear.localCookies[cookie]);
+            Gear.refresh();
         }
     },
     viewLoader: function (req) {
@@ -77,8 +77,8 @@ app.handlers = {
             .into('#portal')
             .on('200', function(request){
                 // Switch Nav-Link-Highlight to selected view
-                for (i=0; i < app.sideNavLinks.length; i++) {
-                    $("#nav-link-" + app.sideNavLinks[i]).removeClass("active");
+                for (i=0; i < Gear.sideNavLinks.length; i++) {
+                    $("#nav-link-" + Gear.sideNavLinks[i]).removeClass("active");
                 }
                 $("#nav-link-" + view).addClass("active");
                 aja().url('views/' + view + '.js').type('script').go();
@@ -91,16 +91,16 @@ app.handlers = {
     } 
 };
 
-app.start = function() {
+Gear.start = function() {
     // apply user and tennant settings
-    $('.logo').render(app.tennant);
-    $('.user').render(app.user, app.directives);
+    $('.logo').render(Gear.tennant);
+    $('.user').render(Gear.user, Gear.directives);
 
     // setup router
     router = new Grapnel();
-    router.get('logout', app.handlers.logout);
-    router.get('v/:view', app.handlers.viewLoader);
+    router.get('logout', Gear.handlers.logout);
+    router.get('v/:view', Gear.handlers.viewLoader);
 };
 
 // call startup exectution
-app.start();
+Gear.start();
