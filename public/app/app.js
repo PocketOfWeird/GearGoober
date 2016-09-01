@@ -29,14 +29,38 @@ Gear.sideNavLinks = [
 
 // template rendering directives
 Gear.directives = {
-    image: {
-        src: function(params) {
+    imageEquip: {
+        src: function() {
+            // if not rendering user data, return the imageUrl
+            return this.firstName ? "" : this.imageUrl;
+        },
+        alt: function() {
+            return this.name;
+        }
+    },
+    imageUser: {
+        src: function() {
             return this.imageUrl;
+        },
+        alt: function() {
+            return this.firstName;
+        }
+    },
+    category: {
+        html: function() {
+            return this.category + this.subCategory ? " > " + this.subCategory : "";
+        }
+    },
+    inKit: {
+        class: function() {
+            // if equipment is not in a kit, hide the element 
+            return this.inKit ? this.class : 'hidden';
         }
     },
     restrictedToLabAssistant: {
-        class: function(params) {
-            if (!this.labAssistant) return 'hidden'; 
+        class: function() {
+            // if user doesn't have labAssistant permission, hide the element 
+            return this.labAssistant ? this.class : 'hidden'; 
         }    
     }
 };
@@ -90,7 +114,14 @@ Gear.handlers = {
             .go();
     } 
 };
+// all calls to the api
+Gear.data = {};
+// returns an immuntable array of Equipment (and Kit) objects
+Gear.data.getEquipment = function() {
+    // TODO
+};
 
+// startup function
 Gear.start = function() {
     // apply user and tennant settings
     $('.logo').render(Gear.tennant);
