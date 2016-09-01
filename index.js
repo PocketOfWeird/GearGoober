@@ -206,7 +206,7 @@ apiRoutes.get('/', function(req, res) {
     res.json({ message: 'Welcome to the GearGoober API!' });
 });
 //////// Tennant //////////
-// route to return all users (GET http://localhost:3000/api/tennant)
+// route to return a specified tennant (GET http://localhost:3000/api/tennant/:id)
 apiRoutes.get('/tennant/:id', function(req, res) {
     Tennant.findOne({'_id': req.params.id }, function(err, tennant){
         if (err) {
@@ -226,7 +226,18 @@ apiRoutes.get('/users', function(req, res) {
         return res.json(users);
     });
 });
-
+//////// Equipment and Kits //////////
+// route to return an array {data:[...]} of equipment and kits based on a query (GET http://localhost:3000/api/equipment/:query)
+apiRoutes.get('/equipment/:query', function(req, res) {
+    var query = JSON.parse(req.params.query);
+    Equipment.find(query, function(err, equipment) {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({ success: false, message: 'Server error'});
+        }
+        return res.json({data: equipment});
+    });
+});
 /********************************************************** 
  * Start app*/
 app.use('/api', apiRoutes);
