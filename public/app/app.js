@@ -116,9 +116,16 @@ Gear.handlers = {
 };
 // all calls to the api
 Gear.data = {};
-// returns an immuntable array of Equipment (and Kit) objects
-Gear.data.getEquipment = function() {
-    // TODO
+// returns an immutable array of Equipment (and Kit) objects
+Gear.data.getEquipment = function(query) {
+    var promise = new RSVP.Promise(function(resolve, reject){
+        api.getEquipment(query).then(function(equipment) {
+            resolve(equipment);
+        }).catch(function(error) {
+            reject(error);
+        });
+    });
+    return promise;
 };
 
 // startup function

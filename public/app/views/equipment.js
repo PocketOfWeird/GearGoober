@@ -1,4 +1,9 @@
 (function () {
     $('#equipmentTabs').render(Gear.user, Gear.directives);
-    $('#equip-list').render(Gear.data.getEquipment, Gear.directives);
+    
+    Gear.data.getEquipment({}).then(function(equipment){
+        $('#equip-list').render(equipment, Gear.directives);
+    }).catch(function(error){
+        // TODO: handle error
+    });
 })();

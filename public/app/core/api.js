@@ -14,7 +14,7 @@ api = {
                 // Set tennant cookie
                 Cookies.set('tennant', JSON.stringify(response.tennant));
             })
-            .on('400', function(response) {
+            .on('40*', function(response) {
                 console.log(response + ' ' + response.message);
             })
             .on('500', function(response) {
@@ -38,12 +38,34 @@ api = {
                 // Redirect to app
                 window.location.href = '/app'
             })
-            .on('400', function(response) {
+            .on('40*', function(response) {
                 console.log(response + ' ' + response.message);
             })
             .on('500', function(response) {
                 console.log(response + ' ' + response.message);
             })
             .go();
+    },
+    /// Equipment and Kits
+    getEquipment: function (query) {
+        var promise = new RSVP.Promise(function(resolve, reject){
+            aja()
+                .method('get')
+                .url('/api/equipment/' + JSON.stringify(query) + '?token=' + Cookies.get('jwt'))
+                .on('200', function(response) {
+                    resolve(response.data);
+                })
+                .on('40*', function(response) {
+                    console.log(response + ' ' + response.message);
+                    reject(response);
+                })
+                .on('500', function(response) {
+                    console.log(response + ' ' + response.message);
+                    reject(response);
+                })
+                .go();
+        });
+
+        return promise;
     }
 };
