@@ -210,10 +210,7 @@ apiRoutes.get('/', function(req, res) {
 // route to return a specified tennant
 apiRoutes.get('/tennant/:id', function(req, res) {
     Tennant.findOne({'_id': req.params.id }, function(err, tennant){
-        if (err) {
-            console.log(err);
-            return res.status(500).send({ success: false, message: 'Server error'});
-        }
+        if (err) return handleError(err, res);
         if (!tennant) return res.status(500).send({ success: false, message: 'Did not find tennant'});
 
         return res.json({success: true, tennant: tennant});
@@ -234,18 +231,25 @@ apiRoutes.get('/users', function(req, res) {
 apiRoutes.get('/equipment/:query', function(req, res) {
     var query = JSON.parse(req.params.query);
     Equipment.find(query, function(err, equipment) {
-        if (err) {
-            console.log(err);
-            return res.status(500).send({ success: false, message: 'Server error'});
-        }
+        if (err) return handleError(err, res);
         return res.json({data: equipment});
     });
 });
 // GET: /api/equipment/categories/all
 // route to return an array {data:[...]} of simple category objects {categoryName: "", subCategories: [{categoryName: ""}]}
 apiRoutes.get('/equipment/categories/all', function(req, res) {
-    // TODO
+    Equipment.find({},'category subCategory', function(err, categories) {
+        if (err) {
+            console.log(err);
+            return
+        }
+    });
 });
+//////// Error Handler //////////
+function handleError(error, res) {
+    console.log(error);
+    return res.status(500).send({ success: false, message: 'Server error: ' + error});
+}
 /********************************************************** 
  * Start app*/
 app.use('/api', apiRoutes);
