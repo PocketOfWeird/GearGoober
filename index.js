@@ -200,13 +200,14 @@ apiRoutes.use(function(req, res, next) {
     }
 
 });
-
-// route to show a random message (GET http://localhost:3000/api/)
+// GET: /api/
+// route to show a random message
 apiRoutes.get('/', function(req, res) {
     res.json({ message: 'Welcome to the GearGoober API!' });
 });
 //////// Tennant //////////
-// route to return a specified tennant (GET http://localhost:3000/api/tennant/:id)
+// GET: /api/tennant/:id
+// route to return a specified tennant
 apiRoutes.get('/tennant/:id', function(req, res) {
     Tennant.findOne({'_id': req.params.id }, function(err, tennant){
         if (err) {
@@ -220,14 +221,16 @@ apiRoutes.get('/tennant/:id', function(req, res) {
     });
 });
 //////// Users //////////
-// route to return all users (GET http://localhost:3000/api/users)
+// GET: /api/users
+// route to return all users
 apiRoutes.get('/users', function(req, res) {
     User.find({}, function(err, users) {
         return res.json(users);
     });
 });
 //////// Equipment and Kits //////////
-// route to return an array {data:[...]} of equipment and kits based on a query (GET http://localhost:3000/api/equipment/:query)
+// GET: /api/equipment/:query
+// route to return an array {data:[...]} of equipment and kits based on a query
 apiRoutes.get('/equipment/:query', function(req, res) {
     var query = JSON.parse(req.params.query);
     Equipment.find(query, function(err, equipment) {
@@ -237,6 +240,11 @@ apiRoutes.get('/equipment/:query', function(req, res) {
         }
         return res.json({data: equipment});
     });
+});
+// GET: /api/equipment/categories/all
+// route to return an array {data:[...]} of simple category objects {categoryName: "", subCategories: [{categoryName: ""}]}
+apiRoutes.get('/equipment/categories/all', function(req, res) {
+    // TODO
 });
 /********************************************************** 
  * Start app*/
