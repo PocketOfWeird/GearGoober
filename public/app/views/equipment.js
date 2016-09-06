@@ -1,8 +1,10 @@
 (function () {
     $('#equipmentTabs').render(Gear.user, Gear.directives);
     
-    Gear.data.getEquipment({}).then(function(equipment){
-        $('#equip-list').render(equipment, Gear.directives);
+    Gear.data.getCategory({}).then(function(categories){
+
+        //$('').render(categories, Gear.directives);
+
     }).catch(function(error){
         // TODO: handle error
     });

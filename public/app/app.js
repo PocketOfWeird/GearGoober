@@ -72,6 +72,14 @@ Gear.refresh = function () {
 Gear.rerouteTo = function (page) {
     window.location.href = page;
 }
+Gear.convertToArray = function(object) {
+    var list = [];
+    var keys = object.keys();
+    for (i=0; i < keys.length; i++) {
+        list.push(keys[i]);
+    }
+    return list;
+}
 
 // get current tennant and user from stored cookie
 var tennantCookie = Cookies.get(Gear.localCookies.tennant);
@@ -127,6 +135,25 @@ Gear.data.getEquipment = function(query) {
     });
     return promise;
 };
+/**
+ * Gets categories from the database and converts them to an array
+ * 
+ * @param {JSON} query - {} for all categories, {category:"Cameras"} or {subCategory:"Lenses"} for a specific category
+ * 
+ * @return {Promise<Array>}
+ */
+Gear.data.getCategory = function(query) {
+    var promise = new RSVP.Promise(function(resolve, reject) {
+        api.getData('/api/equipment/categories/', query).then(function(categories) {
+            var catList = Gear.convertToArray(categories); 
+            console.log(catList);
+            resolve(catList);
+        }).catch(function(error) {
+            reject(error);
+        });
+    });
+    return promise;
+}
 
 // startup function
 Gear.start = function() {
