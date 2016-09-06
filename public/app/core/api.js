@@ -46,12 +46,20 @@ api = {
             })
             .go();
     },
-    /// Equipment and Kits
-    getEquipment: function (query) {
+    /**
+     * Gets data from the db via the api
+     * 
+     * @param {String} url - The api url to get from
+     * @param {JSON} query - 
+     * 
+     * 
+     * @returns {Promise}
+     */
+    getData: function (url, query) {
         var promise = new RSVP.Promise(function(resolve, reject){
             aja()
                 .method('get')
-                .url('/api/equipment/' + JSON.stringify(query) + '?token=' + Cookies.get('jwt'))
+                .url(url + JSON.parse(Cookies.get('user')).tennantId + '/' + JSON.stringify(query) + '?token=' + Cookies.get('jwt'))
                 .on('200', function(response) {
                     resolve(response.data);
                 })

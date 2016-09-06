@@ -80,8 +80,8 @@ var User = mongoose.model('User', new Schema({
 var Equipment = mongoose.model('Equipment', new Schema({
     tennantId: String,
     name: String,
-    cat: String,
-    subCat: String,
+    categories: String,
+    subCategories: String,
     imageUrl: String,
     mfg: String,
     model: String,
@@ -235,14 +235,53 @@ apiRoutes.get('/equipment/:query', function(req, res) {
         return res.json({data: equipment});
     });
 });
-// GET: /api/equipment/categories/all
-// route to return an array {data:[...]} of simple category objects {categoryName: "", subCategories: [{categoryName: ""}]}
-apiRoutes.get('/equipment/categories/all', function(req, res) {
-    Equipment.find({},'category subCategory', function(err, categories) {
-        if (err) {
-            console.log(err);
-            return
-        }
+// GET: /api/equipment/categories/
+// route to return an object { data:{...} }} of category objects {"name": "", "subCategories": ["",""], "subCatCheck": {"<categoryName>": true}}
+apiRoutes.get('/equipment/categories/:tennantId/:query', function(req, res) {
+    
+    var query = JSON.parse(req.params.query);
+    var tennantId = req.params.tennantId;
+    query.tennantId = tennantId; 
+
+    Equipment.find(query,'category subCategory', function(err, categories) {
+        if (err) return handleError(err, res);
+        console.log(categories);
+        // main object to return
+        var allCatsObject = {};
+        // for each category in the db array of categories
+        for (i=0; i < categories.length; i++) {
+            // if this is the first instance of the category
+            if (!allCatsObject[categories[i].category]) {
+                // add it to the main object
+                allCatsObject[categories[i].category]["name"] = categories[i].category;
+                // if the subCategory property is not ""
+                if (categories[i].subCategory) {
+                    // add it to category's instance in the main object
+                    allCatsObject[categories[i].category]["subCatCheck"][categories[i].subCategory] = true;
+                    // initialize the subCategories array and push the subCategory
+                    allCatsObject[categories[i].category]["subCategories"] = [];
+                    allCatsObject[categories[i].category]["subCategories"].push(categories[i].subCategory);
+                }
+                // this is not the first time the loop has seen this category
+            } else {
+                // if the subCategory property is not "" and has not already been added to the category object
+                if (categories[i].subCategory && !allCatsObject[categories[i].category]["subCatCheck"][categories[i].subCategory]) {
+                        // add it to category's instance in the main object
+                        allCatsObject[categories[i].category]["subCatCheck"][categories[i].subCategory] = true;
+                        // if the subCategories array has not been initialized
+                        if (!allCatsObject[categories[i].category]["subCategories"]) {
+                            // initialize it
+                            allCatsObject[categories[i].category]["subCategories"] = [];
+                        } else {
+                            // add the subCategory to the array
+                            allCatsObject[categories[i].category]["subCategories"].push(categories[i].subCategory);
+                        }
+                } // elsewise skip it
+            }
+        } // end of for loop
+        console.log(allCatsObject);
+        return res.json({data: allCatsObject});
+
     });
 });
 //////// Error Handler //////////
