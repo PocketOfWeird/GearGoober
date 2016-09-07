@@ -46,9 +46,11 @@ Gear.directives = {
             return this.firstName;
         }
     },
-    category: {
-        html: function() {
-            return this.category + this.subCategory ? " > " + this.subCategory : "";
+    subCategory: {
+        subCategoryName: {
+            text: function () {
+                return this.value;
+            } 
         }
     },
     inKit: {
@@ -145,9 +147,7 @@ Gear.data.getEquipment = function(query) {
 Gear.data.getCategory = function(query) {
     var promise = new RSVP.Promise(function(resolve, reject) {
         api.getData('/api/equipment/categories/', query).then(function(categories) {
-            var catList = Gear.convertToArray(categories); 
-            console.log(catList);
-            resolve(catList);
+            resolve(categories);
         }).catch(function(error) {
             reject(error);
         });
