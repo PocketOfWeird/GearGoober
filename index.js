@@ -80,8 +80,8 @@ var User = mongoose.model('User', new Schema({
 var Equipment = mongoose.model('Equipment', new Schema({
     tennantId: String,
     name: String,
-    categories: String,
-    subCategories: String,
+    category: String,
+    subCategory: String,
     imageUrl: String,
     mfg: String,
     model: String,
@@ -243,7 +243,7 @@ apiRoutes.get('/equipment/categories/:tennantId/:query', function(req, res) {
     var tennantId = req.params.tennantId;
     query.tennantId = tennantId; 
 
-    Equipment.find(query,'category subCategory', function(err, categories) {
+    /* Equipment.find(query,'category subCategory', function(err, categories) {
         if (err) return handleError(err, res);
         console.log(categories);
         // main object to return
@@ -282,7 +282,7 @@ apiRoutes.get('/equipment/categories/:tennantId/:query', function(req, res) {
         console.log(allCatsObject);
         return res.json({data: allCatsObject});
 
-    });
+    }); */
 });
 //////// Error Handler //////////
 function handleError(error, res) {
