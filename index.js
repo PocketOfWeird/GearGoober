@@ -236,54 +236,52 @@ apiRoutes.get('/equipment/:query', function(req, res) {
     });
 });
 // GET: /api/equipment/categories/
-// route to return an object { data:{...} }} of category objects {"name": "", "subCategories": ["",""], "subCatCheck": {"<categoryName>": true}}
+// route to return an array {data:[...]} of equipment categories based on a query
 apiRoutes.get('/equipment/categories/:tennantId/:query', function(req, res) {
     
     var query = JSON.parse(req.params.query);
     var tennantId = req.params.tennantId;
-    query.tennantId = tennantId; 
+    query.tennantId = tennantId;
 
-    /* Equipment.find(query,'category subCategory', function(err, categories) {
-        if (err) return handleError(err, res);
-        console.log(categories);
-        // main object to return
-        var allCatsObject = {};
-        // for each category in the db array of categories
-        for (i=0; i < categories.length; i++) {
-            // if this is the first instance of the category
-            if (!allCatsObject[categories[i].category]) {
-                // add it to the main object
-                allCatsObject[categories[i].category]["name"] = categories[i].category;
-                // if the subCategory property is not ""
-                if (categories[i].subCategory) {
-                    // add it to category's instance in the main object
-                    allCatsObject[categories[i].category]["subCatCheck"][categories[i].subCategory] = true;
-                    // initialize the subCategories array and push the subCategory
-                    allCatsObject[categories[i].category]["subCategories"] = [];
-                    allCatsObject[categories[i].category]["subCategories"].push(categories[i].subCategory);
-                }
-                // this is not the first time the loop has seen this category
-            } else {
-                // if the subCategory property is not "" and has not already been added to the category object
-                if (categories[i].subCategory && !allCatsObject[categories[i].category]["subCatCheck"][categories[i].subCategory]) {
-                        // add it to category's instance in the main object
-                        allCatsObject[categories[i].category]["subCatCheck"][categories[i].subCategory] = true;
-                        // if the subCategories array has not been initialized
-                        if (!allCatsObject[categories[i].category]["subCategories"]) {
-                            // initialize it
-                            allCatsObject[categories[i].category]["subCategories"] = [];
-                        } else {
-                            // add the subCategory to the array
-                            allCatsObject[categories[i].category]["subCategories"].push(categories[i].subCategory);
+    Equipment.aggregate(
+        { $match: query }, // where equipment = query
+        { $group: {_id:{category: "$category", subCategory: "$subCategory"}} }, // removes duplicate results
+        { $project: {_id:0, category:"$_id.category", subCategory:"$_id.subCategory"} } // cleans up the output
+    ).exec(function (err, categories) {
+                // handle error
+                if (err) return handleError(err, res);        
+                // validate results
+                assert(Array.isArray(categories));
+                // group subCategories under each parent category
+                var grouped = {}; // placeholder object
+                for (i=0; i < categories.length; i++) { // loop through results
+                    cat = categories[i]; // current category object
+                    if (!grouped[cat.category]) { // if category is not in the placeholder object
+                        grouped[cat.category] = { category: cat.category, subCategory: [], subCategoryCheck: {} }; // add the category to the placeholder object
+                        if (cat.subCategory) { // if a subCategory exists 
+                            grouped[cat.category]["subCategoryCheck"][cat.subCategory] = true; // add the subCategory to the placeholder object 
+                            grouped[cat.category]["subCategory"].push(cat.subCategory); // and push it into the subCategory array
                         }
-                } // elsewise skip it
-            }
-        } // end of for loop
-        console.log(allCatsObject);
-        return res.json({data: allCatsObject});
-
-    }); */
+                    } else { // the category is in the placeholder object
+                        if (cat.subCategory) { // if a subCategory exists 
+                            if (!grouped[cat.category]["subCategoryCheck"][cat.subCategory]) { // if the subCategory is not in the placeholder object
+                                grouped[cat.category]["subCategoryCheck"][cat.subCategory] = true; // add the subCategory to the placeholder object
+                                grouped[cat.category]["subCategory"].push(cat.subCategory); // push it into the array
+                            }
+                        }
+                    }
+                }
+                // covert grouped object to an array
+                var groupedArray = [];
+                for (key in grouped) {
+                    groupedArray.push(grouped[key]);
+                }
+                console.log(groupedArray);
+                // return results
+                return res.json({data: groupedArray});
+    });
 });
+
 //////// Error Handler //////////
 function handleError(error, res) {
     console.log(error);
