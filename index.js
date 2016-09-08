@@ -228,7 +228,7 @@ apiRoutes.get('/users', function(req, res) {
 //////// Equipment and Kits //////////
 // GET: /api/equipment/:query
 // route to return an array {data:[...]} of equipment and kits based on a query
-apiRoutes.get('/equipment/:query', function(req, res) {
+apiRoutes.get('/equipment/:tennantId/:query', function(req, res) {
     var query = JSON.parse(req.params.query);
     Equipment.find(query, function(err, equipment) {
         if (err) return handleError(err, res);
