@@ -139,6 +139,18 @@ Gear.start = function() {
     router = new Grapnel();
     router.get('logout', Gear.handlers.logout);
     router.get('v/:view', Gear.handlers.viewLoader);
+
+    // initialize searchbar
+    $('#top-search-bar').on('keyup', function() {
+        var input = $(this).val();
+        api.getData('suggest/', {$text:{$search: input }}).then( function (results) {
+            
+            console.log(results);
+
+        }).catch(function(err) {
+            // TODO: Handle error
+        });
+    });
 };
 
 // call startup exectution

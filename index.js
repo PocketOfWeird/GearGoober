@@ -61,8 +61,8 @@ var Tennant = mongoose.model('Tennant', new Schema({
 var User = mongoose.model('User', new Schema({
     tennantId: String,
     email: String,
-    firstName: String,
-    lastName: String,
+    firstName: {type: String, text: true}, // creates a text index
+    lastName: {type: String, text: true},
     imageUrl: String,
     phoneNumber: String,
     addressOne: String,
@@ -79,17 +79,17 @@ var User = mongoose.model('User', new Schema({
 // equipment
 var Equipment = mongoose.model('Equipment', new Schema({
     tennantId: String,
-    name: String,
+    name: {type: String, text: true}, // creates a text index
     category: String,
     subCategory: String,
     imageUrl: String,
-    mfg: String,
-    model: String,
+    mfg: {type: String, text: true},
+    model: {type: String, text: true},
     price: Number,
     qty: Number,
     inKit: Boolean,
     barcodes: [{
-        barcode: String,
+        barcode: {type: String, text: true},
         checkedIn: Boolean,
         damaged: Boolean,
         missing: Boolean
@@ -281,7 +281,38 @@ apiRoutes.get('/equipment/categories/:tennantId/:query', function(req, res) {
                 return res.json({data: groupedArray});
     });
 });
+/**
+ * GET: /api/suggest
+ * 
+ * @param {String} tennantId
+ * @param {JSON} query
+ * 
+ * @returns {Array} - array of <= 10 document objects
+ */
+apiRoutes.get('/suggest/:tennantId/:query', function(req, res) {
+    
+    var query = JSON.parse(req.params.query);
+    var tennantId = req.params.tennantId;
+    query.tennantId = tennantId;
 
+    var upperLim = 10;
+
+    Equipment.find(query)
+            .limit(upperLim)
+            .exec(function(err, results){
+                // handle error
+                if (err) return handleError(err, res);
+                // validate results
+                assert(Array.isArray(results));
+                // check array length
+                if (results.length < 1) {
+                    // TODO: run query on Reservations collection
+                }
+                // return results
+                return res.json({data: results});
+            });
+
+});
 //////// Error Handler //////////
 function handleError(error, res) {
     console.log(error);
