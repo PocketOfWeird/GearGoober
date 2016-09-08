@@ -1,6 +1,14 @@
 (function () {
+    // apply user settings
     $('#equipmentTabs').render(Gear.user, Gear.directives);
+
+    // show inner search bar if on mobile
+    if ($(window).width() <= 992) {
+        $('#equipment-mobile-search').removeClass("hidden");
+    }
     
+
+    // get all categories from the db
     Gear.data.getCategory({}).then(function(categories){
         // Switch plugin
         aja().url('assets/js/bootstrap-checkbox-radio-switch-tags.js').type('script').go();
