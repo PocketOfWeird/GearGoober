@@ -127,36 +127,6 @@ Gear.handlers = {
             .go();
     } 
 };
-// all calls to the api
-Gear.data = {};
-// returns an immutable array of Equipment (and Kit) objects
-Gear.data.getEquipment = function(query) {
-    var promise = new RSVP.Promise(function(resolve, reject){
-        api.getEquipment(query).then(function(equipment) {
-            resolve(equipment);
-        }).catch(function(error) {
-            reject(error);
-        });
-    });
-    return promise;
-};
-/**
- * Gets categories from the database and converts them to an array
- * 
- * @param {JSON} query - {} for all categories, {category:"Cameras"} or {subCategory:"Lenses"} for a specific category
- * 
- * @return {Promise<Array>}
- */
-Gear.data.getCategory = function(query) {
-    var promise = new RSVP.Promise(function(resolve, reject) {
-        api.getData('/api/equipment/categories/', query).then(function(categories) {
-            resolve(categories);
-        }).catch(function(error) {
-            reject(error);
-        });
-    });
-    return promise;
-}
 
 // startup function
 Gear.start = function() {
