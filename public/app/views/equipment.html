@@ -20,7 +20,7 @@
                 <div class="panel-group" id="categoryAccordian">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a data-target="#collapseCats" href="#" data-toggle="collapse">
+                            <a data-target="#collapseCats" href="#v/equipment/categories" data-toggle="collapse">
                                 Categories
 
                                 <b class="caret"></b>
@@ -54,22 +54,28 @@
                         </div>    
                     </div>
                 </div>
-                <div id="equip-list">
+                <form class="navbar-form navbar-left navbar-search-form hidden" role="search" id="equipment-mobile-search">                  
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            <input type="text" value="" class="form-control" placeholder="Search...">
+                        </div> 
+                </form>
+                <div id="equip-list" class="hidden">
                     <!-- Template for each piece of equipment -->
                     <div class="row">
                         <div class="col-md-12">
-                            <legend><strong><span class="name">A Fancy Expensive Thing</span></strong></legend>
+                            <legend><strong><span class="name"></span></strong></legend>
                             <div class="col-md-3">
                                 <div class="md-photo">
-                                    <img class="imageEquip" src="assets/img/blog-5.jpg" alt="">
+                                    <img class="imageEquip" src="" alt="">
                                 </div>
                             </div>
                             <div class="col-md-9">
                                 <p>
-                                    Category: <strong><span class="category">Fancy Stuff > Even Fancier Stuff</span></strong><br>
-                                    Manufacturer: <strong><span class="mfg">Orange</span></strong><br>
-                                    Model: <strong><span class="model">eyePad 2090</span></strong><br>
-                                    Price: <strong>$<span class="price">9999.00</span></strong><br>
+                                    Category: <strong><span class="category"></span> > <span class="subCategory"></span></strong><br>
+                                    Manufacturer: <strong><span class="mfg"></span></strong><br>
+                                    Model: <strong><span class="model"></span></strong><br>
+                                    Price: <strong>$<span class="price"></span></strong><br>
                                 </p>
                                 <p class="inKit"><i class="fa fa-briefcase"></i> Kit Item</p>
                             </div>
