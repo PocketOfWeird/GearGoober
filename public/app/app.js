@@ -82,6 +82,9 @@ Gear.convertToArray = function(object) {
     }
     return list;
 }
+Gear.isMobile = function() {
+    return $(window).width() <= 992 ? true : false;
+}
 
 // get current tennant and user from stored cookie
 var tennantCookie = Cookies.get(Gear.localCookies.tennant);
@@ -112,9 +115,9 @@ Gear.handlers = {
             .on('200', function(request){
                 // Switch Nav-Link-Highlight to selected view
                 for (i=0; i < Gear.sideNavLinks.length; i++) {
-                    $("#nav-link-" + Gear.sideNavLinks[i]).removeClass("active");
+                    $('#nav-link-' + Gear.sideNavLinks[i]).removeClass('active');
                 }
-                $("#nav-link-" + view).addClass("active");
+                $('#nav-link-' + view).addClass('active');
                 aja().url('views/' + view + '.js').type('script').go();
             })
             .on('404', function(request){

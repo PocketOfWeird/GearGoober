@@ -3,10 +3,10 @@
     $('#equipmentTabs').render(Gear.user, Gear.directives);
 
     // show inner search bar if on mobile
-    if ($(window).width() <= 992) {
+    if (Gear.isMobile) {
         $('#equipment-mobile-search').removeClass("hidden");
     }
-    
+
 
     // get all categories from the db
     Gear.data.getCategory({}).then(function(categories){
