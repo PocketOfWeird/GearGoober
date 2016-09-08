@@ -17,15 +17,42 @@
 
         <div class="tab-content">
             <div id="equip-browse" class="tab-pane active">
-                <div id="category-list">
-                    <!-- Template for each category -->
-                    <div class="col-md-3">
-                        <p class="category"></p>
-                        <ul class="subCategory">
-                            <li class="subCategoryName"></li>
-                        </ul>
+                <div class="panel-group" id="categoryAccordian">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a data-target="#collapseCats" href="#" data-toggle="collapse">
+                                Categories
+
+                                <b class="caret"></b>
+                            </a>
+                        </div>
+                        <div id="collapseCats" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div id="category-list">
+                                    <!-- Template for each category -->
+                                    <div class="col-md-3">
+                                        <p class="category"></p>
+                                        <div class="switch"
+                                            data-on-label="<i class='fa fa-check'></i>"
+                                            data-off-label="<i class='fa fa-times'></i>">
+                                            <input type="checkbox"/>
+                                        </div>
+                                        <ul class="subCategory">
+                                            <li>
+                                                <p class="subCategoryName"></p>
+                                                <div class="switch"
+                                                    data-on-label="<i class='fa fa-check'></i>"
+                                                    data-off-label="<i class='fa fa-times'></i>">
+                                                    <input type="checkbox"/>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- End template for each category -->
+                                </div>
+                            </div>
+                        </div>    
                     </div>
-                    <!-- End template for each category -->
                 </div>
                 <div id="equip-list">
                     <!-- Template for each piece of equipment -->
@@ -51,6 +78,7 @@
                     <!-- End template for each piece of equipment -->
                 </div>
             </div>
+            
             <div id="equip-add" class="tab-pane">
                 We are Houses Inc., a group of architects and interior designers based in Chicago and operating for clients worldwide. We’ve been designing stunningly beautiful houses and making clients happy for years.
             </div>
