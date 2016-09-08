@@ -11,3 +11,9 @@
     -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
     box-shadow: 1px 2px 3px rgba(0,0,0,.5);
 }
+
+.autocomplete {
+    border: solid lightgray 1px;
+    z-index: 999;
+    
+}
