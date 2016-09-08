@@ -9,7 +9,7 @@
 
 
     // get all categories from the db
-    api.getData('/api/equipment/categories/', {}).then(function(categories){
+    api.getData('equipment/categories/', {}).then(function(categories){
         // Switch plugin
         aja().url('assets/js/bootstrap-checkbox-radio-switch-tags.js').type('script').go();
         $('#category-list').render(categories, Gear.directives);

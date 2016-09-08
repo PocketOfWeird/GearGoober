@@ -59,7 +59,7 @@ api = {
         var promise = new RSVP.Promise(function(resolve, reject){
             aja()
                 .method('get')
-                .url(url + JSON.parse(Cookies.get('user')).tennantId + '/' + JSON.stringify(query) + '?token=' + Cookies.get('jwt'))
+                .url('/api/' + url + JSON.parse(Cookies.get('user')).tennantId + '/' + JSON.stringify(query) + '?token=' + Cookies.get('jwt'))
                 .on('200', function(response) {
                     resolve(response.data);
                 })
