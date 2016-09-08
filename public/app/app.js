@@ -143,13 +143,15 @@ Gear.start = function() {
     // initialize searchbar
     $('#top-search-bar').on('keyup', function() {
         var input = $(this).val();
-        api.getData('suggest/', {$text:{$search: input }}).then( function (results) {
-            
-            console.log(results);
+        if (input.length < 2) {
+            api.getData('suggest/', {$text:{$search: input }}).then( function (results) {
+                
+               
 
-        }).catch(function(err) {
-            // TODO: Handle error
-        });
+            }).catch(function(err) {
+                // TODO: Handle error
+            });
+        }
     });
 };
 
