@@ -68,13 +68,14 @@ Gear.directives = {
 };
 
 // utility functions
-Gear.refresh = function () {
+Gear.util = {};
+Gear.util.refresh = function () {
     window.location.reload();
 }
-Gear.rerouteTo = function (page) {
+Gear.util.rerouteTo = function (page) {
     window.location.href = page;
 }
-Gear.convertToArray = function(object) {
+Gear.util.convertToArray = function(object) {
     var list = [];
     var keys = object.keys();
     for (i=0; i < keys.length; i++) {
@@ -82,17 +83,17 @@ Gear.convertToArray = function(object) {
     }
     return list;
 }
-Gear.isMobile = function() {
+Gear.util.isMobile = function() {
     return $(window).width() <= 992 ? true : false;
 }
 
 // get current tennant and user from stored cookie
 var tennantCookie = Cookies.get(Gear.localCookies.tennant);
-if (!tennantCookie) Gear.rerouteTo('/login');
+if (!tennantCookie) Gear.util.rerouteTo('/login');
 Gear.tennant = JSON.parse(tennantCookie);
 // get current user from stored cookie
 var userCookie = Cookies.get(Gear.localCookies.user);
-if (!userCookie) Gear.rerouteTo('/login');
+if (!userCookie) Gear.util.rerouteTo('/login');
 Gear.user = JSON.parse(userCookie);
 
 // setup router handlers
@@ -100,7 +101,7 @@ Gear.handlers = {
     logout: function (req) {
         for (cookie in Gear.localCookies) {
             Cookies.expire(Gear.localCookies[cookie]);
-            Gear.refresh();
+            Gear.util.refresh();
         }
     },
     viewLoader: function (req) {
