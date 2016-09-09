@@ -141,16 +141,47 @@ Gear.start = function() {
     router.get('v/:view', Gear.handlers.viewLoader);
 
     // initialize searchbar
-    $('#top-search-bar').on('keyup', function() {
+    $('#top-search-bar').on('keyup', function(event) {
         var input = $(this).val();
-        if (input.length < 2) {
-            api.getData('suggest/', {$text:{$search: input }}).then( function (results) {
-                
-               
+        var autoComplete = $('#top-search-bar-autocomplete');
+        var key = event.keyCode;
 
-            }).catch(function(err) {
-                // TODO: Handle error
-            });
+         // gets data based on input, 
+         // if input is more than 2 characters 
+        if (input.length > 2) {
+            // and if key is not equal to ENTER, DOWN, UP
+            if (key !== 13 && key !== 40 && key !== 38) {
+                api.getData('suggest/', {$text:{$search: input }}).then( function (results) {
+                    if (results.length > 0) {
+                        $('#top-search-autocomplete-items').render(results);
+                        $('#top-search-autocomplete-items > li:first-child')
+                            .addClass('autocomplete-selected');
+                        autoComplete.removeClass('hidden');
+                    }
+                }).catch(function(err) {
+                    // TODO: Handle error
+                });
+            }
+        } else {
+            // hide the autocomplete
+            autoComplete.addClass('hidden');
+        }
+        // controls the searchbar arrow-key logic, if not on a mobile browser
+        if (!Gear.util.isMobile()) {
+            switch (event.keyCode) {
+                case 40: // down arrow
+                    $('#top-search-autocomplete-items > li:not(:last-child).autocomplete-selected')
+                        .removeClass('autocomplete-selected')
+                        .next().addClass('autocomplete-selected');
+                    break;
+                case 38: // up arrow
+                    $('#top-search-autocomplete-items > li:not(:first-child).autocomplete-selected')
+                        .removeClass('autocomplete-selected')
+                        .prev().addClass('autocomplete-selected');
+                    break;
+                default:
+                    break;
+            }
         }
     });
 };
