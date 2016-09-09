@@ -299,6 +299,7 @@ apiRoutes.get('/suggest/:tennantId/:query', function(req, res) {
 
     Equipment.find(query)
             .limit(upperLim)
+            .select('name')
             .exec(function(err, results){
                 // handle error
                 if (err) return handleError(err, res);
