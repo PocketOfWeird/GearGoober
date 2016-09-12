@@ -10,7 +10,7 @@
 
 
 Gear = {};
-
+Gear.views = {};
 // all cookies
 Gear.localCookies = {
     auth: 'jwt',
@@ -86,7 +86,7 @@ Gear.util.convertToArray = function(object) {
 Gear.util.isMobile = function() {
     return $(window).width() <= 992 ? true : false;
 }
-
+// TODO: Move the below funtionality to a Gear namespaced function
 // get current tennant and user from stored cookie
 var tennantCookie = Cookies.get(Gear.localCookies.tennant);
 if (!tennantCookie) Gear.util.rerouteTo('/login');
@@ -119,7 +119,15 @@ Gear.handlers = {
                     $('#nav-link-' + Gear.sideNavLinks[i]).removeClass('active');
                 }
                 $('#nav-link-' + view).addClass('active');
-                aja().url('views/' + view + '.js').type('script').go();
+                // Load view's javascript into the DOM
+                aja()
+                    .url('views/' + view + '.js')
+                    .type('script')
+                    .on('success', function() {
+                        // Run the view's initialize function
+                        Gear.views[view].init();
+                })
+                .go();
             })
             .on('404', function(request){
                 // Load 'not found' view
