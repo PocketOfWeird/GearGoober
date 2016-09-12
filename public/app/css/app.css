@@ -1,0 +1,59 @@
+/* General Styles
+-----------------------------------*/
+body {
+    font-family: "Roboto Slab", 'Franklin Gothic Medium', Arial, serif;
+    background-color: #FFB300;
+}
+button, button:focus {
+    border-color: #000000;
+    color: #000000;
+}
+button:hover {
+    border-color: #4312AE;
+    color: #4312AE;
+}
+
+
+/* Menu Styles
+-----------------------------------*/
+.menu {
+    margin-top: 2rem;
+}
+
+/* Game Styles
+-----------------------------------*/
+.game p {
+    font-size: 3.6rem; 
+    line-height: 1.25; 
+    letter-spacing: -.1rem;
+    margin-bottom: 0;
+}
+.game span {
+    color: #4312AE;
+}
+.game input {
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent;
+    margin: 0;
+    height: 50px;
+    width: 75%;
+    color: #000000;
+}
+
+.game input:focus {
+    border: none;
+}
+
+
+/* Instruction Styles
+-----------------------------------*/
+.instructions {
+    display: none;
+    position: absolute;
+    top: 0;
+    margin: 0 auto;
+    padding-top: 2rem;
+    width: 100%;
+    background-color: #FFB300;
+}
