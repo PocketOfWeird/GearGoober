@@ -15,7 +15,19 @@ Gear.views = {};
 Gear.localCookies = {
     auth: 'jwt',
     tennant: 'tennant',
-    user: 'user'
+    user: 'user',
+    /**
+     * Gets a locally stored cookie and parses the data. Assumes the cookies contain stringified JSON data
+     * @function 
+     * @param {String} cookie - the name of the locally stored cookie
+     * @returns {JSON}
+     */
+    getCookie: function(cookie) {
+        // get data from stored cookie
+        var data = Cookies.get(Gear.localCookies[cookie]);
+        // parse the data and return it
+        return JSON.parse(data);
+    }
 };
 
 // all side-nav views
@@ -86,17 +98,8 @@ Gear.util.convertToArray = function(object) {
 Gear.util.isMobile = function() {
     return $(window).width() <= 992 ? true : false;
 }
-// TODO: Move the below funtionality to a Gear namespaced function
-// get current tennant and user from stored cookie
-var tennantCookie = Cookies.get(Gear.localCookies.tennant);
-if (!tennantCookie) Gear.util.rerouteTo('/login');
-Gear.tennant = JSON.parse(tennantCookie);
-// get current user from stored cookie
-var userCookie = Cookies.get(Gear.localCookies.user);
-if (!userCookie) Gear.util.rerouteTo('/login');
-Gear.user = JSON.parse(userCookie);
 
-// setup router handlers
+// router handlers
 Gear.handlers = {
     logout: function (req) {
         for (cookie in Gear.localCookies) {
@@ -140,6 +143,8 @@ Gear.handlers = {
 // startup function
 Gear.start = function() {
     // apply user and tennant settings
+    Gear.tennant = Gear.localCookies.getCookie('tennant');
+    Gear.user = Gear.localCookies.getCookie('user');
     $('.logo').render(Gear.tennant);
     $('.user').render(Gear.user, Gear.directives);
 
