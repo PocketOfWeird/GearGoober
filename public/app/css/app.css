@@ -2,17 +2,27 @@
 -----------------------------------*/
 body {
     font-family: "Roboto Slab", 'Franklin Gothic Medium', Arial, serif;
-    background-color: #FFB300;
+    color: #fff;
+    background-color: #1C8ADB;
 }
 button, button:focus {
-    border-color: #000000;
-    color: #000000;
+    border-color: #fff;
+    color: #fff;
 }
 button:hover {
-    border-color: #4312AE;
-    color: #4312AE;
+    border-color: #A8D0EF;
+    color: #A8D0EF;
 }
-
+input {
+    color: #fff;
+    outline: none;
+}
+::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
+    color: #7694AD;
+}
+div {
+    outline: none;
+}
 
 /* Menu Styles
 -----------------------------------*/
@@ -28,9 +38,6 @@ button:hover {
     letter-spacing: -.1rem;
     margin-bottom: 0;
 }
-.game span {
-    color: #4312AE;
-}
 .game input {
     padding: 0;
     border-radius: 0;
@@ -38,7 +45,6 @@ button:hover {
     margin: 0;
     height: 50px;
     width: 75%;
-    color: #000000;
 }
 
 .game input:focus {
