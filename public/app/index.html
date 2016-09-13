@@ -36,6 +36,8 @@
   <script src="node_modules/rsvp/dist/rsvp.min.js"></script>
   <!-- Client-side router -->
   <script src="node_modules/grapnel/dist/grapnel.min.js"></script>
+  <!-- AJAX Library -->
+  <script src="node_modules/aja/aja.min.js"></script>
   <!-- Data to DOM Rendering -->
   <script src="lib/transparency.min.js"></script>
   <!-- Main Application Logic -->
@@ -43,7 +45,8 @@
 </head>
 <body>
     
-  <!-- Menu -->
+  <!-- Menu
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <menu>
       <div class="menu">
         <div class="container">
@@ -67,49 +70,15 @@
         </div>
       </div>
   </menu>
-  
-  <!-- Game body -->
-  <div class="container game">
-      <div class="row">
-          <div class="twelve columns">
-              <p>
-                  <i class="material-icons">play_arrow</i>
-                  sanctionin<span>g</span>
-              </p>
-              <p>
-                  <i class="material-icons">play_arrow</i>
-                  <span>g</span><input type="text" placeholder="...word" autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-              </p>
-          </div>
-      </div>
+  <!-- End Menu -->
+
+  <!-- View Portal
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div id="view-portal" class="container">
+      <!-- Views will be rendered here -->
   </div>
   
-  <!-- Instructions
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <section class="instructions">
-      <div class="container">
-          <div class="row">
-              <div class="eight columns">
-                  <button>Done</button>
-                  <h2>How to Play</h2>
-                  <p>Create a sequence of words that begin with the letter that the previous word ended with. Enter at least 3 letters in 8 seconds.</p>
-                  <table>
-                      <caption>Points</caption>
-                      <tr><td>1pt</td><td>​A,E,I,O,U,L,N,S,T,R</td></tr>
-                      <tr><td>2pts</td><td>D,G</td></tr>
-                      <tr><td>3pts</td><td>​B,C,M,P</td></tr>
-                      <tr><td>4pts</td>​<td>​​F,H,V,W,Y</td></tr>
-                      <tr><td>5pts</td><td>​K</td></tr>
-                      <tr><td>8pts</td><td>​J,X</td></tr>
-                      <tr><td>10pts</td><td>​Q,Z</td></tr>
-                      <tr><td>32pts</td><td>​32 Words</td></tr>
-                  </table>
-                  <button>Done</button>
-              </div>
-          </div>
-      </div>
-  </section>
-  
+
   <!-- Footer
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <footer>
