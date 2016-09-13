@@ -6,12 +6,16 @@ body {
     background-color: #1C8ADB;
 }
 button, button:focus {
-    border-color: #fff;
-    color: #fff;
+    border: none;
+    background-color: #fff;
+    color: #1C8ADB;
+    -moz-box-shadow:    3px 3px 5px 6px rgba(0,0,0,.5);
+    -webkit-box-shadow: 3px 3px 5px 6px rgba(0,0,0,.5);
+    box-shadow:         -4px 5px 8px 1px rgba(0,0,0,.5);
 }
 button:hover {
-    border-color: #A8D0EF;
-    color: #A8D0EF;
+    background-color: #A8D0EF;
+    color: #000;
 }
 input {
     color: #fff;
@@ -28,6 +32,12 @@ div {
 -----------------------------------*/
 .menu {
     margin-top: 2rem;
+}
+.logo {
+    width: 80%;
+}
+.logo-image {
+    width: 20%;
 }
 
 /* Game Styles
