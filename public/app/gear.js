@@ -94,11 +94,22 @@
     /**
      * @func getFromCookie
      * @desc Makes get requests to the local cookies and returns the data.
-     * Uses the cookies.js plugin {@link https://github.com/ScottHamper/Cookies}
+     * Uses the cookies.js plugin {@link https://github.com/ScottHamper/Cookies#cookiesgetkey}
      * 
-     * @param {String} key
+     * @param {String} name - the name of the cookie
      * @returns {Promise|ImmutableMap}
      */
+    function getFromCookie(name) {
+        var promise = new Promise(function(resolve, reject) {
+            try {
+                const data = Immutable.Map(Cookies.get(name));
+                resolve(data);
+            } catch (error) {
+                reject(error);
+            }
+        });
+        return promise;
+    }
     /**
      * @func loadHtml
      * @desc Loads an HTML View into index.html's view portal. 
@@ -118,6 +129,38 @@
             .on('error', function(response){ reject(response) }).go();
         });
         return promise;
+    }
+    /**
+     * @func postToApi
+     * @desc Makes a post request to the api backend and returns the data.
+     * Calls the {@link func:getFromCookie} function for auth data
+     * Uses the aja.js plugin {@link http://krampstudio.com/aja.js/}
+     * 
+     * @param {String} url
+     * @param {JSON} query
+     * @calls func:getFromCookie
+     * @returns {Promise|ImmutableList}
+     */
+    /**
+     * @func postToApiAnonymous
+     * @desc Makes an anonymous post request to the api backend and returns the data.
+     * Uses the aja.js plugin {@link http://krampstudio.com/aja.js/}
+     * 
+     * @param {String} url
+     * @param {JSON} body - the data to post
+     * @returns {Promise|ImmutableList}
+     */
+    function postToApiAnonymous(url, body) {
+        var promise = new Promise(function(resolve, reject) {
+            aja().method('post').url(url).body(body)
+            .on('success', function(response) {
+                resolve(Immutable.List(response));
+            })
+            .on('error', function(response) {
+                reject(response);
+            })
+            .go()
+        });
     }
     /**
      * @func render
@@ -175,6 +218,34 @@
             // TODO: handle error
             console.log(error);
         });
+    }
+    /**
+     * @func setToCookie
+     * @desc Sets a cookie with the passed name and index 0 of the data
+     * Uses cookies.js {@link https://github.com/ScottHamper/Cookies#cookiessetkey-value--options}
+     * 
+     * @pararm {String} name - the name of the cookie
+     * @param {ImmutableList} data - the data to set.
+     * @returns {Promise|ImmutableMap} A promise with either the data that was set or an error
+     */
+    function setToCookie(name, data) {
+        var promise = new Promise(function(resolve, reject) {
+            const firstObject = data.first();
+
+            try {
+                /** see {@link http://facebook.github.io/immutable-js/docs/#/Map/toJS} */
+                Cookies.set(name, JSON.stringify(firstObject.toJSON()))
+                // waits until the Cookie is set
+                while (!Cookies.get(name)) {
+                    continue;
+                }
+                // then resolves the promise
+                resolve(firstObject);
+            } catch (error) {
+                reject(error);
+            }
+        });
+        return promise;
     }
 
     /**============================================================================
