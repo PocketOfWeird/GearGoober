@@ -25,7 +25,6 @@
  * THE SOFTWARE.
  * 
  * @requires immutable.js - Immutable data structures
- * @requires rsvp.js - Promise library
  * @requires grapnel.js - Client-side router
  * @requires aja.js - AJAX library
  * @requires transparency.js - Data to DOM binding
@@ -113,7 +112,7 @@
     function loadHtml(view, subview, viewportal) {
         const url = 'views/' + view + '/' + subview +'.html';
         
-        var promise = new RSVP.Promise(function(resolve, reject) {
+        var promise = new Promise(function(resolve, reject) {
             aja().url(url).into(viewportal)
             .on('success', function(response){ resolve(response) })
             .on('error', function(response){ reject(response) }).go();
