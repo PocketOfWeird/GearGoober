@@ -161,12 +161,7 @@ apiRoutes.post('/auth', function(req, res) {
                 });
 
                 // return the information including token as JSON
-                return res.json({
-                    success: true,
-                    message: 'Enjoy your token!',
-                    token: token,
-                    user: user
-                });
+                return res.json({ data: [ token, user ]});
             }
         }
     });
@@ -206,14 +201,19 @@ apiRoutes.get('/', function(req, res) {
     res.json({ message: 'Welcome to the GearGoober API!' });
 });
 //////// Tennant //////////
-// GET: /api/tennant/:id
-// route to return a specified tennant
-apiRoutes.get('/tennant/:id', function(req, res) {
-    Tennant.findOne({'_id': req.params.id }, function(err, tennant){
-        if (err) return handleError(err, res);
-        if (!tennant) return res.status(500).send({ success: false, message: 'Did not find tennant'});
+// GET: /api/tennant/:tennantId/:query
+// route to return tennant data based on a query
+apiRoutes.get('/tennant/:tennantId/:query', function(req, res) {
 
-        return res.json({success: true, tennant: tennant});
+    var query = JSON.parse(req.params.query);
+    let tennantId = req.params.tennantId;
+    query.tennantId = tennantId;
+
+    Tennant.find(query, function(err, results){
+        // handle error
+        if (err) return handleError(err, res);
+        // return results
+        return res.json({data: results});
 
     });
 });
@@ -235,7 +235,7 @@ apiRoutes.get('/equipment/:tennantId/:query', function(req, res) {
         return res.json({data: equipment});
     });
 });
-// GET: /api/equipment/categories/
+// GET: /api/equipment/categories/:tennantId/:query
 // route to return an array {data:[...]} of equipment categories based on a query
 apiRoutes.get('/equipment/categories/:tennantId/:query', function(req, res) {
     

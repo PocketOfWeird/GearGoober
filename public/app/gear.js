@@ -79,21 +79,72 @@
      * ============================================================================
      * ============================================================================
      */
-
+    /**
+     * @func authenticateApp
+     * @desc Handles the app authentication logic.
+     * Calls the {@link func:postToApiAnonymous},
+     * and {@link func:setToCookie} functions
+     * 
+     * 
+     * @param {String} email - the user's email
+     * @param {String} pass - the user's password
+     * @returns {Promise|ImmutableList}
+     */
+    function authenticateApp(email, pass) {
+        var promise = new Promise(function(resolve, reject) {
+            postToApiAnonymous('auth',{email: email, password: pass})
+            .then(function(data) {
+                return setToCookie('jwt', data, 0);
+            })
+            .then(function(data) {
+                return setToCookie('user', data, 1);
+            })
+            .then(function(data) {
+                
+            })
+            .catch(function(error) {
+                reject(error);
+            });
+        });
+        return promise;
+    }
     /**
      * @func getFromApi
      * @desc Makes get requests to the api backend and returns the data.
      * Call the {@link func:getFromCookie} function for auth data
      * Uses the aja.js plugin {@link http://krampstudio.com/aja.js/}
      * 
-     * @param {String} url
+     * @param {String} url - path after '/api/' with no ending '/'
      * @param {JSON} query
      * @calls func:getFromCookie
      * @returns {Promise|ImmutableList}
      */
+    function getFromApi(url, query) {
+        var promise = new Promise(function(resolve, reject) {
+
+            getFromCookies(Immutable.List('user','jwt')).then(function(cookies) {
+
+                const fullUrl = '/api/' + url + '/' + cookies.first().get('tennantId') + '/' + JSON.stringify(query) + '?token=' + cookies.last();
+
+                aja().method('get')
+                .url(fullUrl)
+                .on('success', function(response) {
+                    resolve(Immutable.List(response.data));
+                })
+                .on('error', function(response) {
+                    reject(response);
+                })
+                .go()
+            })
+            .catch(function(error) {
+                reject(error);
+            });
+        });
+        return promise;
+    }
     /**
      * @func getFromCookie
-     * @desc Makes get requests to the local cookies and returns the data.
+     * @desc Makes a get request to a local cookie and returns the data.
      * Uses the cookies.js plugin {@link https://github.com/ScottHamper/Cookies#cookiesgetkey}
      * 
      * @param {String} name - the name of the cookie
@@ -102,8 +153,34 @@
     function getFromCookie(name) {
         var promise = new Promise(function(resolve, reject) {
             try {
-                const data = Immutable.Map(Cookies.get(name));
+                const data = Immutable.Map(JSON.parse(Cookies.get(name)));
                 resolve(data);
+            } catch (error) {
+                reject(error);
+            }
+        });
+        return promise;
+    }
+    /**
+     * @func getFromCookies
+     * @desc Makes get requests to the local cookies and returns the data.
+     * Uses the cookies.js plugin {@link https://github.com/ScottHamper/Cookies#cookiesgetkey}
+     * 
+     * @param {ImmutableList} names - the names of the cookies
+     * @returns {Promise|ImmutableList}
+     */
+    function getFromCookies(names) {
+        var promise = new Promise(function(resolve, reject) {
+            try {
+                resolve(names.map(function(name) {
+                    try {
+                        // return object
+                        return Immutable.Map(JSON.parse(Cookies.get(name)));    
+                    } catch (error) {
+                        // return string
+                        return Cookies.get(name);
+                    }
+                }));
             } catch (error) {
                 reject(error);
             }
@@ -136,25 +213,26 @@
      * Calls the {@link func:getFromCookie} function for auth data
      * Uses the aja.js plugin {@link http://krampstudio.com/aja.js/}
      * 
-     * @param {String} url
-     * @param {JSON} query
+     * @param {String} url - path after '/api/' with no ending '/'
+     * @param {JSON} body - the data to post
      * @calls func:getFromCookie
      * @returns {Promise|ImmutableList}
      */
+    
     /**
      * @func postToApiAnonymous
      * @desc Makes an anonymous post request to the api backend and returns the data.
      * Uses the aja.js plugin {@link http://krampstudio.com/aja.js/}
      * 
-     * @param {String} url
+     * @param {String} url - path after '/api/' with no ending '/'
      * @param {JSON} body - the data to post
      * @returns {Promise|ImmutableList}
      */
     function postToApiAnonymous(url, body) {
         var promise = new Promise(function(resolve, reject) {
-            aja().method('post').url(url).body(body)
+            aja().method('post').url('/api/' + url).body(body)
             .on('success', function(response) {
-                resolve(Immutable.List(response));
+                resolve(Immutable.List(response.data));
             })
             .on('error', function(response) {
                 reject(response);
@@ -221,26 +299,27 @@
     }
     /**
      * @func setToCookie
-     * @desc Sets a cookie with the passed name and index 0 of the data
+     * @desc Sets a cookie with name and data at the given index
      * Uses cookies.js {@link https://github.com/ScottHamper/Cookies#cookiessetkey-value--options}
      * 
-     * @pararm {String} name - the name of the cookie
-     * @param {ImmutableList} data - the data to set.
-     * @returns {Promise|ImmutableMap} A promise with either the data that was set or an error
+     * @param {String} name - the name of the cookie
+     * @param {ImmutableList} data - the data list.
+     * @param {Number} index - the index of the data to set
+     * @returns {Promise|ImmutableList}
      */
-    function setToCookie(name, data) {
+    function setToCookie(name, data, index) {
         var promise = new Promise(function(resolve, reject) {
-            const firstObject = data.first();
+            const dataObject = data.get(index);
 
             try {
                 /** see {@link http://facebook.github.io/immutable-js/docs/#/Map/toJS} */
-                Cookies.set(name, JSON.stringify(firstObject.toJSON()))
+                Cookies.set(name, JSON.stringify(dataObject.toJSON()))
                 // waits until the Cookie is set
                 while (!Cookies.get(name)) {
                     continue;
                 }
                 // then resolves the promise
-                resolve(firstObject);
+                resolve(data);
             } catch (error) {
                 reject(error);
             }
