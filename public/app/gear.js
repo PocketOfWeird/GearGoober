@@ -51,6 +51,7 @@
  */
 const routes = {
     '/' : routeHome,
+    '/:view/:subview/:query' : routeView,
     '/:view/:subview' : routeView
 };
 /**
@@ -76,7 +77,26 @@ const rulesForRender = {
  */
 
 /**
- * @func load
+ * @func getFromApi
+ * @desc Makes get requests to the api backend and returns the data.
+ * Call the {@link func:getFromCookie} function for auth data
+ * Uses the aja.js plugin {@link http://krampstudio.com/aja.js/}
+ * 
+ * @param {String} url
+ * @param {JSON} query
+ * @calls func:getFromCookie
+ * @returns {Promise|ImmutableList}
+ */
+/**
+ * @func getFromCookie
+ * @desc Makes get requests to the local cookies and returns the data.
+ * Uses the cookies.js plugin {@link https://github.com/ScottHamper/Cookies}
+ * 
+ * @param {String} key
+ * @returns {Promise|ImmutableMap}
+ */
+/**
+ * @func loadHtml
  * @desc Loads an HTML View into index.html's view portal. 
  * Uses the aja.js plugin {@link http://krampstudio.com/aja.js/}
  * 
@@ -85,7 +105,7 @@ const rulesForRender = {
  * @param {String} viewportal - the element selector for the view portal
  * @returns {Promise}
  */
-function load(view, subview, viewportal) {
+function loadHtml(view, subview, viewportal) {
     const url = 'views/' + view + '/' + subview +'.html';
     
     var promise = new RSVP.Promise(function(resolve, reject) {
@@ -120,12 +140,34 @@ function routeView(req) {
 
     const view = req.params.view;
     const subview = req.params.subview;
+    const query = req.params.query;
     const viewportal = '#view-portal';
 
+    /**
+     * Application views
+     * @see http://facebook.github.io/immutable-js/docs/#/fromJS
+     */
+    const viewRegistry = Immutable.fromJS({
+        equipment : {
+            add: { data: false, api: '', cookie: '' },
+            search: { data: true, api: 'equipment', cookie: ''  }
+        }
+    });
+
+    // Check if the view is not registered
+    if (!viewRegistry.hasIn([view, subview])) console.log('404! ' + view + ' not found'); // TODO: return 404 view
+
     // TODO: show loader gif
-    load(view, subview, viewportal).then(function() {
-        // TODO: hide loader gif
-    }).catch(function(error) {
+    loadHtml(view, subview, viewportal)
+    .then( function() {
+        // Check if view needs data
+        if (viewRegistry.hasIn([view, subview, 'data'])) {
+            // TODO: check for api or cookie via switch
+        } else {
+            // TODO: hide loader gif
+        }
+    } )
+    .catch(function(error) {
         // TODO: handle error
         console.log(error);
     });
