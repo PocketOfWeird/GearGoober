@@ -38,6 +38,17 @@
   <script src="node_modules/aja/aja.min.js"></script>
   <!-- Data to DOM Rendering -->
   <script src="lib/transparency.min.js"></script>
+  <!-- Secure Cookies Manager -->
+  <script src="node_modules/cookies-js/dist/cookies.min.js"></script>
+  <script>
+      // Setup cookie defaults
+      Cookies.defaults = { 
+          path: '/app/',
+          domain: 'localhost', // TODO: switch to host domain
+          expires: 86400, // expires in 24 hours
+          //TODO: secure: true // requires https
+        }
+  </script>
   <!-- Main Application Logic -->
   <script src="gear.js"></script>
 </head>
