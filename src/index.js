@@ -1,10 +1,30 @@
 /**
  * @file index.js
  */
-var React = require('react');
-var ReactDOM = require('react-dom');
+import { createStore } from 'redux'
 
-ReactDOM.render(
-  <h1>Hello, world again!</h1>,
-  document.getElementById('main')
-);
+// redux reducer
+const counter = (state = 0, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+// redux store
+let store = createStore(counter);
+
+const render = () => {
+  document.getElementById('main').innerText = store.getState();
+}
+
+store.subscribe(render);
+render();
+
+document.addEventListener('click', () => {
+  store.dispatch({ type: 'INCREMENT' });
+});

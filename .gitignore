@@ -41,3 +41,6 @@ public/assets
 public/app/assets
 public/app/images
 public/app/css/vendor
+
+# Bundles
+public/app/bundle.js
