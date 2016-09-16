@@ -27,79 +27,11 @@
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="images/favicon.png">
-
-  <!-- Core JavaScript
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <!-- Immutable Data Structure -->
-  <script src="node_modules/immutable/dist/immutable.min.js"></script>
-  <!-- Client-side router -->
-  <script src="node_modules/grapnel/dist/grapnel.min.js"></script>
-  <!-- AJAX Library -->
-  <script src="node_modules/aja/aja.min.js"></script>
-  <!-- Data to DOM Rendering -->
-  <script src="lib/transparency.min.js"></script>
-  <!-- Secure Cookies Manager -->
-  <script src="node_modules/cookies-js/dist/cookies.min.js"></script>
-  <script>
-      // Setup cookie defaults
-      Cookies.defaults = { 
-          path: '/app/',
-          domain: 'localhost', // TODO: switch to host domain
-          expires: 86400, // expires in 24 hours
-          //TODO: secure: true // requires https
-        }
-  </script>
-  <!-- Main Application Logic -->
-  <script src="gear.js"></script>
 </head>
 <body>
     
-  <!-- Menu
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <menu>
-      <div class="menu">
-        <div class="container">
-            <div class="row">
-                <div class="three columns logo">
-                    <h3><span class="name">Demo University</span> Gear</h3>
-                </div>
-                <div class="one column logo-image">
-                    <!-- TODO: Serve diff size images based on mobile or desktop -->
-                    <img class="u-max-full-width" src="images/logo_sm.png" alt="">
-                </div>
-                <div class="four columns">
-                    <button>New Game</button>
-                    &nbsp
-                    <button>How To</button>
-                </div>
-                <div class="four columns">
-                    <h4><strong>0</strong> pts</h4>
-                </div>
-            </div>
-        </div>
-      </div>
-  </menu>
-  <!-- End Menu -->
+  <div id="main"></div>
 
-  <!-- View Portal
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div id="view-portal" class="container">
-      <!-- Views will be rendered here -->
-  </div>
-  
-
-  <!-- Footer
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <footer>
-    <div class="container">
-        <div class="row">
-            <div class="eight columns">
-                
-            </div>
-        </div>
-    </div>
-  </footer>
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="bundle.js"></script>
 </body>
 </html>
