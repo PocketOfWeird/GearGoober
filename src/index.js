@@ -1,7 +1,6 @@
 /**
  * @file index.js
  */
-import { createStore } from 'redux'
 
 // redux reducer
 const counter = (state = 0, action) => {
@@ -16,8 +15,32 @@ const counter = (state = 0, action) => {
 }
 
 // redux store
+const createStore = (reducer) => {
+  let state;
+  let listeners = [];
+
+  const getState = () => state;
+
+  const dispatch = (action) => {
+    state = reducer(state, action);
+    listeners.forEach(listener => listener());
+  };
+
+  const subscribe = (listener) => {
+    listeners.push(listener);
+    return () => {
+      listeners = listeners.filter(l => l !== listener);
+    };
+  };
+
+  dispatch({});
+
+  return { getState, dispatch, subscribe };
+};
+
 let store = createStore(counter);
 
+// render to dom
 const render = () => {
   document.getElementById('main').innerText = store.getState();
 }
