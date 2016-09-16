@@ -1,6 +1,9 @@
 /**
  * @file index.js
  */
+var React = require('react');
+var ReactDOM = require('react-dom');
+import { createStore } from 'redux';
 
 // redux reducer
 const counter = (state = 0, action) => {
@@ -14,40 +17,38 @@ const counter = (state = 0, action) => {
   }
 }
 
+// React component
+const Counter = ({ 
+  value,
+  onIncrement,
+  onDecrement 
+}) => (
+  <div>
+    <h1>{value}</h1>
+    <button onClick={onIncrement}>+</button>
+    <button onClick={onDecrement}>-</button>
+  </div>
+);
+
 // redux store
-const createStore = (reducer) => {
-  let state;
-  let listeners = [];
+const store = createStore(counter);
 
-  const getState = () => state;
 
-  const dispatch = (action) => {
-    state = reducer(state, action);
-    listeners.forEach(listener => listener());
-  };
-
-  const subscribe = (listener) => {
-    listeners.push(listener);
-    return () => {
-      listeners = listeners.filter(l => l !== listener);
-    };
-  };
-
-  dispatch({});
-
-  return { getState, dispatch, subscribe };
-};
-
-let store = createStore(counter);
-
-// render to dom
+// React render to dom
 const render = () => {
-  document.getElementById('main').innerText = store.getState();
-}
+  ReactDOM.render( 
+    <Counter 
+      value={store.getState()} 
+      onIncrement={() => 
+        store.dispatch({ type: 'INCREMENT'})
+      }
+      onDecrement={() => 
+        store.dispatch({ type: 'DECREMENT'})
+      }  
+    />,
+    document.getElementById('main')
+  );
+};
 
 store.subscribe(render);
 render();
-
-document.addEventListener('click', () => {
-  store.dispatch({ type: 'INCREMENT' });
-});
