@@ -18,7 +18,7 @@ button:hover {
     color: #000;
 }
 input {
-    color: #fff;
+    color: black;
     outline: none;
 }
 ::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
