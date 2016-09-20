@@ -1,0 +1,47 @@
+@font-face {
+  font-family: "Roboto Slab";
+  src: url("font/Roboto_Slab/RobotoSlab-Regular.ttf");
+}
+body {
+    font-family: "Roboto Slab", 'Franklin Gothic Medium', Arial, serif;
+    color: #fff;
+    background-color: #1C8ADB;
+}
+
+/*
+ * NavBar Styles
+*/
+.navBar {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+}
+.navBar > .navContainer {
+  margin: 0 auto;
+  max-width: 768px;
+  text-align: center;
+  background-color: white;
+}
+.navBar > .navContainer > .navGroup {
+  width: 22%;
+  height: 6rem;
+  display: inline-block;
+  padding-top: .5rem;
+  font-size: .75rem;
+  text-align: center;
+}
+.navBar > .navContainer > .navGroup > span {
+  font-size: 1rem;
+  color: #000;
+}
+.navBar > .navContainer > .navGroup > span > i {
+  font-size: 2rem;
+  color: #000;
+}
+.navBar > .navContainer > .active > span {
+  color: #1C8ADB;
+}
+.navBar > .navContainer > .active >  span > i {
+  color: #1C8ADB;
+}

@@ -1,67 +1,42 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import FaVideoCamera from 'react-icons/lib/fa/video-camera'
 import FaCalender from 'react-icons/lib/fa/calendar'
 import FaGroup from 'react-icons/lib/fa/group'
 import FaCog from 'react-icons/lib/fa/cog'
 
 // Styles
-const ulStyles = {
-  listStyle: 'none',
-  textAlign: 'center'
-
-}
-const liStyles = {
-  
-}
-const aStyles = {
-  textDecoration: 'none',
-  color: 'black'
-}
 const iconStyles = {
-  width: '36px',
-  height: '36px'
+  width: '1.5rem',
+  height: '1.5rem',
+  color: '#1C8ADB'
 }
 
 // Component
-const NavBar = () => (
-  <ul style={ulStyles}>
-    <li style={liStyles}>
-      <a href="#" style={aStyles}
-        onClick={e => {e.preventDefault()}}
-      > 
-        <FaVideoCamera style={iconStyles} />
-        <br />
-        Equipment
-      </a>
-    </li>
-    <li style={liStyles}>
-      <a href="#" style={aStyles}
-        onClick={e => {e.preventDefault()}}
-      > 
-        <FaCalender style={iconStyles} />
-        <br />
-        Reservations
-      </a>
-    </li>
-    <li style={liStyles}>
-      <a href="#" style={aStyles}
-        onClick={e => {e.preventDefault()}}
-      > 
-        <FaGroup style={iconStyles} />
-        <br />
-        Groups
-      </a>
-    </li>
-    <li style={liStyles}>
-      <a href="#" style={aStyles}
-        onClick={e => {e.preventDefault()}}
-      > 
-        <FaCog style={iconStyles} />
-        <br />
-        Settings
-      </a>
-    </li>
-  </ul>
+const NavBar = ({ navs }) => (
+  <footer className={'navBar'}>
+    <div className={'navContainer'}>
+      {navs.map(nav =>
+          <div
+            className={nav.active ? 'navGroup active' : 'navGroup'}
+            onClick={e => e.preventDefault()}>
+            <span>
+              <i className={'icon-' + nav.icon} />
+              <br />
+              {nav.name}
+            </span>
+          </div>
+        )
+      }
+    </div>
+  </footer>
 )
+
+NavBar.propTypes = {
+  navs: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    active: PropTypes.bool.isRequired
+  }).isRequired).isRequired
+}
 
 export default NavBar
