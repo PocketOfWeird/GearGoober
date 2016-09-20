@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "Roboto Slab";
+  src: url("font/Roboto_Slab/RobotoSlab-Regular.ttf");
+}
+body {
+    font-family: "Roboto Slab", 'Franklin Gothic Medium', Arial, serif;
+    color: #fff;
+    background-color: #1C8ADB;
+}
