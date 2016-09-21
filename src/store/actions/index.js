@@ -1,3 +1,6 @@
+export { REQUEST_VIEW, activateView } from './views'
+
+/*
 import fetch from 'isomorphic-fetch'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
@@ -30,11 +33,11 @@ const recievePosts = (subreddit, json) => ({
 const fetchPosts = (subreddit) => {
   return dispatch => {
     dispatch(requestPosts(subreddit))
-    return fetch(`http://www.reddit.com/r/${subreddit}.json`) 
+    return fetch(`http://www.reddit.com/r/${subreddit}.json`)
       .then(response => response.json())
       .then(json => dispatch(recievePosts(subreddit, json)))
   }
-} 
+}
 
 const shouldFetchPosts = (state, subreddit) => {
   const posts = state.postsBySubreddit[subreddit]
@@ -53,4 +56,5 @@ export const fetchPostsIfNeeded = (subreddit) => {
       return dispatch(fetchPosts(subreddit))
     }
   }
-} 
+}
+*/

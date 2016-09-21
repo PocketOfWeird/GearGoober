@@ -2,7 +2,7 @@
 ## An implementation guide
 
 1. Views
-  + a. Setup actions and reducers for Views state
+  + a. ~~Setup actions and reducers for Views state~~
   + b. Link this state to the NavBar
 2. Equipment
   + a. Setup views for Equipment

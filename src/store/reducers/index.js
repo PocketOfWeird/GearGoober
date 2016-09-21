@@ -1,4 +1,19 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux-immutable'
+import views from './views'
+
+const rootReducer = combineReducers({
+  views
+})
+
+export default rootReducer
+
+/*
+const rootReducer = combineReducers({
+  views
+})
+
+export default rootReducer
+/*
 import {
   SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT,
   REQUEST_POSTS, RECEIVE_POSTS
@@ -59,3 +74,4 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer
+*/
