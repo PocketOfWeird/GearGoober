@@ -1,0 +1,5 @@
+
+.icon-videocam:before { content: '\e800'; } /* '' */
+.icon-calendar:before { content: '\e801'; } /* '' */
+.icon-cog:before { content: '\e802'; } /* '' */
+.icon-users:before { content: '\e803'; } /* '' */
