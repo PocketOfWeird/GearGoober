@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import Immutable from 'immutable'
+import { List } from 'immutable'
 import configureStore from '../store/configureStore'
-import { activateView } from '../store/actions/'
+import { activateView } from '../store/actions'
 import App from './App'
+
 
 const store = configureStore()
 
-let firstView = Immutable.List(['groups'])
+let firstView = List(['equipment'])
 store.dispatch(activateView(firstView))
 
 

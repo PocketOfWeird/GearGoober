@@ -1,8 +1,4 @@
 import React, { PropTypes } from 'react'
-import FaVideoCamera from 'react-icons/lib/fa/video-camera'
-import FaCalender from 'react-icons/lib/fa/calendar'
-import FaGroup from 'react-icons/lib/fa/group'
-import FaCog from 'react-icons/lib/fa/cog'
 
 // Styles
 const iconStyles = {
@@ -12,31 +8,68 @@ const iconStyles = {
 }
 
 // Component
-const NavBar = ({ navs }) => (
+const NavBar = ({ activeParentView, onNavClick }) => (
   <footer className={'navBar'}>
     <div className={'navContainer'}>
-      {navs.map(nav =>
           <div
-            className={nav.active ? 'navGroup active' : 'navGroup'}
-            onClick={e => e.preventDefault()}>
+            className={activeParentView === 'equipment' ?
+                          'navGroup active' : 'navGroup'}
+            onClick={e => {
+              e.preventDefault()
+              onNavClick('equipment')
+            }}>
             <span>
-              <i className={'icon-' + nav.icon} />
+              <i className='icon-videocam' />
               <br />
-              {nav.name}
+              Equipment
             </span>
           </div>
-        )
-      }
+          <div
+            className={activeParentView === 'reservations' ?
+                          'navGroup active' : 'navGroup'}
+            onClick={e => {
+              e.preventDefault()
+              onNavClick('reservations')
+            }}>
+            <span>
+              <i className='icon-calendar' />
+              <br />
+              Reserve
+            </span>
+          </div>
+          <div
+            className={activeParentView === 'groups' ?
+                          'navGroup active' : 'navGroup'}
+            onClick={e => {
+              e.preventDefault()
+              onNavClick('groups')
+            }}>
+            <span>
+              <i className='icon-users' />
+              <br />
+              Groups
+            </span>
+          </div>
+          <div
+            className={activeParentView === 'settings' ?
+                          'navGroup active' : 'navGroup'}
+            onClick={e => {
+              e.preventDefault()
+              onNavClick('settings')
+            }}>
+            <span>
+              <i className='icon-cog' />
+              <br />
+              Settings
+            </span>
+          </div>
     </div>
   </footer>
 )
 
 NavBar.propTypes = {
-  navs: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
-    active: PropTypes.bool.isRequired
-  }).isRequired).isRequired
+  activeParentView: PropTypes.string.isRequired,
+  onNavClick: PropTypes.func.isRequired
 }
 
 export default NavBar

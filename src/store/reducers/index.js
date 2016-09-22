@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux-immutable'
-import views from './views'
+import activeView from './activeView'
 
 const rootReducer = combineReducers({
-  views
+  activeView
 })
 
 export default rootReducer

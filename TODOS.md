@@ -3,7 +3,7 @@
 
 1. Views
   + a. ~~Setup actions and reducers for Views state~~
-  + b. Link this state to the NavBar
+  + b. ~~Link this state to the NavBar~~
 2. Equipment
   + a. Setup views for Equipment
    - C.R.U.D.
