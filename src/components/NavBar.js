@@ -16,7 +16,7 @@ const NavBar = ({ activeParentView, onNavClick }) => (
                           'navGroup active' : 'navGroup'}
             onClick={e => {
               e.preventDefault()
-              onNavClick('equipment')
+              onNavClick(['equipment','search'])
             }}>
             <span>
               <i className='icon-videocam' />
@@ -29,7 +29,7 @@ const NavBar = ({ activeParentView, onNavClick }) => (
                           'navGroup active' : 'navGroup'}
             onClick={e => {
               e.preventDefault()
-              onNavClick('reservations')
+              onNavClick(['reservations'])
             }}>
             <span>
               <i className='icon-calendar' />
@@ -42,7 +42,7 @@ const NavBar = ({ activeParentView, onNavClick }) => (
                           'navGroup active' : 'navGroup'}
             onClick={e => {
               e.preventDefault()
-              onNavClick('groups')
+              onNavClick(['groups'])
             }}>
             <span>
               <i className='icon-users' />
@@ -55,7 +55,7 @@ const NavBar = ({ activeParentView, onNavClick }) => (
                           'navGroup active' : 'navGroup'}
             onClick={e => {
               e.preventDefault()
-              onNavClick('settings')
+              onNavClick(['settings'])
             }}>
             <span>
               <i className='icon-cog' />

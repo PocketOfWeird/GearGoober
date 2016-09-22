@@ -8,7 +8,7 @@ import App from './App'
 
 const store = configureStore()
 
-let firstView = List(['equipment'])
+let firstView = List(['equipment','search'])
 store.dispatch(activateView(firstView))
 
 
