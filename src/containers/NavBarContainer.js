@@ -1,6 +1,5 @@
-import { List } from 'immutable'
 import { connect } from 'react-redux'
-import { activateView } from '../store/actions'
+import { dispatchActivateView } from '../store/helpers'
 import NavBar from '../components/NavBar'
 
 const mapStateToProps = (state) => ({
@@ -8,9 +7,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onNavClick: (view) => {
-    dispatch(activateView(List([view])))
-  }
+  onNavClick: dispatchActivateView(dispatch)
 })
 
 const NavBarContainer = connect(
