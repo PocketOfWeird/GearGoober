@@ -8,6 +8,9 @@ const activeView = (state = defaultState, action) => {
     case ACTIVATE_VIEW:
       return action.view
     case HASH_CHANGE:
+      if (state.equals(action.view)) {
+        return state
+      }
       return action.view
     default:
       return state

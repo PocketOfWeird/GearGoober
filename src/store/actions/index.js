@@ -1,7 +1,8 @@
 export {
   ACTIVATE_VIEW,
   activateView,
-  activateHashRoute 
+  HASH_CHANGE,
+  activateHashRoute
 } from './activeView'
 
 /*

@@ -1,3 +1,8 @@
+import { List } from 'immutable'
+import { listenToWindowEvent, onFirstPageLoad } from '../helpers'
+import { activateHashRoute } from '../actions'
+
+
 const transform = (view) => {
   // recursive case
   if (view.size > 1) {
@@ -9,6 +14,24 @@ const transform = (view) => {
   }
   // base case
   return '/' + view.first() + '/'
+}
+
+export const getViewFromHash = (event) => {
+  let url = event.newURL.slice(event.newURL.indexOf('#') + 2).split('/')
+  let view = List(url)
+  return view.last() === "" ? view.pop() : view
+}
+
+export const configureRouter = (store) => {
+  // subscribe to event
+  let unlistenRouter = store.dispatch(
+    listenToWindowEvent('hashchange', activateHashRoute)
+  )
+  // eventually unsubscribe
+  //unlistenRouter();
+
+  // run first page load logic
+  onFirstPageLoad(store)
 }
 
 export const router = store => next => action => {

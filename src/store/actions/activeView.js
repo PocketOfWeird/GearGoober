@@ -1,5 +1,4 @@
-import { List } from 'immutable'
-
+import { getViewFromHash } from '../middlewares'
 export const ACTIVATE_VIEW = 'ACTIVATE_VIEW'
 export const HASH_CHANGE = 'HASH_CHANGE'
 
@@ -8,10 +7,8 @@ export const activateView = (view) => ({
   view
 })
 
-export const activateHashRoute = (e) => {
-  let view = List(
-    e.newURL.slice(e.newURL.indexOf('#') + 2).split('/')
-  ).pop()
+export const activateHashRoute = (event) => {
+  let view = getViewFromHash(event)
   return {
     type: HASH_CHANGE,
     view

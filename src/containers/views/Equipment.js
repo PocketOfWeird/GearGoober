@@ -6,10 +6,9 @@ import Edit from '../../components/equipment/Edit'
 import Search from '../../components/equipment/Search'
 import Browse from '../../components/equipment/Browse'
 import Inventory from '../../components/equipment/Inventory'
-import { dispatchActivateView } from '../../store/helpers'
 
 
-const Equipment = ({ view, navigateToView }) => (
+const Equipment = ({ view }) => (
   <div>
     <h2>Equipment</h2>
 
@@ -32,20 +31,12 @@ const Equipment = ({ view, navigateToView }) => (
 )
 
 Equipment.propTypes = {
-  view: ImmutablePropTypes.list.isRequired,
-  navigateToView: PropTypes.func.isRequired
+  view: ImmutablePropTypes.list.isRequired
 }
 
 const mapStateToProps = (state) => ({
   view: state.get('activeView').rest()
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  navigateToView: dispatchActivateView(dispatch)
-})
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Equipment)
+export default connect(mapStateToProps)(Equipment)

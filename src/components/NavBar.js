@@ -8,68 +8,51 @@ const iconStyles = {
 }
 
 // Component
-const NavBar = ({ activeParentView, onNavClick }) => (
+const NavBar = ({ activeParentView }) => (
   <footer className={'navBar'}>
     <div className={'navContainer'}>
           <div
             className={activeParentView === 'equipment' ?
-                          'navGroup active' : 'navGroup'}
-            onClick={e => {
-              e.preventDefault()
-              onNavClick(['equipment','search'])
-            }}>
-            <span>
+                          'navGroup active' : 'navGroup'}>
+            <a href='#/equipment/search/'>
               <i className='icon-videocam' />
               <br />
               Equipment
-            </span>
+            </a>
           </div>
           <div
             className={activeParentView === 'reservations' ?
-                          'navGroup active' : 'navGroup'}
-            onClick={e => {
-              e.preventDefault()
-              onNavClick(['reservations'])
-            }}>
-            <span>
+                          'navGroup active' : 'navGroup'}>
+            <a href='#/reservations/'>
               <i className='icon-calendar' />
               <br />
               Reserve
-            </span>
+            </a>
           </div>
           <div
             className={activeParentView === 'groups' ?
-                          'navGroup active' : 'navGroup'}
-            onClick={e => {
-              e.preventDefault()
-              onNavClick(['groups'])
-            }}>
-            <span>
+                          'navGroup active' : 'navGroup'}>
+            <a href='#/groups/'>
               <i className='icon-users' />
               <br />
               Groups
-            </span>
+            </a>
           </div>
           <div
             className={activeParentView === 'settings' ?
-                          'navGroup active' : 'navGroup'}
-            onClick={e => {
-              e.preventDefault()
-              onNavClick(['settings'])
-            }}>
-            <span>
+                          'navGroup active' : 'navGroup'}>
+            <a href='#/settings/'>
               <i className='icon-cog' />
               <br />
               Settings
-            </span>
+            </a>
           </div>
     </div>
   </footer>
 )
 
 NavBar.propTypes = {
-  activeParentView: PropTypes.string.isRequired,
-  onNavClick: PropTypes.func.isRequired
+  activeParentView: PropTypes.string.isRequired
 }
 
 export default NavBar
