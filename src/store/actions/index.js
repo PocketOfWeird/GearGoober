@@ -1,4 +1,8 @@
-export { ACTIVATE_VIEW, activateView } from './activeView'
+export {
+  ACTIVATE_VIEW,
+  activateView,
+  activateHashRoute 
+} from './activeView'
 
 /*
 import fetch from 'isomorphic-fetch'

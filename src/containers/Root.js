@@ -2,14 +2,23 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { List } from 'immutable'
 import configureStore from '../store/configureStore'
-import { activateView } from '../store/actions'
+import { listenToWindowEvent } from '../store/helpers'
+import { activateView, activateHashRoute } from '../store/actions'
 import App from './App'
 
 
 const store = configureStore()
 
-let firstView = List(['equipment','search'])
-store.dispatch(activateView(firstView))
+// subscribe to event
+let unlistenRouter = store.dispatch(
+  listenToWindowEvent('hashchange', activateHashRoute)
+)
+// eventually unsubscribe
+//unlistenRouter();
+
+
+//let firstView = List(['equipment','search'])
+//store.dispatch(activateView(firstView))
 
 
 const Root = () => (
