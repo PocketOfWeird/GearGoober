@@ -7,6 +7,13 @@ body {
     color: #fff;
     background-color: #1C8ADB;
 }
+/*
+ * General input styles
+*/
+input {
+  color: #000;
+}
+/*
 
 /*
  * NavBar Styles
@@ -45,4 +52,51 @@ body {
 }
 .navBar > .navContainer > .active >  a > i {
   color: #1C8ADB;
+}
+
+/*
+ * Search box styles
+*/
+.searchbox {
+  text-align: center;
+}
+.searchbox > input {
+  width: 100%;
+}
+/*
+ * Suggest styles
+*/
+.suggest {
+  padding: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  border-radius: 5px;
+  color: #000;
+  background-color: #fff;
+}
+.suggest > ul {
+  list-style: none;
+}
+.suggest > ul > li > a {
+  text-decoration: none;
+}
+
+/*
+ * Card styles
+*/
+.card {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 5px;
+  color: #000;
+  background-color: #fff;
+}
+
+/*
+ * Photo styles
+*/
+.photo-medium {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 5px;
 }
