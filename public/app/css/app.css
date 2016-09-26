@@ -13,7 +13,44 @@ body {
 input {
   color: #000;
 }
+
 /*
+ * General button styles
+*/
+.button-success {
+  border-color: #2E33E1;
+  background-color: #2E33E1;
+}
+.button-warning {
+  color: #000;
+  border-color: #FF9812;
+  background-color: #FF9812;
+}
+.button-danger {
+  color: #fff;
+  border-color: red;
+  background-color: red;
+}
+
+/*
+ * Display spacers
+*/
+.spacer-one, .spacer-two, .spacer-four, .spacer-six {
+  width: 1px;
+}
+.spacer-one {
+  margin-top: 1rem;
+}
+.spacer-two {
+  margin-top: 2rem;
+}
+.spacer-four {
+  margin-top: 4rem;
+}
+.spacer-six {
+  margin-top: 6rem;
+}
+
 
 /*
  * NavBar Styles
@@ -99,4 +136,31 @@ input {
   height: 200px;
   overflow: hidden;
   border-radius: 5px;
+}
+
+/*
+ * Tags styles
+*/
+.tags {
+  padding: .75rem;
+  border-radius: 5px;
+  color: #000;
+  background-color: #fff;
+}
+.tag {
+  display: inline-block;
+  margin: .25rem;
+  border: 5px solid #33C3F0;
+  border-radius: 4px;
+  background-color: #33C3F0;
+}
+.tags > input {
+  border: none;
+}
+.tag > input {
+  width: 25%;
+  margin: 0 0 0 .5rem;
+}
+.tag > i {
+  float: right;
 }

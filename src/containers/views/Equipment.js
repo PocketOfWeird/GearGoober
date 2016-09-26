@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import Add from '../../components/equipment/Add'
-import Edit from '../../components/equipment/Edit'
+import EquipForm from '../../components/equipment/EquipForm'
 import Search from '../../components/equipment/Search'
 import Browse from '../../components/equipment/Browse'
 import Inventory from '../../components/equipment/Inventory'
@@ -13,10 +12,10 @@ const Equipment = ({ view }) => (
     <h2>Equipment</h2>
 
     {view.first() === 'add' &&
-      <Add />
+      <EquipForm mode={'add'} />
     }
     {view.first() === 'edit' &&
-      <Edit />
+      <EquipForm mode={'edit'} />
     }
     {view.first() === 'search' &&
       <Search />

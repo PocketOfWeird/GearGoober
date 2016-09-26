@@ -6,4 +6,7 @@
 .icon-search:before { content: '\e804'; } /* '' */
 .icon-briefcase:before { content: '\e805'; } /* '' */
 .icon-book:before { content: '\e806'; } /* '' */
+.icon-plus:before { content: '\e807'; } /* '' */
+.icon-cancel:before { content: '\e808'; } /* '' */
+.icon-chart-line:before { content: '\f201'; } /* '' */
 .icon-calendar-plus-o:before { content: '\f271'; } /* '' */
