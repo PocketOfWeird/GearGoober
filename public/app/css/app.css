@@ -17,6 +17,12 @@ input {
   display: inline;
   width: 25%;
 }
+.react-numeric-input {
+  margin-bottom: 2rem;
+}
+.react-numeric-input input{
+  margin: auto;
+}
 
 /*
  * Buttons

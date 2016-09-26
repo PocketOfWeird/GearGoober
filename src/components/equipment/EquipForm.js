@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import NumericInput from 'react-numeric-input'
 
 const EquipForm = ({ mode }) => (
   <div className='container'>
@@ -48,8 +49,9 @@ const EquipForm = ({ mode }) => (
             </ul>
         </div>
       }
-      <label>Cost</label>
-      <input className='u-full-width' type='number' placeholder='equipment cost $0.00' />
+      <label>Purchase Cost</label>
+      <NumericInput min={0} value={9.95} precision={2} />
+
       <label>Barcodes</label>
       <div className='tags'>
         <input type='text' placeholder='add barcodes'></input>

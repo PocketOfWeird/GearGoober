@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactSwipe from 'react-swipe'
+import NumericInput from 'react-numeric-input'
 
 const Details = () => (
   <div>
@@ -15,9 +16,14 @@ const Details = () => (
         <img src='images/10192_thumb.jpg' />
       </div>
     </ReactSwipe>
+
     <h3>Canon 70D</h3>
-    <p>Availible: <strong>7</strong></p>
-    <p>Requested: <input className='inline-input-sm' defaultValue={1} type='number' /></p>
+
+    <p style={{marginBottom:'.25rem'}}>Availible: <strong>7</strong></p>
+
+    <label style={{fontWeight:'normal'}}>Requested:</label>
+    <NumericInput mobile={true} min={1} value={1} max={7} />
+
     <a className='button button-primary' href='#/reservations/:id/add/:productId'>
       <i className='icon-calendar-plus-o'></i>
       Reserve
