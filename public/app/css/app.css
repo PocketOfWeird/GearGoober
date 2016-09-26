@@ -25,6 +25,13 @@ input {
 }
 
 /*
+ * Selects
+*/
+select {
+  color:#000;
+}
+
+/*
  * Buttons
 */
 .button-success {
@@ -40,6 +47,9 @@ input {
   color: #fff;
   border-color: red;
   background-color: red;
+}
+.category {
+  margin-left: .75rem;
 }
 
 /*

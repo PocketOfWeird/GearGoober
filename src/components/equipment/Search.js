@@ -74,8 +74,8 @@ const Search = () => (
           Add to Plan
         </a>
       </div>
-
     </div>
+    <div className='spacer-six'></div>
   </div>
 )
 
