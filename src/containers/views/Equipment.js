@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import EquipForm from '../../components/equipment/EquipForm'
+import Details from '../../components/equipment/Details'
 import Search from '../../components/equipment/Search'
 import Browse from '../../components/equipment/Browse'
 import Inventory from '../../components/equipment/Inventory'
@@ -16,6 +17,9 @@ const Equipment = ({ view }) => (
     }
     {view.first() === 'edit' &&
       <EquipForm mode={'edit'} />
+    }
+    {view.first() === 'details' &&
+      <Details />
     }
     {view.first() === 'search' &&
       <Search />

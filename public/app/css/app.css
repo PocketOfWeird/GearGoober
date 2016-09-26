@@ -8,14 +8,18 @@ body {
     background-color: #1C8ADB;
 }
 /*
- * General input styles
+ * Inputs
 */
 input {
   color: #000;
 }
+.inline-input-sm {
+  display: inline;
+  width: 25%;
+}
 
 /*
- * General button styles
+ * Buttons
 */
 .button-success {
   border-color: #2E33E1;
@@ -89,6 +93,17 @@ input {
 }
 .navBar > .navContainer > .active >  a > i {
   color: #1C8ADB;
+}
+
+/*
+ * Breadcrumb
+*/
+.breadcrumb {
+  margin-bottom: .5rem;
+}
+.breadcrumb > a {
+  color: #fff;
+  text-decoration: none;
 }
 
 /*
