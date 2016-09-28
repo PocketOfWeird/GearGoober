@@ -11,7 +11,7 @@ const SubNav = ({ parentView, subViews }) => (
         return <li key={index} style={styles.li}>
           <a style={styles.a}
              href={'#/' + parentView + '/' + subView + '/'}>
-            {subView}
+            {capitalizeFirstLetter(subView)}
             <i style={styles.i} className='icon-right-open'></i>
           </a>
         </li>
