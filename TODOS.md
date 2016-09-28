@@ -7,7 +7,7 @@
 2. Equipment
   + a. Setup views for Equipment
    - ~~C.R.U.D.~~
-   - Inventory, & Browse
+   - ~~Inventory, & Browse~~
   + b. Setup actions and reducers for Equipment state
 3. Server
   + a. Refactor server to use modules and functions

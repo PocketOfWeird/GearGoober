@@ -14,7 +14,7 @@ const NavBar = ({ activeParentView }) => (
           <div
             className={activeParentView === 'equipment' ?
                           'navGroup active' : 'navGroup'}>
-            <a href='#/equipment/search/'>
+            <a href='#/equipment/'>
               <i className='icon-videocam' />
               <br />
               Equipment
