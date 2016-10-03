@@ -1,5 +1,5 @@
 import Cookies from 'cookies-js'
-import { Map, List } from 'immutable'
+import { fromJS } from 'immutable'
 
 Cookies.defaults = {
   path: '/app/',
@@ -10,16 +10,14 @@ Cookies.defaults = {
 
 export const cookieMiddleware = store => next => action => {
   let result = next(action)
-  let activeView = JSON.stringify(store.getState().get('activeView').toJS())
-  Cookies.set('activeView', activeView)
+  let currentState = JSON.stringify(store.getState().toJS())
+  Cookies.set('state', currentState)
   return result
 }
 
 export const loadStateFromCookies = () => {
-  if (Cookies.get('activeView')) {
-    let state = Map()
-    let activeView = List(JSON.parse(Cookies.get('activeView')))
-    return state.set('activeView', activeView)
+  if (Cookies.get('state')) {
+    return fromJS(JSON.parse(Cookies.get('state')))
   }
   return null
 }
