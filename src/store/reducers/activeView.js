@@ -1,5 +1,6 @@
 import { List } from 'immutable'
-import { ACTIVATE_VIEW, HASH_CHANGE } from '../actions'
+import { ACTIVATE_VIEW, HASH_CHANGE, RECEIVE_TOKEN } from '../actions'
+import { defaultView } from '../helpers'
 
 const defaultState = List()
 
@@ -12,6 +13,8 @@ const activeView = (state = defaultState, action) => {
         return state
       }
       return action.view
+    case RECEIVE_TOKEN:
+      return defaultView
     default:
       return state
   }

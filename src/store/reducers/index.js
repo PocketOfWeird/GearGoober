@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux-immutable'
 import activeView from './activeView'
+import auth from './auth'
+import user from './user'
+import form from './form'
 
 const rootReducer = combineReducers({
-  activeView
+  activeView,
+  auth,
+  user,
+  form
 })
 
 export default rootReducer
