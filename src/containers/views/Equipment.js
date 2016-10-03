@@ -40,7 +40,7 @@ Equipment.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  view: state.get('activeView').rest()
+  view: state.getIn(['views', 'activeView']).rest()
 })
 
 

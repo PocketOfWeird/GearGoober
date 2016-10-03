@@ -8,10 +8,10 @@ import NavBar from '../components/NavBar'
 
 const App = ({ activeParentView, loggedIn }) => (
   <div>
-    {!loggedIn && activeParentView === 'login' &&
+    {!loggedIn &&
       <SimpleLogin />
     }
-    {loggedIn && activeParentView !== 'login' &&
+    {loggedIn &&
       <div>
         <BreadcrumbContainer />
         <ViewContainer />
@@ -22,12 +22,12 @@ const App = ({ activeParentView, loggedIn }) => (
 )
 
 App.propTypes = {
-  activeParentView: PropTypes.string.isRequired,
+  activeParentView: PropTypes.string,
   loggedIn: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  activeParentView: state.get('activeView').first(),
+  activeParentView: state.hasIn(['views', 'activeView']) ? state.getIn(['views', 'activeView']).first() : '',
   loggedIn: state.getIn(['auth', 'token']) ? true : false
 })
 

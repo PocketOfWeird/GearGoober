@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-fetch'
 import { Map, fromJS } from 'immutable'
-import { SubmissionError } from 'redux-form'
 import { setUser } from './user'
 import { clearForm } from './form'
 import { isValidValue } from '../helpers'

@@ -4,13 +4,13 @@ import { activateHashRoute } from '../actions'
 
 
 const transform = (view) => {
-  // recursive case
-  if (view.size > 1) {
-    return '/' + view.first() + transform(view.rest())
-  }
   // special case
-  else if (view.size === 0) {
+  if (view.size === 0) {
     return '/'
+  }
+  // recursive case
+  else if (view.size > 1) {
+    return '/' + view.first() + transform(view.rest())
   }
   // base case
   return '/' + view.first() + '/'
@@ -36,7 +36,9 @@ export const configureRouter = (store) => {
 
 export const router = store => next => action => {
   let result = next(action)
-  const appUrlString = transform(store.getState().get('activeView'))
+  const appUrlString = transform(
+    store.getState().getIn(['views', 'activeView']) || List()
+  )
   window.location.hash = appUrlString
   return result
 }

@@ -29,7 +29,7 @@ ViewContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  view: state.get('activeView')
+  view: state.getIn(['views', 'activeView'])
 })
 
 export default connect(

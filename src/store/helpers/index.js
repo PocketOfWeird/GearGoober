@@ -1,6 +1,7 @@
 import { List } from 'immutable'
 import { validate as emailValidator } from 'email-validator'
-import { activateView, activateHashRoute } from '../actions'
+import { activateView, activateHashRoute, stashView } from '../actions'
+import { getViewFromHash } from '../middlewares'
 export { listenToWindowEvent } from './globalEventListener'
 
 
@@ -15,10 +16,19 @@ export const dispatchActivateView = (dispatch) => {
 
 export const onFirstPageLoad = (store) => {
   let loggedIn = store.getState().getIn(['auth', 'token'])
-  if (loggedIn && window.location.hash) {
+  let loginView = List(['login'])
+
+  if (window.location.hash) {
     // view loading from url link
     let event = {newURL: window.location.href}
-    store.dispatch(activateHashRoute(event))
+    if (loggedIn) {
+      store.dispatch(activateHashRoute(event))
+    } else {
+      let view = getViewFromHash(event)
+      if (!view.equals(loginView)) {
+        store.dispatch(stashView(view))
+      }
+    }
   } else if (loggedIn && store.getState().get('activeView').size === 0) {
     // no cookie, no url link, loading default view
     store.dispatch(activateView(defaultView))

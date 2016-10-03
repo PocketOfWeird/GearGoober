@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Breadcrumb from '../components/Breadcrumb'
 
 const mapStateToProps = (state) => ({
-  activeView: state.get('activeView')
+  activeView: state.getIn(['views', 'activeView'])
 })
 
 const BreadcrumbContainer = connect(
