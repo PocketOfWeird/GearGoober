@@ -19,7 +19,7 @@ const Details = ({ piece }) => (
           <p style={{marginBottom:'.25rem'}}>Availible: <strong>{piece.get('qty')}</strong></p>
 
           <label style={{fontWeight:'normal'}}>Requested:</label>
-          <NumericInput mobile={true} min={1} value={1} max={piece.qty} />
+          <NumericInput mobile={true} min={1} value={1} max={piece.get('qty')} />
 
           <a className='button button-primary' href={'#/reservations/:id/add/' + piece.get('_id')}>
             <i className='icon-calendar-plus-o'></i>
