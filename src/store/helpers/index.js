@@ -2,9 +2,10 @@ import { List } from 'immutable'
 import { validate as emailValidator } from 'email-validator'
 import { activateView, activateHashRoute, stashView } from '../actions'
 import { getViewFromHash } from '../middlewares'
+
+
 export { listenToWindowEvent } from './globalEventListener'
-
-
+export { fetchGet, fetchPostAnonymous } from './fetcher'
 export const defaultView = List(['equipment','search'])
 
 
@@ -29,7 +30,7 @@ export const onFirstPageLoad = (store) => {
         store.dispatch(stashView(view))
       }
     }
-  } else if (loggedIn && store.getState().get('activeView').size === 0) {
+  } else if (loggedIn && store.getState().getIn(['views', 'activeView']).size === 0) {
     // no cookie, no url link, loading default view
     store.dispatch(activateView(defaultView))
   } else if (loggedIn) {

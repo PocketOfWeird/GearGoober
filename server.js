@@ -228,12 +228,23 @@ apiRoutes.get('/users', function(req, res) {
 //////// Equipment and Kits //////////
 // GET: /api/equipment/:query
 // route to return an array {data:[...]} of equipment and kits based on a query
-apiRoutes.get('/equipment/:tennantId/:query', function(req, res) {
-    var query = JSON.parse(req.params.query);
-    Equipment.find(query, function(err, equipment) {
-        if (err) return handleError(err, res);
-        return res.json({data: equipment});
-    });
+apiRoutes.get('/search/equipment/:query/:tennantId', function(req, res) {
+
+  let query = req.params.query;
+  let tennantId = req.params.tennantId;
+  let upperLim = 10; // TODO: Infinte Scroll Index Number
+
+  Equipment.find({ $text: {$search: query} })
+          .limit(upperLim)
+          .select('name imageUrl mfg model price inKit')
+          .exec(function(err, results){
+              // handle error
+              if (err) return handleError(err, res);
+              // validate results
+              assert(Array.isArray(results));
+              // return results
+              return res.json({data: results});
+  });
 });
 // GET: /api/equipment/categories/:tennantId/:query
 // route to return an array {data:[...]} of equipment categories based on a query
@@ -289,15 +300,13 @@ apiRoutes.get('/equipment/categories/:tennantId/:query', function(req, res) {
  *
  * @returns {Array} - array of <= 10 document objects
  */
-apiRoutes.get('/suggest/:tennantId/:query', function(req, res) {
+apiRoutes.get('/suggest/equipment/:query/:tennantId', function(req, res) {
 
-    var query = JSON.parse(req.params.query);
-    var tennantId = req.params.tennantId;
-    query.tennantId = tennantId;
+    let query = req.params.query;
+    let tennantId = req.params.tennantId;
+    let upperLim = 10;
 
-    var upperLim = 10;
-
-    Equipment.find(query)
+    Equipment.find({ $text: {$search: query} })
             .limit(upperLim)
             .select('name')
             .exec(function(err, results){
@@ -305,10 +314,6 @@ apiRoutes.get('/suggest/:tennantId/:query', function(req, res) {
                 if (err) return handleError(err, res);
                 // validate results
                 assert(Array.isArray(results));
-                // check array length
-                if (results.length < 1) {
-                    // TODO: run query on Reservations collection
-                }
                 // return results
                 return res.json({data: results});
             });

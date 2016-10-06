@@ -1,82 +1,74 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
-const Search = () => (
+
+const Search = ({ search, handleKeyUp, handleChange, suggestions, results }) => (
   <div>
     <div className="searchbox">
-      <input type='search' placeholder='search'></input>
+      <input id='search' type='search' value={search}
+              placeholder={search ? null: 'search'}
+              onKeyUp={handleKeyUp}
+              onChange={handleChange} />
     </div>
-    {false &&
+    {suggestions && suggestions.size >= 1 &&
       <div className='suggest'>
         <ul>
-          <li><a href='#/equipment/search/suggestion1'>Suggestion 1</a></li>
-          <li><a href='#/equipment/search/suggestion2'>Suggestion 2</a></li>
-          <li><a href='#/equipment/search/suggestion3'>Suggestion 3</a></li>
-          <li><a href='#/equipment/search/suggestion4'>Suggestion 4</a></li>
-          <li><a href='#/equipment/search/suggestion5'>Suggestion 5</a></li>
-          <li><a href='#/equipment/search/suggestion6'>Suggestion 6</a></li>
-          <li><a href='#/equipment/search/suggestion7'>Suggestion 7</a></li>
-          <li><a href='#/equipment/search/suggestion8'>Suggestion 8</a></li>
-          <li><a href='#/equipment/search/suggestion9'>Suggestion 9</a></li>
-          <li><a href='#/equipment/search/suggestion10'>Suggestion 10</a></li>
+          {suggestions.map((sugg, i) =>
+            <li key={i}>
+              <a href={'#/equipment/details/' + sugg.get('_id')}>
+                {sugg.get('name')}
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     }
-    <div className='results'>
-      <div className='card'>
-        <div className='photo-medium'>
-          <img src='images/10018_thumb.jpg' />
-        </div>
-        <h4><a href='#/equipment/details/:id'>Canon 70D</a></h4>
-        <p>
-          Manufacturer: <strong>Canon</strong><br/>
-          Model: <strong>EOS 70D</strong><br/>
-          Price: <strong>$1,500</strong><br/>
-          {true &&
-            <span>
-              <i className='icon-briefcase'></i>
-              Kit Item
-            </span>
-          }
-        </p>
-        <a className='button' href='#/reservations/:id/add/:productId'>
-          <i className='icon-calendar-plus-o'></i>
-          Reserve
-        </a>
-        <br />
-        <a className='button' href='#/settings/plans/:id/add/:productId'>
-          <i className='icon-book'></i>
-          Add to Plan
-        </a>
+    {results && results.size >= 1 &&
+      <div className='results'>
+        {results.map( (res, i) =>
+          <div className='card' key={i}>
+            <div className='photo-medium'>
+              <img src={res.get('imageUrl')} />
+            </div>
+            <h4>
+              <a href={'#/equipment/details/' + res.get('_id')}>
+                {res.get('name')}
+              </a>
+            </h4>
+            <p>
+              Manufacturer: <strong>{res.get('mfg')}</strong><br/>
+              Model: <strong>{res.get('model')}</strong><br/>
+              Price: <strong>{res.get('price')}</strong><br/>
+              {res.get('inKit') &&
+                <span>
+                  <i className='icon-briefcase'></i>
+                  Kit Item
+                </span>
+              }
+            </p>
+            <a className='button' href={'#/reservations/:id/add/' + res.get('_id')}>
+              <i className='icon-calendar-plus-o'></i>
+              Reserve
+            </a>
+            <br />
+            <a className='button' href={'#/settings/plans/:id/add/' + res.get('_id')}>
+              <i className='icon-book'></i>
+              Add to Plan
+            </a>
+          </div>
+        )}
       </div>
-      <div className='card'>
-        <div className='photo-medium'>
-          <img src='images/10018_thumb.jpg' />
-        </div>
-        <h4><a href='#/equipment/details/:id'>Canon 70D</a></h4>
-        <p>
-          Manufacturer: <strong>Canon</strong><br/>
-          Model: <strong>EOS 70D</strong><br/>
-          Price: <strong>$1,500</strong><br/>
-          {true &&
-            <span>
-              <i className='icon-briefcase'></i>
-              Kit Item
-            </span>
-          }
-        </p>
-        <a className='button' href='#/reservations/:id/add/:productId'>
-          <i className='icon-calendar-plus-o'></i>
-          Reserve
-        </a>
-        <br />
-        <a className='button' href='#/settings/plans/:id/add/:productId'>
-          <i className='icon-book'></i>
-          Add to Plan
-        </a>
-      </div>
-    </div>
+    }
     <div className='spacer-six'></div>
   </div>
 )
+
+Search.propTypes = {
+  search: PropTypes.string.isRequired,
+  handleKeyUp: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  suggestions: ImmutablePropTypes.listOf(ImmutablePropTypes.map.isRequired),
+  results: ImmutablePropTypes.listOf(ImmutablePropTypes.map.isRequired)
+}
 
 export default Search

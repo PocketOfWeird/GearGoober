@@ -1,8 +1,7 @@
-import fetch from 'isomorphic-fetch'
 import { Map, fromJS } from 'immutable'
 import { setUser } from './user'
 import { clearForm } from './form'
-import { isValidValue } from '../helpers'
+import { isValidValue, fetchPostAnonymous } from '../helpers'
 
 
 export const INVALIDATE_TOKEN = 'INVALIDATE_TOKEN'
@@ -36,25 +35,9 @@ const shouldFetchToken = (state) => {
 const fetchToken = (email, password) => {
   return dispatch => {
     dispatch(requestToken)
-    return fetch('/api/auth/', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
-    })
-    .then(response => {
-      if (response.status >= 400) {
-        console.log(response.json().message);
-        throw new Error(response.json().message)
-      }
-      return response.json()
-    })
-    .then(json => {
+    return fetchPostAnonymous('auth/',
+      { email: email, password: password }
+    ).then( json => {
       dispatch(clearForm())
       dispatch(recieveToken(json.data[0]))
       dispatch(setUser(fromJS(json.data[1])))
@@ -65,9 +48,7 @@ const fetchToken = (email, password) => {
 
 export const login = (email, password) => {
   return (dispatch, getState) => {
-    console.log('calling first function');
     if (shouldFetchToken(getState())) {
-      console.log('should fetch!');
       return dispatch(fetchToken(email, password))
     }
   }

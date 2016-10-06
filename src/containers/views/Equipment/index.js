@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import EquipNav from '../../components/equipment/EquipNav'
-import EquipForm from '../../components/equipment/EquipForm'
-import Details from '../../components/equipment/Details'
-import Search from '../../components/equipment/Search'
-import Browse from '../../components/equipment/Browse'
-import Inventory from '../../components/equipment/Inventory'
+import EquipNav from '../../../components/equipment/EquipNav'
+import EquipForm from '../../../components/equipment/EquipForm'
+import Details from '../../../components/equipment/Details'
+import SearchContainer from './SearchContainer'
+import Browse from '../../../components/equipment/Browse'
+import Inventory from '../../../components/equipment/Inventory'
 
 
 const Equipment = ({ view }) => (
@@ -24,7 +24,7 @@ const Equipment = ({ view }) => (
       <Details />
     }
     {view.first() === 'search' &&
-      <Search />
+      <SearchContainer />
     }
     {view.first() === 'browse' &&
       <Browse />
