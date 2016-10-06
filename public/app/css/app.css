@@ -1,0 +1,197 @@
+@font-face {
+  font-family: "Roboto Slab";
+  src: url("font/Roboto_Slab/RobotoSlab-Regular.ttf");
+}
+body {
+    font-family: "Roboto Slab", 'Franklin Gothic Medium', Arial, serif;
+    color: #fff;
+    background-color: #1C8ADB;
+}
+/*
+ * Inputs
+*/
+input {
+  color: #000;
+}
+.inline-input-sm {
+  display: inline;
+  width: 25%;
+}
+.react-numeric-input {
+  margin-bottom: 2rem;
+}
+.react-numeric-input input{
+  margin: auto;
+}
+
+/*
+ * Selects
+*/
+select {
+  color:#000;
+}
+
+/*
+ * Buttons
+*/
+.button-success {
+  border-color: #2E33E1;
+  background-color: #2E33E1;
+}
+.button-warning {
+  color: #000;
+  border-color: #FF9812;
+  background-color: #FF9812;
+}
+.button-danger {
+  color: #fff;
+  border-color: red;
+  background-color: red;
+}
+.category {
+  margin-left: .75rem;
+}
+
+/*
+ * Display spacers
+*/
+.spacer-one, .spacer-two, .spacer-four, .spacer-six {
+  width: 1px;
+}
+.spacer-one {
+  margin-top: 1rem;
+}
+.spacer-two {
+  margin-top: 2rem;
+}
+.spacer-four {
+  margin-top: 4rem;
+}
+.spacer-six {
+  margin-top: 6rem;
+}
+
+
+/*
+ * NavBar Styles
+*/
+.navBar {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+}
+.navBar > .navContainer {
+  margin: 0 auto;
+  max-width: 768px;
+  text-align: center;
+  background-color: white;
+}
+.navBar > .navContainer > .navGroup {
+  width: 22%;
+  height: 6rem;
+  display: inline-block;
+  padding-top: .5rem;
+  font-size: .75rem;
+  text-align: center;
+}
+.navBar > .navContainer > .navGroup > a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #000;
+}
+.navBar > .navContainer > .navGroup > a > i {
+  font-size: 2rem;
+  color: #000;
+}
+.navBar > .navContainer > .active > a {
+  color: #1C8ADB;
+}
+.navBar > .navContainer > .active >  a > i {
+  color: #1C8ADB;
+}
+
+/*
+ * Breadcrumb
+*/
+.breadcrumb {
+  margin-bottom: .5rem;
+}
+.breadcrumb > a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/*
+ * Search box styles
+*/
+.searchbox {
+  text-align: center;
+}
+.searchbox > input {
+  width: 100%;
+}
+/*
+ * Suggest styles
+*/
+.suggest {
+  padding: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  border-radius: 5px;
+  color: #000;
+  background-color: #fff;
+}
+.suggest > ul {
+  list-style: none;
+}
+.suggest > ul > li > a {
+  text-decoration: none;
+}
+
+/*
+ * Card styles
+*/
+.card {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 5px;
+  color: #000;
+  background-color: #fff;
+}
+
+/*
+ * Photo styles
+*/
+.photo-medium {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+/*
+ * Tags styles
+*/
+.tags {
+  padding: .75rem;
+  border-radius: 5px;
+  color: #000;
+  background-color: #fff;
+}
+.tag {
+  display: inline-block;
+  margin: .25rem;
+  border: 5px solid #33C3F0;
+  border-radius: 4px;
+  background-color: #33C3F0;
+}
+.tags > input {
+  border: none;
+}
+.tag > input {
+  width: 25%;
+  margin: 0 0 0 .5rem;
+}
+.tag > i {
+  float: right;
+}

@@ -36,6 +36,12 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-# Template Assets
+# Styling Assets
 public/assets
 public/app/assets
+public/app/images
+public/app/css/font
+public/app/css/vendor
+
+# Bundles
+public/app/bundle.js
