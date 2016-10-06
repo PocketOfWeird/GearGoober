@@ -1,17 +1,21 @@
 import fetch from 'isomorphic-fetch'
+import { setViewError } from '../actions'
 
 
 const api = '/api/'
 
 const jsonOrError = (response) => {
   if (response.status >= 400) {
-    console.log(response.json().message);
-    throw new Error(response.json().message)
+    return response.json().then(err => {throw err})
   }
   return response.json()
 }
 
-export const fetchGet = (state, url) => {
+const handleFetchError = (dispatch, err) => {
+  return dispatch(setViewError(err.message))
+}
+
+export const fetchGet = (state, dispatch, url) => {
   let token = state.getIn(['auth', 'token'])
   let tennantId = state.getIn(['user', 'tennantId'])
   let fullUrl = api + url +  '/' + tennantId
@@ -20,10 +24,12 @@ export const fetchGet = (state, url) => {
     headers: {
       'x-access-token': token
     }
-  }).then(response => jsonOrError(response))
+  })
+  .then(response => jsonOrError(response))
+  .catch(err => handleFetchError(dispatch, err))
 }
 
-export const fetchPostAnonymous = (url, body) => {
+export const fetchPostAnonymous = (dispatch, url, body) => {
   let fullUrl = api + url
   return fetch(fullUrl, {
     method: 'POST',
@@ -32,5 +38,7 @@ export const fetchPostAnonymous = (url, body) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(body),
-  }).then(response => jsonOrError(response))
+  })
+  .then(response => jsonOrError(response))
+  .catch(err => handleFetchError(dispatch, err))
 }

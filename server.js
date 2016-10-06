@@ -27,6 +27,9 @@ app.set('superSecret', config.secret);
 app.use(express.static('public'));
 console.log('Serving static files from "public"');
 
+// Validators
+const isMongoId = require('validator/lib/isMongoId')
+
 /**********************************************************
  * Setup mongo db */
 var MongoClient = require('mongodb').MongoClient;
@@ -234,7 +237,7 @@ apiRoutes.get('/search/equipment/:query/:tennantId', function(req, res) {
   let tennantId = req.params.tennantId;
   let upperLim = 10; // TODO: Infinte Scroll Index Number
 
-  Equipment.find({ $text: {$search: query} })
+  Equipment.find({ $text: {$search: query}, tennantId: tennantId })
           .limit(upperLim)
           .select('name imageUrl mfg model price inKit')
           .exec(function(err, results){
@@ -245,6 +248,29 @@ apiRoutes.get('/search/equipment/:query/:tennantId', function(req, res) {
               // return results
               return res.json({data: results});
   });
+});
+apiRoutes.get('/details/equipment/:equipId/:tennantId', function(req, res) {
+
+  let equipId = req.params.equipId;
+  let tennantId = req.params.tennantId;
+
+  // validate id
+  if (!isMongoId(equipId)) {
+    return handleError('Invalid id', res)
+  }
+
+  Equipment.findOne({ _id: equipId, tennantId: tennantId })
+          .exec(function(err, result){
+              // handle error
+              if (err) return handleError(err, res);
+              // validate results
+              try {
+                assert(typeof(result) === 'object');
+              } catch (e) {
+                return handleError(e, res);
+              }
+              return res.json({data: result});
+          });
 });
 // GET: /api/equipment/categories/:tennantId/:query
 // route to return an array {data:[...]} of equipment categories based on a query
@@ -306,7 +332,7 @@ apiRoutes.get('/suggest/equipment/:query/:tennantId', function(req, res) {
     let tennantId = req.params.tennantId;
     let upperLim = 10;
 
-    Equipment.find({ $text: {$search: query} })
+    Equipment.find({ $text: {$search: query}, tennantId: tennantId })
             .limit(upperLim)
             .select('name')
             .exec(function(err, results){
@@ -322,7 +348,7 @@ apiRoutes.get('/suggest/equipment/:query/:tennantId', function(req, res) {
 //////// Error Handler //////////
 function handleError(error, res) {
     console.log(error);
-    return res.status(500).send({ success: false, message: 'Server error: ' + error});
+    return res.status(500).json({ success: false, message: 'Server error: ' + error});
 }
 /**********************************************************
  * Start app*/

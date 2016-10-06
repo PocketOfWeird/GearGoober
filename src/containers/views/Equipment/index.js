@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import EquipNav from '../../../components/equipment/EquipNav'
-import EquipForm from '../../../components/equipment/EquipForm'
-import Details from '../../../components/equipment/Details'
+import EquipFormContainer from './EquipFormContainer'
+import DetailsContainer from './DetailsContainer'
 import SearchContainer from './SearchContainer'
 import Browse from '../../../components/equipment/Browse'
 import Inventory from '../../../components/equipment/Inventory'
@@ -15,13 +15,13 @@ const Equipment = ({ view }) => (
       <EquipNav />
     }
     {view.first() === 'add' &&
-      <EquipForm mode={'add'} />
+      <EquipFormContainer mode={'add'} />
     }
     {view.first() === 'edit' &&
-      <EquipForm mode={'edit'} />
+      <EquipFormContainer mode={'edit'} />
     }
     {view.first() === 'details' &&
-      <Details />
+      <DetailsContainer />
     }
     {view.first() === 'search' &&
       <SearchContainer />

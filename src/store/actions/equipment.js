@@ -31,13 +31,14 @@ const recieveItems = (itemType, items) => ({
 
 let urls = {
   'suggestions': 'suggest/equipment/',
-  'results': 'search/equipment/'
+  'results': 'search/equipment/',
+  'details': 'details/equipment/'
 }
 
 export const fetchItems = (itemType, query) => {
     return (dispatch, getState) => {
       dispatch(requestItems(itemType, query))
-      return fetchGet(getState(), urls[itemType] + query)
+      return fetchGet(getState(), dispatch, urls[itemType] + query)
         .then(json => {
           dispatch(recieveItems(itemType, fromJS(json.data)))
         })

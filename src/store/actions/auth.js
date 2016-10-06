@@ -35,7 +35,8 @@ const shouldFetchToken = (state) => {
 const fetchToken = (email, password) => {
   return dispatch => {
     dispatch(requestToken)
-    return fetchPostAnonymous('auth/',
+    return fetchPostAnonymous(dispatch,
+      'auth/',
       { email: email, password: password }
     ).then( json => {
       dispatch(clearForm())
