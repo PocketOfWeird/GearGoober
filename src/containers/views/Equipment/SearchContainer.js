@@ -1,13 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import isAlphanumeric from 'validator/lib/isAlphanumeric'
+import isMongoId from 'validator/lib/isMongoId'
 import { fetchItems, clearItems, setQuery, setViewError,
   clearViewErrorIfNeeded } from '../../../store/actions'
 import Search from '../../../components/equipment/Search'
 
 
 const mapStateToProps = (state) => ({
-  search: state.getIn(['equipment', 'currentQuery']) || '',
+  search: isMongoId(state.getIn(['equipment', 'currentQuery'])) ?
+          '' : state.getIn(['equipment', 'currentQuery']),
   suggestions: state.getIn(['equipment', 'suggestions']),
   results: state.getIn(['equipment', 'results'])
 })
