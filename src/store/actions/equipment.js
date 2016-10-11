@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable'
 import { fetchGet } from '../helpers'
+import { cloneFromState } from './form'
 
 
 export const SET_QUERY = 'SET_QUERY'
@@ -23,11 +24,16 @@ const requestItems = (itemType, query) => ({
   payload: query
 })
 
-const recieveItems = (itemType, items) => ({
+const recieveItems = (itemType, items, shouldClone) => ({
   type: RECEIVE_ITEMS,
   itemType: itemType,
-  payload: items
+  payload: items,
+  shouldClone: shouldClone
 })
+
+const shouldFetchDetails = (state) => {
+  return state.getIn(['equipment','details']) ? false : true
+}
 
 let urls = {
   'suggestions': 'suggest/equipment/',
@@ -40,7 +46,18 @@ export const fetchItems = (itemType, query) => {
       dispatch(requestItems(itemType, query))
       return fetchGet(getState(), dispatch, urls[itemType] + query)
         .then(json => {
-          dispatch(recieveItems(itemType, fromJS(json.data)))
+          dispatch(recieveItems(itemType, fromJS(json.data), true))
         })
     }
+}
+
+export const getEquipmentToEdit = (equipmentId) => {
+  return (dispatch, getState) => {
+    let state = getState()
+    if (shouldFetchDetails(state)) {
+      return dispatch(fetchItems('details', equipmentId))
+    } else {
+      dispatch(cloneFromState(state.getIn(['equipment','details'])))
+    }
+  }
 }

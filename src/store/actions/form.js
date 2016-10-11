@@ -3,9 +3,15 @@ import { isValidValue } from '../helpers'
 
 export const SET_FORM_VALUE = 'SET_FORM_VALUE'
 export const CLEAR_FORM = 'CLEAR_FORM'
+export const CLONE_FROM_STATE = 'CLONE_FROM_STATE'
 
 export const clearForm = () => ({
   type: CLEAR_FORM
+})
+
+export const cloneFromState = (payload) => ({
+  type: CLONE_FROM_STATE,
+  payload: payload
 })
 
 const setFormValue = (id, value, isValid) => ({
