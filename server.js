@@ -62,8 +62,8 @@ var Tennant = mongoose.model('Tennant', new Schema({
 
 // user model
 var User = mongoose.model('User', new Schema({
-    tennantId: String,
-    email: String,
+    tennantId: {type: String, index: true},
+    email: {type: String, index: true},
     firstName: {type: String, text: true}, // creates a text index
     lastName: {type: String, text: true},
     imageUrl: String,
@@ -81,8 +81,9 @@ var User = mongoose.model('User', new Schema({
 
 // equipment
 var Equipment = mongoose.model('Equipment', new Schema({
-    tennantId: String,
+    tennantId: {type: String, index: true},
     name: {type: String, text: true}, // creates a text index
+    categoryId: {type: String, index: true},
     category: String,
     subCategory: String,
     imageUrl: String,
@@ -99,14 +100,24 @@ var Equipment = mongoose.model('Equipment', new Schema({
     }]
 }));
 
+// categories
+var Category = mongoose.model('Category', new Schema({
+  tennantId: {type: String, index: true},
+  name: String,
+  subCategories: [{
+    name: String
+  }]
+}));
+
 /**********************************************************
  * Routes */
 app.get('/setup', function (req, res) {
 
     // load demo data into memory
-    var demoDataTennant = require('./demo_data/demo_tennant.json');
-    var demoDataUser = require('./demo_data/demo_user.json');
-    var demoDataEquipment = require('./demo_data/demo_equipment.json'); // an array of equipment models: {"data":[...]}
+    let demoDataTennant = require('./demo_data/demo_tennant.json');
+    let demoDataUser = require('./demo_data/demo_user.json');
+    let demoDataCategories = require('./demo_data/demo_categories.json')
+    let demoDataEquipment = require('./demo_data/demo_equipment.json'); // an array of equipment models: {"data":[...]}
 
     // create sample tennant
     var demoU = new Tennant(demoDataTennant);
@@ -121,6 +132,15 @@ app.get('/setup', function (req, res) {
         bob.save(function (err) {
             if (err) throw err;
         });
+
+        // create sample categories
+        for (c=0; c < demoDataCategories["data"].length; c++) {
+          var category = new Category(demoDataCategories["data"][c]);
+          category.tennantId = tennant._id;
+          category.save(function (err) {
+            if (err) throw err;
+          });
+        }
 
         // create sample equipment
         for (e=0; e < demoDataEquipment["data"].length; e++) {

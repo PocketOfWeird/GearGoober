@@ -1,0 +1,29 @@
+{
+  "data": [
+    {
+      "name": "Cameras",
+      "subCategories": [
+        {"name": "Lenses"},
+        {"name": "Camera Support"}
+      ]
+    },
+    {
+      "name": "Audio",
+      "subCategories": [
+        {"name": "Microphones"},
+        {"name": "Accessories"},
+        {"name": "Cables"}
+      ]
+    },
+    {
+      "name": "Cases",
+      "subCategories": []
+    },
+    {
+      "name": "Computers",
+      "subCategories": [
+        {"name": "Tablets"}
+      ]
+    }
+  ]
+}
