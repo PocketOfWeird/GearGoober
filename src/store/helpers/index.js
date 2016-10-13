@@ -1,5 +1,6 @@
 import { List } from 'immutable'
 import { validate as emailValidator } from 'email-validator'
+import isMongoId from 'validator/lib/isMongoId'
 import { activateView, activateHashRoute, stashView } from '../actions'
 import { getViewFromHash } from '../middlewares'
 
@@ -50,4 +51,12 @@ export const isValidValue = (value, type) => {
     default:
       return false
   }
+}
+
+export const getSearchQuery = (state) => {
+  let query = state.getIn(['equipment', 'currentQuery'])
+  if (typeof(query) === "string" && !isMongoId(query)) {
+    return query
+  }
+  return ''
 }
