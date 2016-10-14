@@ -12,10 +12,14 @@ const form = (state = defaultState, action) => {
     case CLEAR_FORM:
       return defaultState
     case CLONE_FROM_STATE:
-      return action.payload
+      if (action.payload) {
+        return action.payload
+      }
     case RECEIVE_ITEMS:
       if (action.shouldClone) {
-        return action.payload
+        if (action.payload) {
+          return action.payload
+        }
       }
     default:
       return state

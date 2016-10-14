@@ -7,4 +7,4 @@ export { SET_FORM_VALUE, CLEAR_FORM, setValue, clearForm,
 CLONE_FROM_STATE, cloneFromState } from './form'
 export { SET_QUERY, setQuery, fetchItems, REQUEST_ITEMS,
   RECEIVE_ITEMS, CLEAR_ITEMS, clearItems,
-  getEquipmentToEdit } from './equipment'
+  getEquipmentToEdit, getCategoriesIfNeeded } from './equipment'

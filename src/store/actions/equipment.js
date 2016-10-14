@@ -31,22 +31,23 @@ const recieveItems = (itemType, items, shouldClone) => ({
   shouldClone: shouldClone
 })
 
-const shouldFetchDetails = (state) => {
-  return state.getIn(['equipment','details']) ? false : true
+const shouldFetch = (state, substate) => {
+  return state.getIn(['equipment', substate]) ? false : true
 }
 
 let urls = {
   'suggestions': 'suggest/equipment/',
   'results': 'search/equipment/',
-  'details': 'details/equipment/'
+  'details': 'details/equipment/',
+  'categories': 'all/categories/'
 }
 
-export const fetchItems = (itemType, query) => {
+export const fetchItems = (itemType, query, shouldClone = false) => {
     return (dispatch, getState) => {
       dispatch(requestItems(itemType, query))
       return fetchGet(getState(), dispatch, urls[itemType] + query)
         .then(json => {
-          dispatch(recieveItems(itemType, fromJS(json.data), true))
+          dispatch(recieveItems(itemType, fromJS(json.data), shouldClone))
         })
     }
 }
@@ -54,10 +55,18 @@ export const fetchItems = (itemType, query) => {
 export const getEquipmentToEdit = (equipmentId) => {
   return (dispatch, getState) => {
     let state = getState()
-    if (shouldFetchDetails(state)) {
-      return dispatch(fetchItems('details', equipmentId))
+    if (shouldFetch(state, 'details')) {
+      return dispatch(fetchItems('details', equipmentId, true))
     } else {
       dispatch(cloneFromState(state.getIn(['equipment','details'])))
+    }
+  }
+}
+
+export const getCategoriesIfNeeded = () => {
+  return (dispatch, getState) => {
+    if (shouldFetch(getState(), 'categories')) {
+      return dispatch(fetchItems('categories'))
     }
   }
 }

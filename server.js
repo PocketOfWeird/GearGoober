@@ -30,6 +30,9 @@ console.log('Serving static files from "public"');
 // Validators
 const isMongoId = require('validator/lib/isMongoId')
 
+// Immutable Date
+const Immutable = require('immutable')
+
 /**********************************************************
  * Setup mongo db */
 var MongoClient = require('mongodb').MongoClient;
@@ -62,7 +65,7 @@ var Tennant = mongoose.model('Tennant', new Schema({
 
 // user model
 var User = mongoose.model('User', new Schema({
-    tennantId: {type: String, index: true},
+    tennantId: {type: mongoose.Schema.Types.ObjectId, ref: Tennant, index: true},
     email: {type: String, index: true},
     firstName: {type: String, text: true}, // creates a text index
     lastName: {type: String, text: true},
@@ -81,11 +84,9 @@ var User = mongoose.model('User', new Schema({
 
 // equipment
 var Equipment = mongoose.model('Equipment', new Schema({
-    tennantId: {type: String, index: true},
+    tennantId: {type: mongoose.Schema.Types.ObjectId, ref: Tennant, index: true},
     name: {type: String, text: true}, // creates a text index
-    categoryId: {type: String, index: true},
-    category: String,
-    subCategory: String,
+    category: {type: mongoose.Schema.Types.ObjectId, ref: Category, index: true},
     imageUrl: String,
     mfg: {type: String, text: true},
     model: {type: String, text: true},
@@ -102,11 +103,9 @@ var Equipment = mongoose.model('Equipment', new Schema({
 
 // categories
 var Category = mongoose.model('Category', new Schema({
-  tennantId: {type: String, index: true},
+  tennantId: {type: mongoose.Schema.Types.ObjectId, ref: Tennant, index: true},
   name: String,
-  subCategories: [{
-    name: String
-  }]
+  parent: {type: mongoose.Schema.Types.ObjectId, ref: Category}
 }));
 
 /**********************************************************
@@ -123,36 +122,63 @@ app.get('/setup', function (req, res) {
     var demoU = new Tennant(demoDataTennant);
 
     demoU.save(function (err, tennant){
-        if (err) throw err;
+        if (err) return handleError(err, res);
 
         // create sample user
         var bob = new User(demoDataUser);
         bob.tennantId = tennant._id;
 
         bob.save(function (err) {
-            if (err) throw err;
+            if (err) return handleError(err, res);
         });
 
         // create sample categories
+        var categories = Immutable.Map();
+        var subCats = Immutable.Map();
         for (c=0; c < demoDataCategories["data"].length; c++) {
           var category = new Category(demoDataCategories["data"][c]);
           category.tennantId = tennant._id;
-          category.save(function (err) {
-            if (err) throw err;
+          category.save((err, category) => {
+            if (err) return handleError(err, res);
+            try {
+              assert(typeof(category) === 'object')
+              categories = categories.set(category.name, category)
+              var subCatArray = categories.get(category.name).get('subCategories')
+              assert(Array.isArray(subCatArray))
+
+            } catch (e) {
+              return handleError(e, res);
+            }
           });
         }
 
         // create sample equipment
-        for (e=0; e < demoDataEquipment["data"].length; e++) {
+        setTimeout(() => {
+          for (e=0; e < demoDataEquipment["data"].length; e++) {
             var pieceOfEquipment = new Equipment(demoDataEquipment["data"][e]);
             pieceOfEquipment.tennantId = tennant._id;
 
+            try {
+              pieceOfEquipment.categoryId = categories.get(pieceOfEquipment.category).get('_id')
+            } catch (e) {
+              return handleError(e, res)
+            }
+
+            /*if (pieceOfEquipment.subCategory) {
+              try {
+                pieceOfEquipment.subCategoryId = categories.getIn([pieceOfEquipment.category, 'subCategories']).get('_id')
+              } catch (e) {
+                return handleError(e, res)
+              }
+            }*/
+
             pieceOfEquipment.save(function (err) {
-                if (err) throw err;
+                if (err) return handleError(err, res);
             });
         }
+      }, 2000)
 
-        res.json({ success: true, message: "Demo Data has been populated in the db" });
+        return res.json({ success: true, message: "Demo Data has been populated in the db" });
     });
 
 });
@@ -294,49 +320,22 @@ apiRoutes.get('/details/equipment/:equipId/:tennantId', function(req, res) {
 });
 // GET: /api/equipment/categories/:tennantId/:query
 // route to return an array {data:[...]} of equipment categories based on a query
-apiRoutes.get('/equipment/categories/:tennantId/:query', function(req, res) {
+apiRoutes.get('/all/categories/:query/:tennantId', function(req, res) {
 
-    var query = JSON.parse(req.params.query);
-    var tennantId = req.params.tennantId;
-    query.tennantId = tennantId;
+    const tennantId = req.params.tennantId;
 
-    Equipment.aggregate(
-        { $match: query }, // where equipment = query
-        { $group: {_id:{category: "$category", subCategory: "$subCategory"}} }, // removes duplicate results
-        { $project: {_id:0, category:"$_id.category", subCategory:"$_id.subCategory"} } // cleans up the output
-    ).exec(function (err, categories) {
-                // handle error
-                if (err) return handleError(err, res);
-                // validate results
-                assert(Array.isArray(categories));
-                // group subCategories under each parent category
-                var grouped = {}; // placeholder object
-                for (i=0; i < categories.length; i++) { // loop through results
-                    cat = categories[i]; // current category object
-                    if (!grouped[cat.category]) { // if category is not in the placeholder object
-                        grouped[cat.category] = { category: cat.category, subCategory: [], subCategoryCheck: {} }; // add the category to the placeholder object
-                        if (cat.subCategory) { // if a subCategory exists
-                            grouped[cat.category]["subCategoryCheck"][cat.subCategory] = true; // add the subCategory to the placeholder object
-                            grouped[cat.category]["subCategory"].push(cat.subCategory); // and push it into the subCategory array
-                        }
-                    } else { // the category is in the placeholder object
-                        if (cat.subCategory) { // if a subCategory exists
-                            if (!grouped[cat.category]["subCategoryCheck"][cat.subCategory]) { // if the subCategory is not in the placeholder object
-                                grouped[cat.category]["subCategoryCheck"][cat.subCategory] = true; // add the subCategory to the placeholder object
-                                grouped[cat.category]["subCategory"].push(cat.subCategory); // push it into the array
-                            }
-                        }
-                    }
-                }
-                // covert grouped object to an array
-                var groupedArray = [];
-                for (key in grouped) {
-                    groupedArray.push(grouped[key]);
-                }
-                console.log(groupedArray);
-                // return results
-                return res.json({data: groupedArray});
-    });
+    Category.find({}, function(err, results) {
+      // handleError
+      if (err) return handleError(err, res);
+      // validate results
+      try {
+        assert(Array.isArray(results));
+      } catch (e) {
+        return handleError(e, res);
+      }
+      // return results
+      return res.json({data: results})
+    })
 });
 /**
  * GET: /api/suggest

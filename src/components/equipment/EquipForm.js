@@ -4,7 +4,8 @@ import NumericInput from 'react-numeric-input'
 import ReactSwipe from 'react-swipe'
 
 
-const EquipForm = ({ mode, piece, handleChange, handlePriceChange, handleCancel }) => (
+const EquipForm = ({ mode, piece, categories, handleChange, handlePriceChange,
+  handleCancel }) => (
   <div className='container'>
     {mode==='add' &&
       <div>
@@ -38,17 +39,17 @@ const EquipForm = ({ mode, piece, handleChange, handlePriceChange, handleCancel 
         </ReactSwipe>
       }
       <label>Category</label>
-      {mode==='add' &&
-        <select className='u-full-width'>
-          <option value='audio'>Audio</option>
-          <option value='audio-boom'>Audio-Boom Mics</option>
-          <option value='cameras'>Cameras</option>
-          <option value='cameras-lenses'>Cameras-Lenses</option>
-        </select>
-      }
-      {mode==='edit' &&
-        piece.get('category')
-      }
+      {piece.get('category')}
+      <select id='category'
+              className='u-full-width'
+              value={mode==='edit' ? piece.get('category') : ''}
+              onChange={handleChange}>
+        {categories.map(cat =>
+          <option key ={cat.get('_id')} value={cat.get('name')}>
+            {cat.get('name')}
+          </option>
+        )}
+      </select>
       <label>Manufacturer</label>
       <input className='u-full-width'
             id='mfg'
@@ -113,7 +114,7 @@ const EquipForm = ({ mode, piece, handleChange, handlePriceChange, handleCancel 
       }
       <button className="button-primary">Save</button>
       <br />
-      
+
       <button className="button-warning"
               onChange={handleCancel}>Cancel</button>
 
@@ -131,6 +132,9 @@ const EquipForm = ({ mode, piece, handleChange, handlePriceChange, handleCancel 
 EquipForm.propTypes = {
   mode: PropTypes.string.isRequired,
   piece: ImmutablePropTypes.map,
+  categories: ImmutablePropTypes.listOf(
+    ImmutablePropTypes.map.isRequired
+  ).isRequired,
   handleChange: PropTypes.func.isRequired,
   handlePriceChange: PropTypes.func.isRequired
 }
