@@ -1,17 +1,13 @@
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import Root from './containers'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
+injectTapEventPlugin()
 
-import 'babel-polyfill'
-
-import React from 'react'
-import { render } from 'react-dom'
-
-render(
-  <div>
-    <p>Hello Gear Goober</p>
-  </div>,
+ReactDOM.render(
+  <Root />,
   document.getElementById('root')
 )

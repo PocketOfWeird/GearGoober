@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 var jwt = require('jsonwebtoken');
 
 var config = require('../configs/gearGooberConfig.js')
+process.env.NODE_ENV = config.environment;
 app.set('superSecret', config.secret);
 
 // Static file setup

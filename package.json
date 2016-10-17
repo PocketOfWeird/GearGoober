@@ -4,8 +4,8 @@
   "description": "Manage Equipment Reservations, Check-ins, and Check-outs. Ideal for University AV Equipment",
   "main": "index.js",
   "scripts": {
-    "build": "browserify src2/index.js -o public/bundle.js -t babelify",
-    "watch": "watchify src2/index.js -o public/bundle.js -t babelify -v"
+    "build": "./node_modules/.bin/eslint src2/** && browserify src2/index.js -o public/bundle.js -t babelify && uglifyjs public/bundle.js --output public/bundle.min.js --compress --screw-ie8",
+    "watch": "./node_modules/.bin/eslint src2/** && watchify src2/index.js -o public/bundle.js -t babelify -v"
   },
   "repository": {
     "type": "git",
@@ -33,13 +33,13 @@
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-immutable-proptypes": "^2.1.0",
-    "react-notification": "^6.2.1",
     "react-numeric-input": "^2.0.6",
     "react-redux": "^4.4.5",
+    "react-router": "^2.8.1",
+    "react-router-redux": "^4.0.6",
     "react-swipe": "^5.0.5",
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.6.0",
-    "redux-immutable": "^3.0.8",
     "redux-thunk": "^2.1.0",
     "swipe-js-iso": "^2.0.3",
     "validator": "^6.0.0"
@@ -50,9 +50,13 @@
     "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
+    "eslint": "^3.8.0",
+    "eslint-plugin-react": "^6.4.1",
+    "minifyify": "^7.3.3",
     "react-icons": "^2.2.1",
     "redux-devtools": "^3.3.1",
     "redux-logger": "^2.6.1",
+    "uglify-js": "^2.7.3",
     "watchify": "^3.7.0"
   }
 }

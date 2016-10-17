@@ -44,4 +44,5 @@ public/app/css/font
 public/app/css/vendor
 
 # Bundles
-public/app/bundle.js
+public/bundle.js
+public/bundle.min.js
