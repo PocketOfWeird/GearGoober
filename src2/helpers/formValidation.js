@@ -1,22 +1,24 @@
-import isAscii from 'validator/lib/isAscii'
-import isAlphanumeric from 'validator/lib/isAlphanumeric'
+import { Map } from 'immutable'
 import isEmail from 'validator/lib/isEmail'
 
 
-export const validate = (value, type) => {
-
-  if (typeof(value) !== 'string'){
-    return 'Valdation error: only string values are allowed'
-  }
-
+export const validateValue = (value, type) => {
   switch (type) {
-    case 'text':
-      return isAscii(value) ? '' : 'Special characters aren\'t allowed'
-    case 'search':
-      return isAlphanumeric(value) ? '' : 'Spaces and symbols aren\'t allowed'
     case 'email':
       return isEmail(value) ? '' : 'Invalid email address'
     default:
       return ''
   }
+}
+
+export const validateForm = (values, requiredFields) => {
+  let errors = {}
+
+  requiredFields.forEach(field => {
+    if (!values.get(field)) {
+      errors[field] = 'Required'
+    }
+  })
+
+  return Map(errors)
 }

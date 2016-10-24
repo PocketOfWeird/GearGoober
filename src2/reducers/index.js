@@ -1,10 +1,15 @@
 import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
+import authReducer from './authReducer'
+import searchReducer from './searchReducer'
+import error from './errorReducer'
 import form from './formReducer'
 
 
 const rootReducer = combineReducers({
-  routing: routerReducer,
+  token: authReducer('token'),
+  user: authReducer('user'),
+  equipmentSearch: searchReducer,
+  error,
   form
 })
 

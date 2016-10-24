@@ -1,21 +1,21 @@
 import React, { PropTypes } from 'react'
-import TextField from 'material-ui/TextField'
+import AutoComplete from 'material-ui/AutoComplete'
 
 
-const Search = ({ value, error, handleChange }) => (
-  <TextField
+const Search = ({ dataSource, handleUpdateInput }) => (
+  <AutoComplete
       id='search'
       type='search'
       floatingLabelText='Search'
-      value={value}
-      errorText={error}
-      onChange={handleChange} />
+      fullWidth={true}
+      dataSource={dataSource}
+      onUpdateInput={handleUpdateInput}
+  />
 )
 
 Search.propTypes = {
-  value: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired
+  dataSource: PropTypes.array.isRequired,
+  handleUpdateInput: PropTypes.func.isRequired
 }
 
 export default Search

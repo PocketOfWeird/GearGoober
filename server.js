@@ -1,28 +1,39 @@
 /**********************************************************
- * Setup express */
-var express = require('express');
-var app = express();
+ * Setup */
+const express = require('express');
+let app = express();
 
-// Api Route Setup
-var apiRoutes = express.Router();
+// Configuation file
+const config = require('../.configs/.gearGooberConfig.js')
+
+// Security: Helmet
+app.set('host', config.host)
+const helmetSetup = require('./.server_modules/helpers/helmetSetup')
+app.use(helmetSetup(app.get('host')))
+// Security: Body Parser
+app.use(require('body-parser').json());
+// Security: Content Length Validator
+const contentLength = require('express-content-length-validator')
+app.use(contentLength.validateMax())
+// Security: JWT
+app.set('secret', config.secret)
+app.set('algorithm', config.algorithm)
+// Security: TODO: Add express-enforces-ssl
+
+// Setup Environment
+app.set('environment', config.environment)
+const env = process.env.NODE_ENV = app.get('environment')
+const runningAs = process.argv[2] // 'production' or 'demo'
+app.set('database', config.database)
+app.set('port', config.port)
+if (runningAs === 'demo') {
+  app.set('database', config.demoDatabase)
+  app.set('port', config.demoPort)
+}
 
 // Logging Setup
-var morgan = require('morgan');
-app.use(morgan('dev'));
-
-// Security setup
-var helmet = require('helmet');
-app.use(helmet());
-
-var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-var jwt = require('jsonwebtoken');
-
-var config = require('../configs/gearGooberConfig.js')
-process.env.NODE_ENV = config.environment;
-app.set('superSecret', config.secret);
+const loggingSetup = require('./.server_modules/helpers/loggingSetup')
+app.use(loggingSetup(env))
 
 // Static file setup
 app.use(express.static('public'));
@@ -31,220 +42,55 @@ console.log('Serving static files from "public"');
 // Validators
 const isMongoId = require('validator/lib/isMongoId')
 
-// Immutable Date
+// Immutable Data
 const Immutable = require('immutable')
 
 /**********************************************************
- * Setup mongo db */
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
-
-var testUrl = config.database;
-MongoClient.connect(testUrl, function(err, db) {
-    assert.equal(null, err);
-    console.log('Connected correctly to mongo server.');
-    db.close();
-});
+ * Test Mongo Setup */
+require('mongodb').MongoClient.connect(app.get('database'), (err, db) => {
+  require('assert').equal(null, err)
+  console.log('Connected correctly to the db')
+  db.close()
+})
 
 /**********************************************************
  * Setup mongoose */
-var mongoose = require('mongoose');
-var bluebird = require('bluebird');
-mongoose.Promise = bluebird;
-mongoose.connect(config.database);
-var Schema = mongoose.Schema;
+let mongoose = require('mongoose')
+const bluebird = require('bluebird')
+mongoose.Promise = bluebird
+
+// demo data or production data setup
+if (runningAs === 'demo') {
+  const setupDemoData = require('./.server_modules/routes/setupDemoData')
+  app.get('/setup', setupDemoData(app.get('database'), runningAs))
+} else {
+  mongoose.connect(app.get('database'))
+}
 
 /**********************************************************
  * Models */
-
-// tennant model
-var Tennant = mongoose.model('Tennant', new Schema({
-    name: String,
-    subdomain: String,
-    colorTheme: String
-}));
-
-// user model
-var User = mongoose.model('User', new Schema({
-    tennantId: {type: mongoose.Schema.Types.ObjectId, ref: Tennant, index: true},
-    email: {type: String, index: true},
-    firstName: {type: String, text: true}, // creates a text index
-    lastName: {type: String, text: true},
-    imageUrl: String,
-    phoneNumber: String,
-    addressOne: String,
-    addressTwo: String,
-    city: String,
-    state: String,
-    zip: String,
-    password: String,
-    admin: Boolean,
-    manager: Boolean,
-    labAssistant: Boolean
-}));
-
-// equipment
-var Equipment = mongoose.model('Equipment', new Schema({
-    tennantId: {type: mongoose.Schema.Types.ObjectId, ref: Tennant, index: true},
-    name: {type: String, text: true}, // creates a text index
-    category: {type: mongoose.Schema.Types.ObjectId, ref: Category, index: true},
-    imageUrl: String,
-    mfg: {type: String, text: true},
-    model: {type: String, text: true},
-    price: Number,
-    qty: Number,
-    inKit: Boolean,
-    barcodes: [{
-        barcode: {type: String, text: true},
-        checkedIn: Boolean,
-        damaged: Boolean,
-        missing: Boolean
-    }]
-}));
-
-// categories
-var Category = mongoose.model('Category', new Schema({
-  tennantId: {type: mongoose.Schema.Types.ObjectId, ref: Tennant, index: true},
-  name: String,
-  parent: {type: mongoose.Schema.Types.ObjectId, ref: Category}
-}));
+let Tennant = require('./.server_modules/models/tennant')
+let User = require('./.server_modules/models/user')
+let Category = require('./.server_modules/models/category')
+let Equipment = require('./.server_modules/models/equipment')
 
 /**********************************************************
  * Routes */
-app.get('/setup', function (req, res) {
-
-    // load demo data into memory
-    let demoDataTennant = require('./demo_data/demo_tennant.json');
-    let demoDataUser = require('./demo_data/demo_user.json');
-    let demoDataCategories = require('./demo_data/demo_categories.json')
-    let demoDataEquipment = require('./demo_data/demo_equipment.json'); // an array of equipment models: {"data":[...]}
-
-    // create sample tennant
-    var demoU = new Tennant(demoDataTennant);
-
-    demoU.save(function (err, tennant){
-        if (err) return handleError(err, res);
-
-        // create sample user
-        var bob = new User(demoDataUser);
-        bob.tennantId = tennant._id;
-
-        bob.save(function (err) {
-            if (err) return handleError(err, res);
-        });
-
-        // create sample categories
-        var categories = Immutable.Map();
-        var subCats = Immutable.Map();
-        for (c=0; c < demoDataCategories["data"].length; c++) {
-          var category = new Category(demoDataCategories["data"][c]);
-          category.tennantId = tennant._id;
-          category.save((err, category) => {
-            if (err) return handleError(err, res);
-            try {
-              assert(typeof(category) === 'object')
-              categories = categories.set(category.name, category)
-              var subCatArray = categories.get(category.name).get('subCategories')
-              assert(Array.isArray(subCatArray))
-
-            } catch (e) {
-              return handleError(e, res);
-            }
-          });
-        }
-
-        // create sample equipment
-        setTimeout(() => {
-          for (e=0; e < demoDataEquipment["data"].length; e++) {
-            var pieceOfEquipment = new Equipment(demoDataEquipment["data"][e]);
-            pieceOfEquipment.tennantId = tennant._id;
-
-            try {
-              pieceOfEquipment.categoryId = categories.get(pieceOfEquipment.category).get('_id')
-            } catch (e) {
-              return handleError(e, res)
-            }
-
-            /*if (pieceOfEquipment.subCategory) {
-              try {
-                pieceOfEquipment.subCategoryId = categories.getIn([pieceOfEquipment.category, 'subCategories']).get('_id')
-              } catch (e) {
-                return handleError(e, res)
-              }
-            }*/
-
-            pieceOfEquipment.save(function (err) {
-                if (err) return handleError(err, res);
-            });
-        }
-      }, 2000)
-
-        return res.json({ success: true, message: "Demo Data has been populated in the db" });
-    });
-
-});
 
 /**********************************************************
  * API Routes */
 
-// route to authenticate a user (POST http://localhost:3000/api/auth)
-apiRoutes.post('/auth', function(req, res) {
-    // find the user
-    User.findOne({
-        email: req.body.email
-    }, function(err, user) {
+// Api Route Setup
+let apiRoutes = express.Router()
 
-        if (err) throw err;
-        if (!user) {
+// route to authenticate a user and get a token (POST /api/auth)
+const apiAuthRoute = require('./.server_modules/routes/api/auth')
+apiRoutes.post('/auth', apiAuthRoute(app.get('secret'), app.get('algorithm')))
 
-            res.status(403).send({ success: false, message: 'Bad Username or Password'});
-        } else if (user) {
-
-            // check if password matches
-            if (user.password != req.body.password) {
-                res.status(403).send({ success: false, message: 'Bad Username or Password'})
-            } else {
-                // if user is found and password is correct
-                // create a token
-                var token = jwt.sign(user, app.get('superSecret'), {
-                    expiresIn: 86400 // expires in 24 hours
-                });
-
-                // return the information including token as JSON
-                return res.json({ data: [ token, user ]});
-            }
-        }
-    });
-});
-
-// route middleware to verify a token
-apiRoutes.use(function(req, res, next) {
-
-    // check header for token
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
-    //decode token
-    if (token) {
-
-        // verifies secret and checks expires
-        jwt.verify(token, app.get('superSecret'), function(err, decodedToken) {
-            if (err) {
-                if (err.name == 'TokenExpiredError') return res.status(418).send({ success: false, message: 'Token expired'});
-                return res.status(403).send({ success: false, message: 'Failed to authenticate token'});
-            } else {
-                // if everything is good, save to request for use in other routes
-                req.decoded = decodedToken;
-                console.log("Recieved a JWT for this request");
-                next();
-            }
-        });
-    } else {
-        // there is no token
-        console.log('token: ' + token);
-        return res.status(401).send({ success: false, message: 'The request has not been authenticated'});
-    }
-
-});
+// Add middleware to any apiRoutes defined below
+// Order is important!
+const tokenMiddleware = require('./.server_modules/middleware/token')
+apiRoutes.use(tokenMiddleware(app.get('secret'), app.get('algorithm')))
 // GET: /api/
 // route to show a random message
 apiRoutes.get('/', function(req, res) {
@@ -364,15 +210,9 @@ apiRoutes.get('/suggest/equipment/:query/:tennantId', function(req, res) {
                 return res.json({data: results});
             });
 
-});
-//////// Error Handler //////////
-function handleError(error, res) {
-    console.log(error);
-    return res.status(500).json({ success: false, message: 'Server error: ' + error});
-}
+})
 /**********************************************************
  * Start app*/
-app.use('/api', apiRoutes);
-app.listen(3000, function () {
-    console.log('App listening on port 3000!');
-});
+app.use('/api', apiRoutes)
+app.listen(app.get('port'),
+() => console.log('App listening on port ' + app.get('port')))
