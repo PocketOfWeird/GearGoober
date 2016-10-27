@@ -1,15 +1,13 @@
 import { AUTH_SUCCESS } from '../actions'
 
 
-const authReducer = key => {
-  return (state = '', action) => {
+const token = (state = '', action) => {
     switch (action.type) {
       case AUTH_SUCCESS:
-        return action.payload[key]
+        return action.payload.token
       default:
         return state
     }
-  }
 }
 
-export default authReducer
+export default token

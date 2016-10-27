@@ -1,6 +1,6 @@
 import { Map } from 'immutable'
 import { FORM_VALUE_CHANGE, FORM_VALUE_VALIDATE,
-  FORM_ERROR, FORM_RESET } from '../actions'
+  FORM_ERROR, FORM_RESET, AUTH_SUCCESS } from '../actions'
 
 
 const defaultState = Map()
@@ -14,6 +14,7 @@ const form = (state = defaultState, action) => {
     case FORM_ERROR:
       return state.set('errors', action.payload)
     case FORM_RESET:
+    case AUTH_SUCCESS:
       return defaultState
     default:
       return state
