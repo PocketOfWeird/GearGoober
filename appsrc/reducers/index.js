@@ -4,6 +4,7 @@ import user from './userReducer'
 import searchReducer from './searchReducer'
 import error from './errorReducer'
 import form from './formReducer'
+import view from './viewReducer'
 
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   user,
   equipmentSearch: searchReducer,
   error,
-  form
+  form,
+  view
 })
 
 export default rootReducer

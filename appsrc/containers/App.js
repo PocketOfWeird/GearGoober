@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
 import LoginContainer from './forms/LoginContainer'
 import ViewsContainer from './shared/ViewsContainer'
 import NavBarContainer from './shared/NavBarContainer'
 import ErrorContainer from './shared/ErrorContainer'
 
 
-const App = () => (
+const App = ({ loggedIn }) => (
   <div>
-    {true &&
+    {!loggedIn &&
       <LoginContainer />
     }
-    {false &&
+    {loggedIn &&
       <div>
         <ViewsContainer />
         <NavBarContainer />
@@ -20,4 +21,12 @@ const App = () => (
   </div>
 )
 
-export default App
+App.propTypes = {
+  loggedIn: PropTypes.bool.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  loggedIn: state.token ? true : false
+})
+
+export default connect(mapStateToProps)(App)
