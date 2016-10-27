@@ -45,10 +45,12 @@
   + d. Document Reservations
   + e. Document Server
 9. Configure Bithound
-10. Configure Sentry error handling
+10. Configure error handling
+  + a. ~~Local~~
+  + b. Freshdesk
+  + c. Sentry
 11. Setup Hosting Server
   + add github webhooks Setup
    - auto-pull 'production' branch onto port 8080
    - auto-pull 'master' branch onto port 80
-12. Write landing page
-13. Ship
+12. Ship
