@@ -1,6 +1,6 @@
 const handleHttpError = (res, error, status) => {
     return res.status(status).json({
-      success: false, message: 'Server error: ' + error
+      success: false, message: 'Error: ' + error
     })
 }
 
