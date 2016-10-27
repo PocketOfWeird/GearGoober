@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import configureStore from '../server/store/configureStore'
-import { hash, randomId, startServer, mockSnapshop } from '../server/helpers'
+import { hash, randomId, isSame, startServer, mockSnapshop } from '../server/helpers'
 import { hydrateFromSnapshot } from '../server/actions'
 
 
@@ -15,9 +15,19 @@ describe('server', () => {
     expect(store.getState()).to.equal(mockSnapshop)
   })
 
-  it('creates a Socket server with the correct events', () => {
+  const userEmail = 'bob@demo.edu'
+  const userId = mockSnapshop.lookup.users[userEmail]
+  const retrievedUser = mockSnapshop.users[userId]
 
-
+  it('can lookup users', () => {
+    expect(retrievedUser.email)
+      .to.equal(userEmail)
   })
+
+  it('can check passwords', () => {
+    expect(isSame('boogerface', retrievedUser.password))
+      .to.equal(true)
+  })
+
 
 })
