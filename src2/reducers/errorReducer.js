@@ -8,10 +8,10 @@ const defaultState = Map({
 })
 
 const error = (state = defaultState, action) => {
-  switch (action) {
+  switch (action.type) {
     case RAISE_ERROR:
       return state.set('message', action.payload.message)
-                  .get('log').push(action.payload)
+                  .set('log', state.get('log').push(action.payload))
     case CLEAR_ERROR:
       return state.set('message', action.payload.message)
     default:

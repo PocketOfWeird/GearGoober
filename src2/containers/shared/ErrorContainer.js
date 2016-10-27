@@ -11,8 +11,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  handleAction: () => dispatch(clearError),
-  handleClose: () => dispatch(clearError)
+  handleAction: e => dispatch(clearError()),
+  handleClose: e => dispatch(clearError())
 })
 
 export default connect(

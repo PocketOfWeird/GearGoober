@@ -1,10 +1,10 @@
 export const RAISE_ERROR = 'RAISE_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 
-export const raiseError = (errorMessage) => ({
+export const raiseError = (err) => ({
   type: RAISE_ERROR,
   payload: {
-    message: errorMessage,
+    message: err.message,
     timestamp: Date.now()
   }
 })
