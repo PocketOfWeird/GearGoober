@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/eslint src2/** && browserify src2/index.js -o public/bundle.js -t babelify && uglifyjs public/bundle.js --output public/bundle.min.js --compress --screw-ie8",
-    "watch": "./node_modules/.bin/eslint src2/** && watchify src2/index.js -o public/bundle.js -t babelify -v"
+    "watch": "./node_modules/.bin/eslint src2/** && watchify src2/index.js -o public/bundle.js -t babelify -v",
+    "test": "mocha --compilers js:babel-core/register  --require ./test/test_helper.js  --recursive",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,7 @@
   },
   "homepage": "https://github.com/PocketOfWeird/GearGoober#readme",
   "dependencies": {
-    "bluebird": "^3.4.1",
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "cookies-js": "^1.2.2",
     "express": "^4.14.0",
@@ -27,9 +29,8 @@
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "jsonwebtoken": "^7.1.9",
+    "lodash": "^4.16.4",
     "material-ui": "^0.16.0",
-    "mongodb": "^2.2.5",
-    "mongoose": "^4.5.9",
     "morgan": "^1.7.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
@@ -40,6 +41,8 @@
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
+    "socket.io": "^1.5.1",
+    "socketio-jwt": "^4.5.0",
     "swipe-js-iso": "^2.0.3",
     "validator": "^6.0.0"
   },
@@ -50,9 +53,10 @@
     "babel-preset-stage-2": "^6.17.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
+    "chai": "^3.5.0",
     "eslint": "^3.8.0",
     "eslint-plugin-react": "^6.4.1",
-    "mongoose-seed": "^0.3.1",
+    "mocha": "^3.1.2",
     "redux-logger": "^2.6.1",
     "uglify-js": "^2.7.3",
     "watchify": "^3.7.0"
