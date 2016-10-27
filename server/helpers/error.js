@@ -1,5 +1,5 @@
-const handleHttpError = (error, res) => {
-    return res.status(500).json({
+const handleHttpError = (res, error, status) => {
+    return res.status(status).json({
       success: false, message: 'Server error: ' + error
     })
 }

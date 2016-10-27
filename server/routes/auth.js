@@ -14,7 +14,7 @@ const authRoute = (userState, secret, algorithm) => (req, res) => {
   if (!isEmail(email)) return bad(res)
   if (typeof(password) !== 'string') return bad(res)
   console.log(userState)
-  return handleError('testing', res)
+  return handleError(res, 'testing', 500)
 }
 
 module.exports = authRoute
