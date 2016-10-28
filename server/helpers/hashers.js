@@ -1,20 +1,26 @@
-const bcrypt = require('bcrypt')
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.randomId = exports.isSame = exports.hash = undefined;
 
-const SALT = 8
+var _bcrypt = require('bcrypt');
 
-const hash = (password) => {
-  return bcrypt.hashSync(password, SALT)
-}
+var _bcrypt2 = _interopRequireDefault(_bcrypt);
 
-const isSame = (password, hash) => {
-  return bcrypt.compareSync(password, hash)
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const randomId = () => {
-  return Math.random().toString(36).substr(2,12)
-}
+var SALT = 8;
 
-module.exports = {
-  hash, isSame, randomId
-}
+var hash = exports.hash = function hash(password) {
+  return _bcrypt2.default.hashSync(password, SALT);
+};
+
+var isSame = exports.isSame = function isSame(password, hash) {
+  return _bcrypt2.default.compareSync(password, hash);
+};
+
+var randomId = exports.randomId = function randomId() {
+  return Math.random().toString(36).substr(2, 12);
+};

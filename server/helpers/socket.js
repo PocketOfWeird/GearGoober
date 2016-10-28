@@ -1,24 +1,35 @@
-const socketIo = require('socket.io')
-const socketioJwt = require('socketio-jwt')
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-const setupSocketIo = (server, app) => {
+var _socket = require('socket.io');
 
-  let sio = socketIo.listen(server)
+var _socket2 = _interopRequireDefault(_socket);
 
-  sio.set('authorization', socketioJwt.authorize({
+var _socketioJwt = require('socketio-jwt');
+
+var _socketioJwt2 = _interopRequireDefault(_socketioJwt);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var setupSocketIo = function setupSocketIo(server, app) {
+
+  var sio = _socket2.default.listen(server);
+
+  sio.set('authorization', _socketioJwt2.default.authorize({
     secret: app.get('secret'),
     algorithm: app.get('algorithm'),
     handshake: true
-  }))
+  }));
 
-  sio.sockets
-    .on('connection', socket => {
-      console.log(socket.handshake.decoded_token.email, 'connected')
-     //socket.on('event')
-    })
+  sio.sockets.on('connection', function (socket) {
+    console.log(socket.handshake.decoded_token.email, 'connected'); // eslint-disable-line no-console
+    //socket.on('event')
+  });
 
-  console.log('Socket server listening')
-}
+  console.log('Socket server listening'); // eslint-disable-line no-console
+};
 
-module.exports = setupSocketIo
+exports.default = setupSocketIo;

@@ -1,18 +1,32 @@
-const http = require('http')
-const setupApp = require('./app')
-//const setupDB = require('./db')
-const setupSocketIo = require('./socket')
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.startServer = undefined;
 
-const startServer = (store) => {
-  const app = setupApp(store)
+var _http = require('http');
 
-  const server = http.createServer(app)
+var _http2 = _interopRequireDefault(_http);
 
-  setupSocketIo(server, app)
+var _app = require('./app');
 
-  server.listen(app.get('port'),
-  () => console.log('Http server listening on port ' + app.get('port')))
-}
+var _app2 = _interopRequireDefault(_app);
 
-module.exports = startServer
+var _socket = require('./socket');
+
+var _socket2 = _interopRequireDefault(_socket);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var startServer = exports.startServer = function startServer(store) {
+  var app = (0, _app2.default)(store);
+
+  var server = _http2.default.createServer(app);
+
+  (0, _socket2.default)(server, app);
+
+  server.listen(app.get('port'), function () {
+    return console.log('Http server listening on port ' + app.get('port'));
+  }); // eslint-disable-line no-console
+};

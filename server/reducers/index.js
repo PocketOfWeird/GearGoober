@@ -1,16 +1,25 @@
-const { HYDRATE_FROM_SNAPSHOT } = require('../actions')
-const { addLoggedInUser } = require('./userReducerHelpers')
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-const reducer = (state = {}, action) => {
+var _actions = require('../actions');
+
+var _userReducerHelpers = require('./userReducerHelpers');
+
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
   switch (action.type) {
-    case HYDRATE_FROM_SNAPSHOT:
-      return action.payload
+    case _actions.HYDRATE_FROM_SNAPSHOT:
+      return action.payload;
     case 'USER_LOGGED_IN':
-      return addLoggedInUser(state, action)
+      return (0, _userReducerHelpers.addLoggedInUser)(state, action);
     default:
-      return state
+      return state;
   }
-}
+};
 
-module.exports = reducer
+exports.default = reducer;

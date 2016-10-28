@@ -1,11 +1,13 @@
-const HYDRATE_FROM_SNAPSHOT = 'HYDRATE_FROM_SNAPSHOT'
+'use strict';
 
-const hydrateFromSnapshot = (snapshot) => ({
-  type: HYDRATE_FROM_SNAPSHOT,
-  payload: snapshot
-})
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var HYDRATE_FROM_SNAPSHOT = exports.HYDRATE_FROM_SNAPSHOT = 'HYDRATE_FROM_SNAPSHOT';
 
-module.exports = {
-  HYDRATE_FROM_SNAPSHOT,
-  hydrateFromSnapshot
-}
+var hydrateFromSnapshot = exports.hydrateFromSnapshot = function hydrateFromSnapshot(snapshot) {
+  return {
+    type: HYDRATE_FROM_SNAPSHOT,
+    payload: snapshot
+  };
+};
