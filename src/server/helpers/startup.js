@@ -8,7 +8,7 @@ export const startServer = (store) => {
 
   const server = http.createServer(app)
 
-  setupSocketIo(server, app)
+  setupSocketIo(store, server, app)
 
   server.listen(app.get('port'),
   () => console.log('Http server listening on port ' + app.get('port'))) // eslint-disable-line no-console

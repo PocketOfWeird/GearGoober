@@ -1,13 +1,12 @@
-import { Map, fromJS } from 'immutable'
-import { AUTH_SUCCESS } from '../actions'
+import { AUTH_SUCCESS, AUTH_CLEAR } from '../actions'
 
 
-const defaultState = Map()
-
-const user = (state = defaultState, action) => {
+const user = (state = {}, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:
-      return fromJS(action.payload.user)
+      return action.payload.user
+    case AUTH_CLEAR:
+      return {}
     default:
       return state
   }

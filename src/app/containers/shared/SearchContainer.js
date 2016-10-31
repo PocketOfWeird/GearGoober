@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getSuggestions } from '../../actions'
 import Search from '../../components/shared/Search'
 
 

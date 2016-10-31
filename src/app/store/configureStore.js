@@ -1,11 +1,12 @@
 import { createStore } from 'redux'
 import rootReducer from '../reducers'
-import configureMiddleware from '../middleware'
+import configureMiddleware, { loadStateFromCookies } from '../middleware'
 
 
 const configureStore = () => {
   return createStore(
     rootReducer,
+    //loadStateFromCookies() || {},
     configureMiddleware()
   )
 }

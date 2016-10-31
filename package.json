@@ -45,6 +45,7 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^2.5.4",
     "socket.io": "^1.5.1",
+    "socket.io-client": "^1.5.1",
     "socketio-jwt": "^4.5.0",
     "swipe-js-iso": "^2.0.3",
     "validator": "^6.0.0"

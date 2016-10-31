@@ -24,7 +24,7 @@ var startServer = exports.startServer = function startServer(store) {
 
   var server = _http2.default.createServer(app);
 
-  (0, _socket2.default)(server, app);
+  (0, _socket2.default)(store, server, app);
 
   server.listen(app.get('port'), function () {
     return console.log('Http server listening on port ' + app.get('port'));

@@ -5,7 +5,7 @@ import { hydrateFromSnapshot } from './actions'
 
 const store = configureStore()
 
-store.subscribe(() => console.log(store.getState())) // eslint-disable-line no-console
+//store.subscribe(() => console.log(store.getState())) // eslint-disable-line no-console
 
 store.dispatch(hydrateFromSnapshot(mockSnapshop))
 

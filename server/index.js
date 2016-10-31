@@ -14,9 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var store = (0, _configureStore2.default)();
 
-store.subscribe(function () {
-  return console.log(store.getState());
-}); // eslint-disable-line no-console
+//store.subscribe(() => console.log(store.getState())) // eslint-disable-line no-console
 
 store.dispatch((0, _actions.hydrateFromSnapshot)(_helpers.mockSnapshop));
 

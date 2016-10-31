@@ -2,6 +2,7 @@ import { fetchPostAnonymous } from '../middleware/api'
 
 
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const AUTH_CLEAR = 'AUTH_CLEAR'
 
 const authSuccess = (data) => ({
   type: AUTH_SUCCESS,
@@ -9,6 +10,10 @@ const authSuccess = (data) => ({
     token: data[0],
     user: data[1]
   }
+})
+
+export const unauthenticate = () => ({
+  type: AUTH_CLEAR
 })
 
 export const authenticate = (values) => (dispatch) => {
