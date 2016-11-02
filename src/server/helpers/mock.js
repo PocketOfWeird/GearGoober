@@ -26,13 +26,25 @@ const reservationStartDate = new Date().getTime()
 export const mockSnapshop = {
   tennants: { [tennantId]: { name: 'Demo University' }},
   users: {
-    [userId]: {
-      id: userId, tennant: tennantId, email: 'bob@demo.edu', password: userPassword,
-      is: { admin: true, leader: true, labworker: true }
+    [tennantId]: {
+      active: {
+        index: {
+          [userId]: 0
+        },
+        data: [{
+          id: userId, tennant: tennantId, email: 'bob@demo.edu', password: userPassword,
+          is: { admin: true, leader: true, labworker: true },
+          active: true, name: 'Bob Smith', lowerName: 'bob smith', graduationDate: null
+        }]
+      },
+      inactive: {
+        index:{},
+        data:[]
+      }
     }
   },
   lookup: {
-    users: { 'bob@demo.edu': userId },
+    users: { 'bob@demo.edu': { id: userId, tennant: tennantId } },
     reservation: { [tennantId]: { [reservationStartDate]: { userId, reservationId } } }
   },
   categories: {
@@ -46,8 +58,20 @@ export const mockSnapshop = {
   equipment: {
     [tennantId]: {
       inKit: {
-        [equipmentIds.sonyCam]: {
+        index: {
+          [equipmentIds.sonyCam]: 0,
+          [equipmentIds.sonyLens]: 1,
+          [equipmentIds.manfrottoTripod]: 2
+        },
+        barcodeIndex: {
+          "35268":0, "35318":0,
+          "35269":1,"35324":1,
+          "35405":2,"35408":2
+        },
+        data: [{
+          "id": equipmentIds.sonyCam,
           "name": "Sony PXW-FS7 XDCAM Super 35 Camera System",
+          "lowerName": "sony pxw-fs7 xdcam super 35 camera system",
           "category": "Cameras",
           "imageUrl": "https://www.bhphotovideo.com/images/images500x500/sony_pxw_fs7_compact_4k_xdcam_with_1082825.jpg",
           "mfg": "Sony",
@@ -60,8 +84,10 @@ export const mockSnapshop = {
             "35318":{"checkedIn": true,"damaged": false,"missing": false}
           }
         },
-        [equipmentIds.sonyLens]: {
+        {
+          "id": equipmentIds.sonyLens,
           "name": "Sony FE PZ 28-135mm f/4 G OSS Lens",
+          "lowerName": "sony fe pz 28-135mm f/4 g oss lens",
           "category": "Cameras",
           "subcategory": "Lenses",
           "imageUrl": "https://www.bhphotovideo.com/images/images2500x2500/sony_selp28135g_e_pz_28_135mm_f_4_1082051.jpg",
@@ -75,8 +101,10 @@ export const mockSnapshop = {
             "35324":{"checkedIn": true,"damaged": false,"missing": false}
           }
         },
-        [equipmentIds.manfrottoTripod]: {
+        {
+          "id": equipmentIds.manfrottoTripod,
           "name": "Manfrotto 526,545BK Professional Video Tripod System with 526 Head",
+          "lowerName": "manfrotto 526,545bk professional video tripod system with 526 head",
           "category": "Cameras",
           "subcategory": "Camera Support",
           "imageUrl": "https://www.bhphotovideo.com/images/images500x500/Manfrotto_526_545BK_526_545BK_Professional_Video_Tripod_589954.jpg",
@@ -90,10 +118,19 @@ export const mockSnapshop = {
             "35408":{"checkedIn": true,"damaged": true,"missing": false}
           }
         }
+        ]
       },
       notInKit: {
-        [equipmentIds.canonCam]: {
+        index: {
+          [equipmentIds.canonCam]: 0
+        },
+        barcodeIndex: {
+          "123456":0,"123457":0,"123458":0,"123480":0,"254140":0,"254173":0
+        },
+        data: [{
+          "id": equipmentIds.canonCam,
           "name": "Canon EOS 70D DSLR Camera with 18-55mm f/3.5-5.6 STM Lens",
+          "lowerName": "canon eos 70d dslr camera with 18-55mm f/3.5-5.6 stm lens",
           "category": "Cameras",
           "imageUrl": "https://www.bhphotovideo.com/images/images1000x1000/canon_8469b009_canon_eos_70d_dslr_986390.jpg",
           "mfg": "Canon",
@@ -110,25 +147,35 @@ export const mockSnapshop = {
             "254173":{checkedIn: false, damaged: false, missing: true}
           }
         }
+      ]
       }
     }
   },
   kits: {
     [tennantId]: {
-      [kitId]: {
+      index: {
+        [kitId]: 0
+      },
+      data: [{
         name: 'Sony FS7 Kit',
+        lowerName: 'sony fs7 kit',
+        isKit: true,
         children: {
           [equipmentIds.sonyCam]: true,
           [equipmentIds.sonyLens]: true,
           [equipmentIds.manfrottoTripod]: true
         }
-      }
+      }]
     }
   },
   reservations: {
     [tennantId]: {
       [userId]: {
-        [reservationId]: {
+        index:{
+          [reservationId]: 0
+        },
+        data: [{
+          id: reservationId,
           start: reservationStartDate,
           user: userId,
           cart: {
@@ -136,6 +183,7 @@ export const mockSnapshop = {
           },
           late: false
         }
+       ]
       }
     }
   }

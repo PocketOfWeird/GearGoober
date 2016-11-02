@@ -16,6 +16,18 @@ Object.keys(_error).forEach(function (key) {
   });
 });
 
+var _filters = require('./filters');
+
+Object.keys(_filters).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _filters[key];
+    }
+  });
+});
+
 var _hashers = require('./hashers');
 
 Object.keys(_hashers).forEach(function (key) {
@@ -48,6 +60,18 @@ Object.keys(_startup).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _startup[key];
+    }
+  });
+});
+
+var _socket = require('./socket');
+
+Object.keys(_socket).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _socket[key];
     }
   });
 });

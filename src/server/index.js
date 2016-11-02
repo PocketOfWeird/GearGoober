@@ -1,12 +1,10 @@
-import configureStore from './store/configureStore'
-import { startServer, mockSnapshop } from './helpers'
+import configureStore from './store'
+import { startServer, startSocketIo, mockSnapshop } from './helpers'
 import { hydrateFromSnapshot } from './actions'
-//import undb from './undb'
+
 
 const store = configureStore()
-
-//store.subscribe(() => console.log(store.getState())) // eslint-disable-line no-console
+const server = startServer(store)
+export const io = startSocketIo(server, store)
 
 store.dispatch(hydrateFromSnapshot(mockSnapshop))
-
-startServer(store)

@@ -1,16 +1,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Search from '../../components/shared/Search'
+import { clientGet } from '../../actions'
 
 
-const mapStateToProps = (state) => ({
-  dataSource: state.equipmentSearch.get('suggestions'),
+const makeMapStateToProps = substate => state => ({
+  dataSource: state.data[substate + 'Suggestions'] || [],
 })
 
-const mapDispatchToProps = (dispatch) => ({
+const makeMapDispatchToProps = substate => dispatch => ({
   handleUpdateInput: value => {
-    dispatch(getSuggestions(value, 'equipment'))
+    if (value.length > 2) {
+      dispatch(clientGet(substate, {
+        type: 'suggestions', text: value.toLowerCase()
+      }))
+    }
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search)
+const makeSearchContainer = substate => {
+  const mapStateToProps = makeMapStateToProps(substate)
+  const mapDispatchToProps = makeMapDispatchToProps(substate)
+  return connect(mapStateToProps, mapDispatchToProps)(Search)
+}
+
+export default makeSearchContainer

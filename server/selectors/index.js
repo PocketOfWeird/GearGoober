@@ -1,37 +1,40 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-//TODO: import { createSelector } from 'reselect'
-//import filter from 'lodash/filter'
+exports.stateSelector = exports.getSpecificUser = undefined;
 
-var categories = function categories(state, user) {
-  return state.categories[user.tennant];
-};
+var _users = require('./users');
 
-var equipment = function equipment(state, user) {
-
-  if (user.is.labworker) {
-    // return both equipment in kits and not in kits
-    return Object.assign({}, state.equipment[user.tennant].inKit, state.equipment[user.tennant].notInKit);
+Object.defineProperty(exports, 'getSpecificUser', {
+  enumerable: true,
+  get: function get() {
+    return _users.getSpecificUser;
   }
-  return state.equipment[user.tennant].notInKit;
-};
+});
 
-var kits = function kits(state, user) {
-  return state.kits[user.tennant];
-};
+var _users2 = _interopRequireDefault(_users);
 
-var reservations = function reservations(state, user) {
-  return state.reservations[user.tennant][user.id];
-};
+var _equipment = require('./equipment');
 
-var stateSelector = exports.stateSelector = function stateSelector(state, user) {
-  return Object.assign({}, {
-    categories: categories(state, user),
-    equipment: equipment(state, user),
-    kits: kits(state, user),
-    reservations: reservations(state, user)
-  });
+var _equipment2 = _interopRequireDefault(_equipment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var stateSelector = exports.stateSelector = function stateSelector(state, _ref) {
+  var user = _ref.user,
+      substate = _ref.substate,
+      query = _ref.query;
+
+  switch (substate) {
+    case 'tennants':
+      return { tennant: state.tennants[user.tennant] };
+    case 'users':
+      return (0, _users2.default)(state.users[user.tennant], user, query);
+    case 'equipment':
+      return (0, _equipment2.default)(state, user, query);
+    default:
+      return {};
+  }
 };

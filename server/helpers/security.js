@@ -12,6 +12,10 @@ var _expressContentLengthValidator = require('express-content-length-validator')
 
 var _expressContentLengthValidator2 = _interopRequireDefault(_expressContentLengthValidator);
 
+var _token = require('./token');
+
+var _token2 = _interopRequireDefault(_token);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var helmetSetup = function helmetSetup(host) {
@@ -38,8 +42,7 @@ var setupSecurity = function setupSecurity(app, config) {
   app.use(helmetSetup(app.get('host')));
   app.use(require('body-parser').json());
   app.use(_expressContentLengthValidator2.default.validateMax());
-  app.set('secret', config.secret);
-  app.set('algorithm', config.algorithm);
+  app.use('/data', (0, _token2.default)(config.secret, config.algorithm));
   // Security: TODO: Add express-enforces-ssl
 };
 

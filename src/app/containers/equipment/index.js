@@ -2,14 +2,15 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-//import SearchContainer from '../shared/SearchContainer'
+import makeSearchContainer from '../shared/SearchContainer'
 import { setCurrentView } from '../../actions'
 
+const SearchContainer = makeSearchContainer('equipment')
 
 const EquipmentViewsContainer = ({ is, view, handleActive }) => (
   <Tabs value={view.first()}>
     <Tab label='Search' value='search' onActive={handleActive}>
-      <p>Search</p>
+      <SearchContainer />
     </Tab>
     {is.labworker &&
       <Tab label='Add' value='add' onActive={handleActive}>

@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
-import { jsonOrError, authorizedGet, anonymousPost } from '../helpers'
+import { jsonOrError, authorizedGet, anonymousPost,
+  authorizedPost } from '../helpers'
 import { raiseError } from '../actions'
 
 
@@ -18,4 +19,8 @@ export const fetchGet = (endpoint, callback) => (dispatch, getState) => {
 
 export const fetchPostAnonymous = (endpoint, callback, body) => (dispatch) => {
   return fetcher(endpoint, callback, anonymousPost(body), dispatch)
+}
+
+export const fetchPost = (endpoint, callback, body) => (dispatch, getState) => {
+  return fetcher(endpoint, callback, authorizedPost(getState(), body), dispatch)
 }
