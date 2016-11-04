@@ -1,6 +1,12 @@
-// NOTE: horizon client config
+import secrets from '../../.config/secrets'
+
+
+// NOTE: firebase client config
 const config = {
-  authType: 'token'
+    apiKey: secrets.apiKey,
+    authDomain: secrets.authDomain,
+    databaseURL: secrets.databaseURL,
+    storageBucket: secrets.storageBucket
 }
 
 export default config

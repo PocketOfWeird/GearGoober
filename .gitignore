@@ -1,8 +1,3 @@
-# horizon files
-rethinkdb_data
-**/*.log
-.hz
-
 # nyc test coverage
 .nyc_output
 
@@ -12,12 +7,13 @@ build/Release
 # Dependency directories
 node_modules
 
-# Static Script Bundles
-dist/bundle.js
-dist/bundle.min.js
+# Static Files
+public/bundle.js
+public/bundle.min.js
+favicon.png
+logo_sm.png
+Roboto-Regular.ttf
 
 # Other folders and files
 old
-staging
-error_notes.txt
 .config

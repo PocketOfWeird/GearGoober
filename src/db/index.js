@@ -1,10 +1,10 @@
-import Horizon from '@horizon/client'
+import Firebase from 'firebase'
 import config from './config'
 
 
-export const horizon = new Horizon(config)
+export const firebase = Firebase.initializeApp(config)
 
-export const authenticated = () => horizon.hasAuthToken()
+export const authenticated = () => firebase.currentUser ? true : false
 
 export const loginWith = provider => {
   horizon.authEndpoint(provider).subscribe(endpoint => {
