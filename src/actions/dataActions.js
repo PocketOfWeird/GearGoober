@@ -1,8 +1,8 @@
-export const HORIZON_STATE = 'HORIZON_STATE'
+export const FIREBASE_STATE = 'FIREBASE_STATE'
 export const HORIZON_FETCH = 'HORIZON_FETCH'
 
-export const horizonState = (state) => ({
-  type: HORIZON_STATE,
+export const firebaseState = (state) => ({
+  type: FIREBASE_STATE,
   payload: state
 })
 

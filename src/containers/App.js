@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { isRegistered } from '../selectors'
+import { isLoggedIn, isRegistered } from '../selectors'
 import { loginWith } from '../db'
 import LoginWith from '../components/forms/LoginWith'
 import ViewsContainer from './shared/ViewsContainer'
@@ -35,6 +35,7 @@ App.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  loggedIn: state.data.user ? true : false,
   registered: isRegistered(state)
 })
 
