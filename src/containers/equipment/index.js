@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import {Tabs, Tab} from 'material-ui/Tabs'
+import { getPermissions } from '../../selectors'
 import makeSearchContainer from '../shared/SearchContainer'
 import { setCurrentView } from '../../actions'
 
@@ -32,9 +33,7 @@ EquipmentViewsContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  is: {
-    labworker: state.data.user ? state.data.user.groups.includes('labworker') : false
-  }
+  is: getPermissions(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
