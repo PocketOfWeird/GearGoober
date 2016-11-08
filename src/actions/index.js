@@ -1,4 +1,4 @@
-export * from './authActions'
+export * from './userActions'
 export * from './errorActions'
 export * from './formActions'
 export * from './viewActions'

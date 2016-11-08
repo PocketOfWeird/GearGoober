@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import auth from './authReducer'
+import user from './userReducer'
 import data from './dataReducer'
 import error from './errorReducer'
 import form from './formReducer'
@@ -7,7 +7,7 @@ import view from './viewReducer'
 
 
 const rootReducer = combineReducers({
-  auth,
+  user,
   data,
   form,
   view

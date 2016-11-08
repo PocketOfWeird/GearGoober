@@ -19,14 +19,7 @@ export const loginWith = provider => {
   firebase.auth().signInWithRedirect(providers[provider])
 }
 
-firebase.auth().getRedirectResult().then(function(result) {
-  if (result.credential) {
-    store.dispatch(authSuccess({
-      providerToken: result.credential.accessToken,
-      user: result.user
-    }))
-  }
-  }).catch(function(error) {
+firebase.auth().getRedirectResult().catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code
     var errorMessage = error.message
