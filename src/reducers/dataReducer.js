@@ -1,8 +1,8 @@
-import { HORIZON_STATE } from '../actions'
+import { FIREBASE_STATE } from '../actions'
 
 const data = (state = {}, action) => {
   switch (action.type) {
-    case HORIZON_STATE:
+    case FIREBASE_STATE:
       return Object.assign({}, state, action.payload)
     default:
       return state

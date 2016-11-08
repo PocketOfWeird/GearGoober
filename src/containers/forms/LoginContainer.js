@@ -1,22 +1,26 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Map } from 'immutable'
 import { formValueChange, formValueValidate, submitForm,
-   authenticate } from '../../actions'
+logInUser } from '../../actions'
 import Login from '../../components/forms/Login'
 
 
-const emptyMap = Map()
+const requiredFields = ['email', 'password']
 
 const mapStateToProps = (state) => ({
-  values: state.form.get('values') || emptyMap,
-  errors: state.form.get('errors') || emptyMap
+  values: state.form.values,
+  errors: state.form.errors
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  handleChange: e => dispatch(formValueChange(e)),
+  handleChange: e => {
+    if (e.key === 'Enter') {
+      dispatch(submitForm(requiredFields, logInUser))
+    }
+    dispatch(formValueChange(e))
+  },
   handleBlur: e => dispatch(formValueValidate(e)),
-  handleSubmit: e => dispatch(submitForm(['email', 'password'], authenticate))
+  handleSubmit: e => dispatch(submitForm(requiredFields, logInUser))
 })
 
 export default connect(

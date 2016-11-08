@@ -1,11 +1,11 @@
-import { AUTH_SUCCESS, AUTH_CLEAR } from '../actions'
+import { USER_UPDATED, USER_OUT } from '../actions'
 
 
 const user = (state = {}, action) => {
   switch (action.type) {
-    case AUTH_SUCCESS:
-      return action.payload.user
-    case AUTH_CLEAR:
+    case USER_UPDATED:
+      return action.payload
+    case USER_OUT:
       return {}
     default:
       return state

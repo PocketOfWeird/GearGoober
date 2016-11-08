@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Card, CardHeader} from 'material-ui/Card'
 import Logo from '../../components/shared/Logo'
 import EquipmentViewsContainer from '../equipment'
+import SettingsContainer from '../settings'
 
 
 const ViewsContainer = ({ tennantName, view }) => (
@@ -17,7 +18,7 @@ const ViewsContainer = ({ tennantName, view }) => (
       <p>Groups</p>
     }
     {view[0] === 'settings' &&
-      <p>Settings</p>
+      <SettingsContainer />
     }
   </div>
 )

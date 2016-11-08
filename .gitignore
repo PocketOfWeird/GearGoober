@@ -4,6 +4,9 @@
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
+# npm
+npm-debug.log
+
 # Dependency directories
 node_modules
 
@@ -13,6 +16,10 @@ public/bundle.min.js
 favicon.png
 logo_sm.png
 Roboto-Regular.ttf
+
+# Firebase files
+firebase-debug.log
+
 
 # Other folders and files
 old
