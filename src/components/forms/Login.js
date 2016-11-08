@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -21,8 +20,8 @@ const Login = ({
         type='email'
         floatingLabelText='Email'
         fullWidth={true}
-        value={values.get('email') || ''}
-        errorText={errors.get('email') || ''}
+        value={values.email || ''}
+        errorText={errors.email || ''}
         onChange={handleChange}
         onBlur={handleBlur}
       />
@@ -31,8 +30,8 @@ const Login = ({
         type='password'
         floatingLabelText='Password'
         fullWidth={true}
-        value={values.get('password') || ''}
-        errorText={errors.get('password') || ''}
+        value={values.password || ''}
+        errorText={errors.password || ''}
         onChange={handleChange}
       />
     </CardText>
@@ -46,8 +45,8 @@ const Login = ({
 )
 
 Login.propTypes = {
-  values: ImmutablePropTypes.map.isRequired,
-  errors: ImmutablePropTypes.map.isRequired,
+  values: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired

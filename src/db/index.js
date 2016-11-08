@@ -11,6 +11,14 @@ export default firebase
   AUTHENTICATION FUNCTIONS
 =============================================================================*/
 
+export const login = (email, password) => {
+  return firebase.auth().signInWithEmailAndPassword(email, password)
+}
+
+export const logout = () => {
+  return firebase.auth().signOut()
+}
+
 const providers = {
   'github': new Firebase.auth.GithubAuthProvider()
 }

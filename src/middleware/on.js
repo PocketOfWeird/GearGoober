@@ -8,9 +8,9 @@ const on = store => next => action => {
     // User
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        firebase.database().ref('/users/' + user.uid).on('value')
-        .then(snapshot => {
-          store.dispatch(updateUser(snapshot.exportVal))
+        firebase.database().ref('/users/' + user.uid)
+        .on('value', snapshot => {
+          store.dispatch(updateUser(snapshot.exportVal()))
         })
       }
     })

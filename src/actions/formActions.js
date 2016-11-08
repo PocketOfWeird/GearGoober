@@ -1,4 +1,4 @@
-import { validateValue, validateForm } from '../helpers'
+import { validateValue, validateForm, isEmptyObject } from '../helpers'
 
 
 export const FORM_VALUE_CHANGE = 'FORM_VALUE_CHANGE'
@@ -18,7 +18,7 @@ export const formValueValidate = (e) => ({
   type: FORM_VALUE_VALIDATE,
   payload: {
     name: e.target.name,
-    error: validateValue(e.target.value, e.target.type)
+    value: validateValue(e.target.value, e.target.type)
   }
 })
 
@@ -32,9 +32,9 @@ export const formReset = () => ({
 })
 
 export const submitForm = (requiredFields, callback) => (dispatch, getState) => {
-  let values = getState().form.get('values')
+  const values = getState().form.values
   let formErrors = validateForm(values, requiredFields)
-  if (formErrors.size !== 0) {
+  if (!isEmptyObject(formErrors)) {
     return dispatch(formError(formErrors))
   }
   return dispatch(callback(values))

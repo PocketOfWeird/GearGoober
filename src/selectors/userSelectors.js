@@ -1,5 +1,5 @@
 export const isLoggedIn = state => {
-  if (!state.user.email) return false
+  if (!state.user || !state.user.email) return false
   return true
 }
 

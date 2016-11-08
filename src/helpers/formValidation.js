@@ -15,10 +15,10 @@ export const validateForm = (values, requiredFields) => {
   let errors = {}
 
   requiredFields.forEach(field => {
-    if (!values.get(field)) {
+    if (!values[field]) {
       errors[field] = 'Required'
     }
   })
 
-  return Map(errors)
+  return errors
 }

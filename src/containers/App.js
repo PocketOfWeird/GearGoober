@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { loginWith } from '../db'
 import { isLoggedIn } from '../selectors'
-import LoginWith from '../components/forms/LoginWith'
+import LoginContainer from './forms/LoginContainer'
 import ViewsContainer from './shared/ViewsContainer'
 import NavBarContainer from './shared/NavBarContainer'
 import Registration from './forms/Registration'
@@ -17,9 +17,7 @@ const App = ({ loggedIn }) => (
         <NavBarContainer />
       </div>
       : // if not logged in
-      <LoginWith
-        handleTouchTap={provider => () => loginWith(provider)}
-      />
+      <LoginContainer />
     }
     <ErrorContainer />
   </div>
