@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { authClear } from '../../actions'
+import { logOutUser } from '../../actions'
 import Settings from '../../components/Settings'
 
 
@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleLogOut: e => dispatch(authClear())
+  handleLogOut: e => dispatch(logOutUser())
 })
 
 export default connect(

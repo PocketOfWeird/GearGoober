@@ -1,13 +1,13 @@
 export const FIREBASE_STATE = 'FIREBASE_STATE'
-export const HORIZON_FETCH = 'HORIZON_FETCH'
+export const FIREBASE_ONCE = 'FIREBASE_ONCE'
 
-export const firebaseState = (state) => ({
+export const firebaseState = state => ({
   type: FIREBASE_STATE,
   payload: state
 })
 
-export const horizonFetch = (collection, query) => ({
-  type: HORIZON_FETCH,
-  payload: {},
-  meta: { collection, query }
+export const firebaseOnce = (path, key) => ({
+  type: FIREBASE_ONCE,
+  path,
+  key
 })

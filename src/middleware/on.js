@@ -7,7 +7,12 @@ const on = store => next => action => {
     // Setup Observers
     // User
     firebase.auth().onAuthStateChanged(user => {
-        if (user) store.dispatch(updateUser(user))
+      if (user) {
+        firebase.database().ref('/users/' + user.uid).on('value')
+        .then(snapshot => {
+          store.dispatch(updateUser(snapshot.exportVal))
+        })
+      }
     })
   }
   return next(action)
