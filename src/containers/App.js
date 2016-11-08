@@ -1,34 +1,35 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import SimpleLogin from './SimpleLogin'
-import BreadcrumbContainer from './BreadcrumbContainer'
-import ViewContainer from './views'
-import NavBar from '../components/NavBar'
+import { loginWith } from '../db'
+import { isLoggedIn } from '../selectors'
+import LoginContainer from './forms/LoginContainer'
+import ViewsContainer from './shared/ViewsContainer'
+import NavBarContainer from './shared/NavBarContainer'
+import Registration from './forms/Registration'
+import ErrorContainer from './shared/ErrorContainer'
 
 
-const App = ({ activeParentView, loggedIn }) => (
+const App = ({ loggedIn }) => (
   <div>
-    {!loggedIn &&
-      <SimpleLogin />
-    }
-    {loggedIn &&
+    {loggedIn ?
       <div>
-        <BreadcrumbContainer />
-        <ViewContainer />
-        <NavBar activeParentView={activeParentView} />
+        <ViewsContainer />
+        <NavBarContainer />
       </div>
+      : // if not logged in
+      <LoginContainer />
     }
+    <ErrorContainer />
   </div>
 )
 
 App.propTypes = {
-  activeParentView: PropTypes.string,
   loggedIn: PropTypes.bool.isRequired
 }
 
-const mapStateToProps = (state) => ({
-  activeParentView: state.hasIn(['views', 'activeView']) ? state.getIn(['views', 'activeView']).first() : '',
-  loggedIn: state.getIn(['auth', 'token']) ? true : false
+const mapStateToProps = state => ({
+  loggedIn: isLoggedIn(state)
 })
+
 
 export default connect(mapStateToProps)(App)

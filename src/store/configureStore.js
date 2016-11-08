@@ -1,14 +1,12 @@
-import { Map } from 'immutable'
 import { createStore } from 'redux'
-import rootReducer from './reducers'
-import configureMiddleware, { loadStateFromCookies } from './middlewares'
+import rootReducer from '../reducers'
+import configureMiddleware, { hydrateState } from '../middleware'
 
-let preLoadedState = loadStateFromCookies()
 
 const configureStore = () => {
   return createStore(
     rootReducer,
-    preLoadedState ? preLoadedState : Map(),
+    hydrateState() || {},
     configureMiddleware()
   )
 }
