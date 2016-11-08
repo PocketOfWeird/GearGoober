@@ -1,9 +1,9 @@
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_CLEAR = 'AUTH_CLEAR'
 
-const authSuccess = (userData) => ({
+export const authSuccess = (authData) => ({
   type: AUTH_SUCCESS,
-  payload: userData
+  payload: authData
 })
 
 export const authClear = () => ({

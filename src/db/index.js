@@ -1,6 +1,6 @@
 import Firebase from 'firebase'
 import config from './config'
-import { firebaseState } from '../actions'
+import { authSuccess } from '../actions'
 import { store } from '../containers'
 
 
@@ -21,7 +21,7 @@ export const loginWith = provider => {
 
 firebase.auth().getRedirectResult().then(function(result) {
   if (result.credential) {
-    store.dispatch(firebaseState({
+    store.dispatch(authSuccess({
       providerToken: result.credential.accessToken,
       user: result.user
     }))

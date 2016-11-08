@@ -1,10 +1,10 @@
 import { AUTH_SUCCESS, AUTH_CLEAR } from '../actions'
 
 
-const user = (state = {}, action) => {
+const auth = (state = {}, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:
-      return action.payload.user
+      return action.payload
     case AUTH_CLEAR:
       return {}
     default:
@@ -13,4 +13,4 @@ const user = (state = {}, action) => {
 }
 
 
-export default user
+export default auth

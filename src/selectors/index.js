@@ -1,2 +1,2 @@
-export * from './userSelectors'
+export * from './authSelectors'
 export * from './viewSelectors'
