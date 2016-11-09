@@ -1,9 +1,18 @@
 import chai, { expect } from 'chai'
-import configureStore from '../src/store/configureStore'
+import { createStore } from 'redux'
 
 describe('app', () => {
 
-  const store = configureStore()
+  const reducer = (state = {}, action) => {
+    switch (action.type) {
+      case 'INITIALIZE':
+        return { a: 1 }
+      default:
+        return state
+    }
+  }
+
+  const store = createStore(reducer)
 
   it('has a redux store', () => {
 
