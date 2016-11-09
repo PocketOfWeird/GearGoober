@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { loginWith } from '../db'
-import { isLoading, isLoggedIn } from '../selectors'
-import LoginContainer from './forms/LoginContainer'
-import FullScreenLoader from './shared/FullScreenLoader'
-import ViewsContainer from './shared/ViewsContainer'
-import NavBarContainer from './shared/NavBarContainer'
-import Registration from './forms/Registration'
-import ErrorContainer from './shared/ErrorContainer'
+import { loginWith } from '../../db'
+import { isLoading, isLoggedIn } from '../../selectors'
+import LoginContainer from '../forms/LoginContainer'
+import FullScreenLoader from './FullScreenLoader'
+import ViewsContainer from './ViewsContainer'
+import NavBarContainer from './NavBarContainer'
+import Registration from '../forms/Registration'
+import ErrorContainer from './ErrorContainer'
 
 
 const App = ({ loggingIn, loggedIn }) => (
