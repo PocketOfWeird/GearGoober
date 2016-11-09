@@ -9,7 +9,5 @@ export const isRegistered = state => {
 }
 
 export const getPermissions = state => {
-  return {
-    labworker: true
-  }
+  return state.user.is
 }
