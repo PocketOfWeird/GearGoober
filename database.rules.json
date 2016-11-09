@@ -1,6 +1,9 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": "false"
+    ".write": "false",
+    "users": {
+      ".indexOn": ["tennant"]
+    }
   }
 }
