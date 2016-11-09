@@ -1,16 +1,20 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { loginWith } from '../db'
-import { isLoggedIn } from '../selectors'
+import { isLoading, isLoggedIn } from '../selectors'
 import LoginContainer from './forms/LoginContainer'
+import FullScreenLoader from './shared/FullScreenLoader'
 import ViewsContainer from './shared/ViewsContainer'
 import NavBarContainer from './shared/NavBarContainer'
 import Registration from './forms/Registration'
 import ErrorContainer from './shared/ErrorContainer'
 
 
-const App = ({ loggedIn }) => (
+const App = ({ loggingIn, loggedIn }) => (
   <div>
+    {loggingIn &&
+      <FullScreenLoader />
+    }
     {loggedIn ?
       <div>
         <ViewsContainer />
@@ -28,6 +32,7 @@ App.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  loggingIn: isLoading(state),
   loggedIn: isLoggedIn(state)
 })
 

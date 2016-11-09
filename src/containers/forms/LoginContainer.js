@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { formValueChange, formValueValidate, submitForm,
 logInUser } from '../../actions'
+import { isLoading } from '../../selectors'
 import Login from '../../components/forms/Login'
 
 
@@ -9,7 +10,8 @@ const requiredFields = ['email', 'password']
 
 const mapStateToProps = (state) => ({
   values: state.form.values,
-  errors: state.form.errors
+  errors: state.form.errors,
+  isLoading: isLoading(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({

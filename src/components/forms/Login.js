@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 
 const Login = ({
-  values, errors,
+  values, errors, isLoading,
   handleChange, handleBlur, handleSubmit
 }) => (
   <Card>
@@ -24,6 +24,7 @@ const Login = ({
         errorText={errors.email || ''}
         onChange={handleChange}
         onBlur={handleBlur}
+        disabled={isLoading}
       />
       <TextField
         name='password'
@@ -33,12 +34,14 @@ const Login = ({
         value={values.password || ''}
         errorText={errors.password || ''}
         onChange={handleChange}
+        disabled={isLoading}
       />
     </CardText>
     <CardActions>
       <RaisedButton
         label='Login'
         onTouchTap={handleSubmit}
+        disabled={isLoading}
       />
     </CardActions>
   </Card>
@@ -47,6 +50,7 @@ const Login = ({
 Login.propTypes = {
   values: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired
