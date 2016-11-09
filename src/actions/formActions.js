@@ -37,5 +37,6 @@ export const submitForm = (requiredFields, callback) => (dispatch, getState) => 
   if (!isEmptyObject(formErrors)) {
     return dispatch(formError(formErrors))
   }
+  dispatch(formReset())
   return dispatch(callback(values))
 }
