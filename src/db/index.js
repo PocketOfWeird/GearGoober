@@ -1,7 +1,6 @@
 import Firebase from 'firebase'
 import config from './config'
 import { authSuccess } from '../actions'
-import { store } from '../containers'
 
 
 const firebase = Firebase.initializeApp(config)

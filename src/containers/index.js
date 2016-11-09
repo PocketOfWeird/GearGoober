@@ -6,7 +6,7 @@ import App from './app'
 
 
 // Create the redux store
-export const store = configureStore()
+let store = configureStore()
 store.dispatch({ type: 'INITIALIZE'})
 
 // Build the root React Component
