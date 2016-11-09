@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { loginWith } from '../../db'
-import { isLoading, isLoggedIn } from '../../selectors'
+import { isLoading, isLoggedIn, isRegistering } from '../../selectors'
 import LoginContainer from '../forms/LoginContainer'
 import FullScreenLoader from './FullScreenLoader'
 import ViewsContainer from './ViewsContainer'
@@ -10,7 +10,7 @@ import Registration from '../forms/Registration'
 import ErrorContainer from './ErrorContainer'
 
 
-const App = ({ loggingIn, loggedIn }) => (
+const App = ({ loggingIn, loggedIn, registering }) => (
   <div>
     {loggingIn &&
       <FullScreenLoader />
@@ -20,7 +20,10 @@ const App = ({ loggingIn, loggedIn }) => (
         <ViewsContainer />
         <NavBarContainer />
       </div>
-      : // if not logged in
+      : registering ?
+        <Registration />
+      :
+      // if not logged in and registered
       <LoginContainer />
     }
     <ErrorContainer />
@@ -28,12 +31,15 @@ const App = ({ loggingIn, loggedIn }) => (
 )
 
 App.propTypes = {
-  loggedIn: PropTypes.bool.isRequired
+  loggingIn: PropTypes.bool.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  registering: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
   loggingIn: isLoading(state),
-  loggedIn: isLoggedIn(state)
+  loggedIn: isLoggedIn(state),
+  registering: isRegistering(state),
 })
 
 

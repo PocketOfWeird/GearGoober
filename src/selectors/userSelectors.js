@@ -1,6 +1,6 @@
 export const isLoggedIn = state => {
   if (!state.user || !state.user.email) return false
-  return true
+  return false
 }
 
 export const isRegistered = state => {

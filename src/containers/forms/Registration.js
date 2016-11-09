@@ -4,7 +4,7 @@ import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import Logo from '../../components/shared/Logo'
 
-const Registration = ({ user }) => (
+const Registration = ({ tennant }) => (
   <div>
     <Logo title='Gear Goober' />
     <Card>
@@ -18,10 +18,8 @@ const Registration = ({ user }) => (
           type='email'
           floatingLabelText='Your School Email'
           fullWidth={true}
-          value={values.get('email') || ''}
-          errorText={errors.get('email') || ''}
-          onChange={handleChange}
-          onBlur={handleBlur}
+          value={''}
+          errorText={''}
         />
       </CardText>
     </Card>
@@ -29,11 +27,11 @@ const Registration = ({ user }) => (
 )
 
 Registration.propTypes = {
-  user: PropTypes.object
+  tennant: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({
-  user: state.data.user
+  tennant: state.view.current[1]
 })
 
 export default connect(mapStateToProps)(Registration)
