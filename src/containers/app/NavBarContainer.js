@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import NavBar from '../../components/shared/NavBar'
+import NavBar from '../../components/NavBar'
 import { setCurrentView } from '../../actions'
 import { firstViewToIndex } from '../../selectors'
 

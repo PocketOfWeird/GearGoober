@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { clearError } from '../../actions'
-import Notification from '../../components/shared/Notification'
+import Notification from '../../components/Notification'
 
 
 const mapStateToProps = (state) => ({

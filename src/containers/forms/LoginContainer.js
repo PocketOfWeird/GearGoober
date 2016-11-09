@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { formValueChange, formValueValidate, submitForm,
 logInUser } from '../../actions'
 import { isLoading } from '../../selectors'
-import Login from '../../components/forms/Login'
+import Login from '../../components/Login'
 
 
 const requiredFields = ['email', 'password']

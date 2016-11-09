@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Card, CardHeader} from 'material-ui/Card'
-import Logo from '../../components/shared/Logo'
+import Logo from '../../components/Logo'
 import EquipmentViewsContainer from '../equipment'
 import SettingsContainer from '../settings'
 

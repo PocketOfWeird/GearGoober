@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
-import Logo from '../../components/shared/Logo'
+import Logo from './Logo'
 
 const Registration = ({ tennant }) => (
   <div>
@@ -30,8 +30,4 @@ Registration.propTypes = {
   tennant: PropTypes.string.isRequired
 }
 
-const mapStateToProps = state => ({
-  tennant: state.view.current[1]
-})
-
-export default connect(mapStateToProps)(Registration)
+export default Registration
