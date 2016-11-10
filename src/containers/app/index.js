@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { loginWith } from '../../db'
 import { isLoading, isLoggedIn, isRegistering } from '../../selectors'
 import LoginContainer from '../forms/LoginContainer'
-import FullScreenLoader from '../components/FullScreenLoader'
+import FullScreenLoader from '../../components/FullScreenLoader'
 import ViewsContainer from './ViewsContainer'
 import NavBarContainer from './NavBarContainer'
-import Registration from '../forms/Registration'
+import Registration from '../forms/RegistrationContainer'
 import ErrorContainer from './ErrorContainer'
 
 
