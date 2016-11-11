@@ -6,8 +6,10 @@ export const firebaseState = state => ({
   payload: state
 })
 
-export const firebaseOnce = (path, key) => ({
+export const firebaseOnce = (path, key, tennant, query={}) => ({
   type: FIREBASE_ONCE,
   path,
-  key
+  key,
+  tennant,
+  query
 })

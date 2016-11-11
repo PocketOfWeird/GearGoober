@@ -1,9 +1,17 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "false",
     "users": {
-      ".indexOn": ["tennant"]
+      "$user": {
+        ".read": "auth.uid === $user",
+        ".write": "auth.uid === $user",
+      },
+    ".indexOn": ["tennant"]
+    },
+    "groups": {
+      "$tennant": {
+        ".read": true,
+        ".indexOn": ["current"]
+      }
     }
   }
 }

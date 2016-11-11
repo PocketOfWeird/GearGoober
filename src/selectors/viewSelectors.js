@@ -29,5 +29,5 @@ export const firstViewToIndex = createSelector(
 )
 
 export const isRegistering = state => {
-  return true //state.view.current[0] === 'register'
+  return state.view.current[0] === 'register'
 }
