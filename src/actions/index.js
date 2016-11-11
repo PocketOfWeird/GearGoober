@@ -1,3 +1,4 @@
+export * from './tennantActions'
 export * from './userActions'
 export * from './errorActions'
 export * from './formActions'

@@ -1,5 +1,5 @@
 import firebase from '../db'
-import { firebaseOnce, SET_CURRENT_VIEW } from '../actions'
+import { setTennant, firebaseOnce, SET_CURRENT_VIEW } from '../actions'
 import { needsData, getDataAction } from '../helpers'
 
 
@@ -9,7 +9,9 @@ const view = store => next => action => {
     const view = action.payload.current
 
     if (view[0] === 'register') {
-      store.dispatch(firebaseOnce('/groups', 'groups', view[1],
+      const tennant = view[1]
+      store.dispatch(setTennant(tennant))
+      store.dispatch(firebaseOnce('/groups', 'groups', tennant,
         { key: 'current', value: true }
       ))
     }

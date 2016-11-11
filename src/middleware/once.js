@@ -14,7 +14,7 @@ const once = store => next => action => {
     }
 
     ref.once('value').then(snapshot => {
-      store.dispatch(firebaseState({ [action.key]: snapshot.exportVal() }))
+      store.dispatch(firebaseState({ [action.key]: snapshot.val() }))
     })
   }
   return next(action)

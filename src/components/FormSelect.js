@@ -11,20 +11,21 @@ const FormSelect = (props) => (
     value={props.values[props.name] || ''}
     errorText={props.errors[props.name] || ''}
     disabled={props.isLoading}
-    onChange={props.handleChange}
+    onChange={props.handleChange(props.name)}
   >
-    {props.children.map((item, key) =>
+    {props.children.map((child, key) =>
       <MenuItem
         key={key}
-        value={item.value}
-        primaryText={item.name}
-        secondaryText={item.subName ? item.subName : ''}
+        value={child.props.value}
+        primaryText={child.props.name}
+        secondaryText={child.props.subName || ''}
       />
     )}
   </SelectField>
 )
 
 FormSelect.propTypes = {
+  name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   values: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,

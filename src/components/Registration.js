@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import map from 'lodash.map'
 import { Card, CardText, CardActions } from 'material-ui/Card'
 import Logo from './Logo'
 
@@ -18,7 +19,7 @@ const Registration = (FormFieldsContainer,
           name='group'
           label='Select a Group'
         >
-          {groups.map((group, key) =>
+          {map(groups, (group, key) =>
             <div
               key={key}
               value={group.id}

@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { formValueChange } from '../../actions'
+import { formSelectChange } from '../../actions'
 import { formMapStateToProps } from '../../helpers'
 import FormSelect from '../../components/FormSelect'
 
 
-const defaultChangeHandler = dispatch => e => dispatch(formValueChange(e))
+const defaultChangeHandler = dispatch => name => (e, key, value) =>
+  dispatch(formSelectChange(name, value))
 
 const makeMapDispatchToProps = changeHandler => dispatch => ({
   handleChange: changeHandler(dispatch)

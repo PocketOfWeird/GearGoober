@@ -9,8 +9,16 @@ export const FORM_RESET = 'FORM_RESET'
 export const formValueChange = (e) => ({
   type: FORM_VALUE_CHANGE,
   payload: {
-    name: e.target.name || e.target.id,
+    name: e.target.name,
     value: e.target.value
+  }
+})
+
+export const formSelectChange = (name, value) => ({
+  type: FORM_VALUE_CHANGE,
+  payload: {
+    name,
+    value
   }
 })
 
