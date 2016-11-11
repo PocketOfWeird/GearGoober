@@ -3,17 +3,21 @@ import { connect } from 'react-redux'
 import { registerUser } from '../../actions'
 import makeFormFieldsContainer from './FormFieldsContainer'
 import makeFormActionContainer from './FormActionContainer'
+import makeFormSelectContainer from './FormSelectContainer'
 import Registration from '../../components/Registration'
 
 
-const requiredFields = ['email', 'password', 'verifiedPassword']
+const requiredFields = ['email', 'password', 'passwordVerify', 'group']
 const FormFieldsContainer = makeFormFieldsContainer(requiredFields, registerUser)
 const FormActionContainer = makeFormActionContainer(requiredFields, registerUser)
+const FormSelectContainer = makeFormSelectContainer()
 
-const RegistrationContainer = Registration(FormFieldsContainer, FormActionContainer)
+const RegistrationContainer = Registration(
+  FormFieldsContainer, FormActionContainer, FormSelectContainer
+)
 
 const mapStateToProps = state => ({
-  tennant: state.view.current[1]
+  groups: state.data.groups || []
 })
 
 export default connect(mapStateToProps)(RegistrationContainer)

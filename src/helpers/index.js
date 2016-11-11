@@ -1,4 +1,4 @@
-export * from './formValidation'
+export * from './form'
 
 
 // General helpers

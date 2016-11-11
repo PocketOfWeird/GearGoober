@@ -1,15 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { formValueChange, formValueValidate, submitForm } from '../../actions'
-import { isLoading } from '../../selectors'
+import { formMapStateToProps } from '../../helpers'
 import FormFields from '../../components/FormFields'
 
-
-const mapStateToProps = state => ({
-  values: state.form.values,
-  errors: state.form.errors,
-  isLoading: isLoading(state)
-})
 
 const makeMapDispatchToProps = (requiredFields, callback) => dispatch => ({
   handleChange: e => {
@@ -23,7 +17,7 @@ const makeMapDispatchToProps = (requiredFields, callback) => dispatch => ({
 
 const makeFormFieldsContainer = (requiredFields, callback) => {
   const mapDispatchToProps = makeMapDispatchToProps(requiredFields, callback)
-  return connect(mapStateToProps, mapDispatchToProps)(FormFields)
+  return connect(formMapStateToProps, mapDispatchToProps)(FormFields)
 }
 
 export default makeFormFieldsContainer
