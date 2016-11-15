@@ -8,3 +8,4 @@ export const formMapStateToProps = state => ({
 })
 
 export * from './formValidation'
+export * from './registrationForm'

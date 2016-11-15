@@ -8,12 +8,12 @@ const mapStateToProps = state => ({
   isLoading: isLoading(state)
 })
 
-const makeMapDispatchToProps = (requiredFields, callback) => dispatch => ({
-  handleSubmit: e => dispatch(submitForm(requiredFields, callback))
+const makeMapDispatchToProps = (requiredFields, callback, specialValidation) => dispatch => ({
+  handleSubmit: e => dispatch(submitForm(requiredFields, callback, specialValidation))
 })
 
-const makeFormActionContainer = (requiredFields, callback) => {
-  const mapDispatchToProps = makeMapDispatchToProps(requiredFields, callback)
+const makeFormActionContainer = (requiredFields, callback, specialValidation=undefined) => {
+  const mapDispatchToProps = makeMapDispatchToProps(requiredFields, callback, specialValidation)
   return connect(mapStateToProps, mapDispatchToProps)(FormAction)
 }
 

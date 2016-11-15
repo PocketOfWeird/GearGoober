@@ -39,9 +39,14 @@ export const formReset = () => ({
   type: FORM_RESET
 })
 
-export const submitForm = (requiredFields, callback) => (dispatch, getState) => {
+export const submitForm = (
+  requiredFields, callback, specialValidation=undefined
+) => (dispatch, getState) => {
   const values = getState().form.values
   let formErrors = validateForm(values, requiredFields)
+  if (specialValidation !== undefined) {
+    formErrors = specialValidation(values, formErrors)
+  }
   if (!isEmptyObject(formErrors)) {
     return dispatch(formError(formErrors))
   }
