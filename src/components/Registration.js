@@ -11,9 +11,9 @@ const Registration = (FormFieldsContainer,
     <Card>
       <CardText>
         <FormFieldsContainer>
-          <div name='email' label='Your School Email' />
-          <div name='password' label='Password' />
-          <div name='passwordVerify' label='Enter Password Again' type='password' />
+          <div name='firstName' label='First Name' />
+          <div name='lastName' label='Last Name' />
+          <div name='phone' label='Phone' type='tel' />
         </FormFieldsContainer>
         <FormSelectContainer
           name='group'
@@ -28,6 +28,11 @@ const Registration = (FormFieldsContainer,
             />
           )}
         </FormSelectContainer>
+        <FormFieldsContainer>
+          <div name='email' label='Your School Email' />
+          <div name='password' label='Password' />
+          <div name='passwordVerify' label='Enter Password Again' type='password' />
+        </FormFieldsContainer>
       </CardText>
       <CardActions>
         <FormActionContainer label='Register' />

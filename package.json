@@ -35,7 +35,7 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^2.5.4",
     "swipe-js-iso": "^2.0.3",
-    "validator": "^6.0.0"
+    "validator": "^6.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.0",
