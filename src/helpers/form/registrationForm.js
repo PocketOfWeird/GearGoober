@@ -20,3 +20,17 @@ export const registrationFormValidate = (values, formErrors) => {
 
   return newErrors
 }
+
+export const mapRegistrationDataToUser = (formValues, authUser, tennant) => {
+  return {
+    email: authUser.email,
+    firstName: formValues.firstName,
+    fullName: formValues.firstName + ' ' + formValues.lastName,
+    groups: { [formValues.group]: true },
+    is: {},
+    lastName: formValues.lastName,
+    phone: formValues.phone,
+    tennant: tennant,
+    uid: authUser.uid
+  }
+}

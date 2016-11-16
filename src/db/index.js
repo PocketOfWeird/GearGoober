@@ -18,6 +18,15 @@ export const logout = () => {
   return firebase.auth().signOut()
 }
 
+export const register = (email, password) => {
+  return firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
+  })
+}
+
 const providers = {
   'github': new Firebase.auth.GithubAuthProvider()
 }

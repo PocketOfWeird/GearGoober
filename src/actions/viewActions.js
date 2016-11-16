@@ -8,6 +8,11 @@ export const setCurrentView = view => ({
   payload: { current: view }
 })
 
+export const setDefaultView = () => ({
+  type: SET_CURRENT_VIEW,
+  payload: { current: ['equipment', 'search'] }
+})
+
 export const goBackward = () => ({
   type: GO_BACKWARD
 })

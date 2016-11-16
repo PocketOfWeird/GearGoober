@@ -4,5 +4,5 @@ export const isLoggedIn = state => {
 }
 
 export const getPermissions = state => {
-  return state.user.is
+  return state.user.is || {}
 }

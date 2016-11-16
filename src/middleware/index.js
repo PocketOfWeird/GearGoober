@@ -4,6 +4,7 @@ import createLogger from 'redux-logger'
 import localStore from './local'
 import on from './on'
 import once from './once'
+import update from './update'
 import url from './url'
 import view from './view'
 
@@ -16,6 +17,7 @@ const configureMiddleware = () => {
     localStore,
     on,
     once,
+    update,
     url,
     view,
     logger
