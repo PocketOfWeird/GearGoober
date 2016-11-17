@@ -7,10 +7,10 @@ import FormFields from '../../components/FormFields'
 
 const makeMapDispatchToProps = (requiredFields, callback) => dispatch => ({
   handleChange: e => {
+    dispatch(formValueChange(e))
     if (e.key === 'Enter') {
       dispatch(submitForm(requiredFields, callback))
     }
-    dispatch(formValueChange(e))
   },
   handleBlur: e => dispatch(formValueValidate(e))
 })
