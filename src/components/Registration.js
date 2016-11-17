@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import map from 'lodash.map'
 import { Card, CardText, CardActions } from 'material-ui/Card'
+import { formSelectMap } from '../helpers'
 import Logo from './Logo'
+
 
 const Registration = (FormFieldsContainer,
   FormActionContainer, FormSelectContainer) => ({ groups }) => (
@@ -15,18 +16,8 @@ const Registration = (FormFieldsContainer,
           <div name='lastName' label='Last Name' />
           <div name='phone' label='Phone' type='tel' />
         </FormFieldsContainer>
-        <FormSelectContainer
-          name='group'
-          label='Select a Group'
-        >
-          {map(groups, (group, key) =>
-            <div
-              key={key}
-              value={group.id}
-              name={group.name}
-              subName={'Instructor: ' + group.leaderName}
-            />
-          )}
+        <FormSelectContainer name='group' label='Select a Group'>
+          {formSelectMap(groups, group => 'Instructor: ' + group.leaderName)}
         </FormSelectContainer>
         <FormFieldsContainer>
           <div name='email' label='Your School Email' />
