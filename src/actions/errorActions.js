@@ -10,8 +10,5 @@ export const raiseError = (err) => ({
 })
 
 export const clearError = () => ({
-  type: CLEAR_ERROR,
-  payload: {
-    message: ''
-  }
+  type: CLEAR_ERROR
 })

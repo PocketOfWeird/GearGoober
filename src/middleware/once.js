@@ -1,5 +1,5 @@
 import firebase from '../db'
-import { FIREBASE_ONCE, firebaseState } from '../actions'
+import { FIREBASE_ONCE, firebaseState, raiseError } from '../actions'
 
 
 const once = store => next => action => {
@@ -13,8 +13,12 @@ const once = store => next => action => {
       ref = ref.orderByChild(query.key).equalTo(query.value)
     }
 
-    ref.once('value').then(snapshot => {
+    ref.once('value')
+    .then(snapshot => {
       store.dispatch(firebaseState({ [action.data.key]: snapshot.val() }))
+    })
+    .catch(err => {
+      store.dispatch(raiseError(err))
     })
   }
   return next(action)

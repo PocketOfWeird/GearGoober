@@ -1,4 +1,4 @@
-import { FIREBASE_UPDATE, firebaseOnce } from '../actions'
+import { FIREBASE_UPDATE, firebaseOnce, raiseError } from '../actions'
 import firebase from '../db'
 
 
@@ -14,7 +14,9 @@ const update = store => next => action => {
         ))
       }
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      store.dispatch(raiseError(err))
+    })
   }
 
   return next(action)

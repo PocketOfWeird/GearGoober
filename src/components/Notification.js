@@ -2,13 +2,14 @@ import React, { PropTypes } from 'react'
 import Snackbar from 'material-ui/Snackbar'
 
 
-const Notification = ({open, message, action, handleAction, handleClose}) => (
+const Notification = color => ({open, message, action, handleAction, handleClose}) => (
   <Snackbar
     open={open}
     message={message}
     action={action}
     onActionTouchTap={handleAction}
     onRequestClose={handleClose}
+    bodyStyle={{backgroundColor: color}}
   />
 )
 

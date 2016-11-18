@@ -1,5 +1,6 @@
 import { login, logout, register } from '../db'
 import { firebaseUpdate } from './dataActions'
+import { raiseError } from './errorActions'
 import { mapRegistrationDataToUser } from '../helpers'
 import { clearUrl, setDefaultView } from './viewActions'
 
@@ -17,13 +18,13 @@ export const updateUser = user => ({
 export const logOutUser = () => dispatch => {
   logout()
   .then(() => dispatch({ type: USER_OUT }) )
-  .catch(err => console.error(err))
+  .catch(err => dispatch(raiseError(err)))
 }
 
 export const logInUser = values => dispatch => {
   dispatch({ type: LOGGING_IN })
   login(values.email, values.password)
-  .catch(err => console.error(err))
+  .catch(err => dispatch(raiseError(err)))
 }
 
 export const registerUser = values => (dispatch, getState) => {
@@ -34,4 +35,5 @@ export const registerUser = values => (dispatch, getState) => {
     dispatch(setDefaultView())
     dispatch(clearUrl())
   })
+  .catch(err => dispatch(raiseError(err)))
 }

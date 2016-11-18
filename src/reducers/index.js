@@ -10,9 +10,10 @@ import loading from './loadingReducer'
 const rootReducer = combineReducers({
   user,
   data,
+  error,
   form,
-  view,
-  loading
+  loading,
+  view
 })
 
 export default rootReducer
