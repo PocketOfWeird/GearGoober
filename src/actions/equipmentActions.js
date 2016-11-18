@@ -19,6 +19,7 @@ export const updateEquipment = values => (dispatch, getState) => {
   return dispatch(firebaseUpdate(
     '/equipment/' + tennant + '/' + newValues.id,
     newValues,
+    'Saved ' + newValues.name,
     { key: 'equipment' }
   ))
 }

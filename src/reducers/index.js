@@ -3,8 +3,9 @@ import user from './userReducer'
 import data from './dataReducer'
 import error from './errorReducer'
 import form from './formReducer'
-import view from './viewReducer'
 import loading from './loadingReducer'
+import note from './noteReducer'
+import view from './viewReducer'
 
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   error,
   form,
   loading,
+  note,
   view
 })
 

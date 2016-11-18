@@ -8,6 +8,7 @@ import ViewsContainer from './ViewsContainer'
 import NavBarContainer from './NavBarContainer'
 import Registration from '../forms/RegistrationContainer'
 import ErrorContainer from './ErrorContainer'
+import NoteContainer from './NoteContainer'
 
 
 const App = ({ loggingIn, loggedIn, registering }) => (
@@ -27,6 +28,7 @@ const App = ({ loggingIn, loggedIn, registering }) => (
       <LoginContainer />
     }
     <ErrorContainer />
+    <NoteContainer />
   </div>
 )
 
