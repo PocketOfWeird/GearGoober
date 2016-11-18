@@ -4,7 +4,7 @@ import { registerUser } from '../../actions'
 import makeFormFieldsContainer from './FormFieldsContainer'
 import makeFormActionContainer from './FormActionContainer'
 import makeFormSelectContainer from './FormSelectContainer'
-import FormTagsContainer from './FormTagsContainer'
+import makeFormTagsContainer from './FormTagsContainer'
 import FormCheckContainer from './FormCheckContainer'
 import { registrationFormValidate } from '../../helpers'
 import EditEquipment from '../../components/EditEquipment'
@@ -17,6 +17,7 @@ const requiredFields = [
 const FormFieldsContainer = makeFormFieldsContainer(requiredFields, registerUser)
 const FormActionContainer = makeFormActionContainer(requiredFields, registerUser, registrationFormValidate)
 const FormSelectContainer = makeFormSelectContainer()
+const FormTagsContainer = makeFormTagsContainer('barcodes')
 
 const EditEquipmentContainer = EditEquipment(
   FormFieldsContainer, FormSelectContainer,

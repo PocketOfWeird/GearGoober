@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { formSelectMap } from '../helpers'
+import { formSelectMap, defaultBarcodeState } from '../helpers'
 
 
 const EditEquipment = (FormFieldsContainer,
@@ -18,7 +18,11 @@ const EditEquipment = (FormFieldsContainer,
           <div name='mfg' label='Manufacturer' />
           <div name='cost' label='Cost' type='number' />
         </FormFieldsContainer>
-        <FormTagsContainer name='barcodes' label='Barcodes' />
+        <FormTagsContainer
+          name='barcodes'
+          label='Barcodes'
+          defaultTagState={defaultBarcodeState} 
+        />
       </div>
     }
     <FormActionContainer label='Save' />
@@ -31,7 +35,8 @@ let styles = {
 }
 
 EditEquipment.propTypes = {
-  categories: PropTypes.object.isRequired
+  categories: PropTypes.object.isRequired,
+  isAKit: PropTypes.bool.isRequired
 }
 
 export default EditEquipment

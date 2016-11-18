@@ -22,7 +22,8 @@ export const formSelectChange = (name, value) => ({
   }
 })
 
-export const formValueValidate = (e) => ({
+
+export const formValueValidate = e => ({
   type: FORM_VALUE_VALIDATE,
   payload: {
     name: e.target.name,
