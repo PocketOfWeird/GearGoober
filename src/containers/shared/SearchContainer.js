@@ -5,7 +5,7 @@ import { horizonFetch } from '../../actions'
 
 
 const makeMapStateToProps = collection => state => ({
-  dataSource: state.data[collection] || [],
+  dataSource: [],
 })
 
 const makeMapDispatchToProps = collection => dispatch => ({

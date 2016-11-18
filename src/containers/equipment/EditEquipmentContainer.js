@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { registerUser } from '../../actions'
+import { updateEquipment } from '../../actions'
 import makeFormFieldsContainer from '../forms/FormFieldsContainer'
 import makeFormActionContainer from '../forms/FormActionContainer'
 import makeFormSelectContainer from '../forms/FormSelectContainer'
 import makeFormTagsContainer from '../forms/FormTagsContainer'
 import FormCheckContainer from '../forms/FormCheckContainer'
-import { registrationFormValidate } from '../../helpers'
 import EditEquipment from '../../components/EditEquipment'
 
 
@@ -14,8 +13,8 @@ const requiredFields = [
   'name', 'category'
 ]
 
-const FormFieldsContainer = makeFormFieldsContainer(requiredFields, registerUser)
-const FormActionContainer = makeFormActionContainer(requiredFields, registerUser, registrationFormValidate)
+const FormFieldsContainer = makeFormFieldsContainer(requiredFields, updateEquipment)
+const FormActionContainer = makeFormActionContainer(requiredFields, updateEquipment)
 const FormSelectContainer = makeFormSelectContainer()
 const FormTagsContainer = makeFormTagsContainer('barcodes')
 

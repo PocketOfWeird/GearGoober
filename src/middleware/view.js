@@ -1,5 +1,5 @@
 import firebase from '../db'
-import { setTennant, firebaseOnce, SET_CURRENT_VIEW } from '../actions'
+import { updateUser, firebaseOnce, SET_CURRENT_VIEW, getCategories } from '../actions'
 import { needsData, getDataAction } from '../helpers'
 
 
@@ -10,10 +10,15 @@ const view = store => next => action => {
 
     if (view[0] === 'register') {
       const tennant = view[1]
-      store.dispatch(setTennant(tennant))
-      store.dispatch(firebaseOnce('/groups', 'groups', tennant,
-        { key: 'current', value: true }
+      store.dispatch(updateUser({ tennant }))
+      store.dispatch(firebaseOnce(
+        '/groups/' + tennant,
+        { key: 'tennant', query: { key: 'current', value: true } }
       ))
+    }
+
+    if (view[0] === 'equipment') {
+      store.dispatch(getCategories())
     }
   }
 

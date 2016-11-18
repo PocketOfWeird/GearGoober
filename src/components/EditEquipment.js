@@ -8,20 +8,20 @@ const EditEquipment = (FormFieldsContainer,
   <div style={styles}>
     <FormCheckContainer name='isAKit' label='This is a Kit' />
     <FormSelectContainer name='category' label='Select a Category'>
-      {formSelectMap(categories, cat => cat.subCategory)}
+      {formSelectMap(categories, cat => cat.parentName)}
     </FormSelectContainer>
     {!isAKit &&
       <div>
         <FormFieldsContainer>
           <div name='name' label='Name' />
-          <div name='model' label='Model' />
           <div name='mfg' label='Manufacturer' />
+          <div name='model' label='Model' />
           <div name='cost' label='Cost' type='number' />
         </FormFieldsContainer>
         <FormTagsContainer
           name='barcodes'
           label='Barcodes'
-          defaultTagState={defaultBarcodeState} 
+          defaultTagState={defaultBarcodeState}
         />
       </div>
     }

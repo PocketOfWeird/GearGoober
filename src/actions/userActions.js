@@ -29,7 +29,7 @@ export const logInUser = values => dispatch => {
 export const registerUser = values => (dispatch, getState) => {
   register(values.email, values.passwordVerify)
   .then(user => {
-    const userData = mapRegistrationDataToUser(values, user, getState().tennant)
+    const userData = mapRegistrationDataToUser(values, user, getState().user.tennant)
     dispatch(firebaseUpdate('/users/' + user.uid, userData))
     dispatch(setDefaultView())
     dispatch(clearUrl())
