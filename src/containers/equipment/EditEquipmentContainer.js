@@ -5,6 +5,7 @@ import makeFormFieldsContainer from '../forms/FormFieldsContainer'
 import makeFormActionContainer from '../forms/FormActionContainer'
 import makeFormSelectContainer from '../forms/FormSelectContainer'
 import makeFormTagsContainer from '../forms/FormTagsContainer'
+import makeFormEnhancedTagsContainer from '../forms/FormEnhancedTagsContainer'
 import FormCheckContainer from '../forms/FormCheckContainer'
 import EditEquipment from '../../components/EditEquipment'
 
@@ -17,12 +18,14 @@ const FormFieldsContainer = makeFormFieldsContainer(requiredFields, updateEquipm
 const FormActionContainer = makeFormActionContainer(requiredFields, updateEquipment)
 const FormSelectContainer = makeFormSelectContainer()
 const FormTagsContainer = makeFormTagsContainer('barcodes')
+const FormEnhancedTagsContainer = makeFormEnhancedTagsContainer('pieces', 'equipment')
 
-const EditEquipmentContainer = EditEquipment(
+
+const EditEquipmentContainer = EditEquipment({
   FormFieldsContainer, FormSelectContainer,
-  FormTagsContainer, FormCheckContainer,
-  FormActionContainer
-)
+  FormTagsContainer, FormEnhancedTagsContainer,
+  FormCheckContainer, FormActionContainer
+})
 
 const mapStateToProps = state => ({
   categories: state.data.categories || [],

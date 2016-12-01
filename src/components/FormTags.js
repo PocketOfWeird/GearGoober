@@ -1,20 +1,37 @@
 import React, { PropTypes } from 'react'
 import TextField from 'material-ui/TextField'
+import AutoComplete from 'material-ui/AutoComplete'
 import { formTagMap } from '../helpers'
+
 
 const FormTags = (props) => (
   <div>
-    <TextField
-      name={props.name}
-      hintText={'Add ' + props.label}
-      floatingLabelText={props.label}
-      fullWidth={true}
-      errorText={props.error}
-      onKeyDown={props.handleChange(props.defaultTagState)}
-    />
+    {!props.enhanced &&
+      <TextField
+        name={props.name}
+        hintText={'Add ' + props.label}
+        floatingLabelText={props.label}
+        fullWidth={true}
+        errorText={props.error}
+        onKeyDown={props.handleChange(props.defaultTagState)}
+      />
+    }
+    {props.enhanced &&
+      <AutoComplete
+        name={props.name}
+        hintText={'Add ' + props.label}
+        floatingLabelText={props.label}
+        fullWidth={true}
+        errorText={props.error}
+        filter={AutoComplete.caseInsensitiveFilter}
+        dataSource={props.dataSource}
+      />
+    }
     <div style={styles}>
       {formTagMap(props.tags, props.name,
-        props.handleTagDelete, props.customColor)}
+        props.handleTagDelete, props.customColor,
+        props.tagId, props.tagName, props.enhanced
+      )}
     </div>
   </div>
 )
@@ -33,7 +50,8 @@ FormTags.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleTagDelete: PropTypes.func.isRequired,
   defaultTagState: PropTypes.object,
-  customColor: PropTypes.func
+  customColor: PropTypes.func,
+  enhanced: PropTypes.bool
 }
 
 export default FormTags

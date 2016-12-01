@@ -4,7 +4,8 @@ import FormField from './FormField'
 
 const FormFields = (props) => (
   <div>
-    {props.children.map((child, key) =>
+    {props.children.length &&
+      props.children.map((child, key) =>
       <FormField
         key={key}
         field={child.props.name}
@@ -17,6 +18,18 @@ const FormFields = (props) => (
         disabled={props.isLoading}
       />
     )}
+    {!props.children.length &&
+      <FormField
+        field={props.children.props.name}
+        label={props.children.props.label}
+        type={props.children.props.type}
+        value={props.values[props.children.props.name] || ''}
+        errorText={props.errors[props.children.props.name] || ''}
+        onChange={props.handleChange}
+        onBlur={props.handleBlur}
+        disabled={props.isLoading}
+      />
+    }
   </div>
 )
 

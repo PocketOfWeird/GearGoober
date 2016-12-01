@@ -2,18 +2,26 @@ import React, { PropTypes } from 'react'
 import { formSelectMap, defaultBarcodeState } from '../helpers'
 
 
-const EditEquipment = (FormFieldsContainer,
-  FormSelectContainer, FormTagsContainer, FormCheckContainer,
-  FormActionContainer) => ({ categories, isAKit }) => (
+const EditEquipment = ({FormFieldsContainer,
+  FormSelectContainer, FormTagsContainer, FormEnhancedTagsContainer,
+  FormCheckContainer, FormActionContainer}) => ({ categories, isAKit }) => (
   <div style={styles}>
     <FormCheckContainer name='isAKit' label='This is a Kit' />
     <FormSelectContainer name='category' label='Select a Category'>
       {formSelectMap(categories, cat => cat.parentName)}
     </FormSelectContainer>
+    <FormFieldsContainer>
+      <div name='name' label='Name' />
+    </FormFieldsContainer>
+    {isAKit &&
+      <FormEnhancedTagsContainer
+        name='pieces'
+        label='Pieces of Equipment'
+      />
+    }
     {!isAKit &&
       <div>
         <FormFieldsContainer>
-          <div name='name' label='Name' />
           <div name='mfg' label='Manufacturer' />
           <div name='model' label='Model' />
           <div name='cost' label='Cost' type='number' />

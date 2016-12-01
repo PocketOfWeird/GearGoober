@@ -1,6 +1,6 @@
 import { FIREBASE_STATE } from '../actions'
 
-const data = (state = {}, action) => {
+const data = (state = { suggestions: [] }, action) => {
   switch (action.type) {
     case FIREBASE_STATE:
       return Object.assign({}, state, action.payload)
