@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import { getPermissions } from '../../selectors'
 import makeSearchContainer from '../shared/SearchContainer'
+import CategoriesContainer from './CategoriesContainer'
 import EditEquipmentContainer from './EditEquipmentContainer'
 import { setCurrentView } from '../../actions'
 
@@ -12,6 +13,7 @@ const EquipmentViewsContainer = ({ is, view, handleActive }) => (
   <Tabs value={view[0]}>
     <Tab label='Search' value='search' onActive={handleActive}>
       <SearchContainer />
+      <CategoriesContainer />
     </Tab>
     {is.labworker &&
       <Tab label='Add' value='add' onActive={handleActive}>
