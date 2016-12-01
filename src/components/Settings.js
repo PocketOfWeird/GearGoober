@@ -4,6 +4,7 @@ import { Card, CardTitle, CardText, CardActions } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import Toggle from 'material-ui/Toggle'
+import {blue300} from 'material-ui/styles/colors'
 
 
 const Settings = ({ appSettings, handleLogOut }) => (
@@ -26,7 +27,7 @@ const Settings = ({ appSettings, handleLogOut }) => (
       <CardText
         style={styles.block}
       >
-        {appSettings.map(setting => {
+        {appSettings.map((setting, key) => {
             switch (setting.type) {
               case 'toggle':
                 return (
@@ -42,6 +43,8 @@ const Settings = ({ appSettings, handleLogOut }) => (
                   <FlatButton
                     key={setting.id}
                     label={setting.name}
+                    primary={key % 2 === 0}
+                    secondary={key % 1 === 0}
                     onTouchTap={setting.handleClick}
                   />
                 )
