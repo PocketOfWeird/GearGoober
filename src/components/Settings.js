@@ -5,9 +5,10 @@ import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import Toggle from 'material-ui/Toggle'
 import {blue300} from 'material-ui/styles/colors'
+import FileInput from 'react-file-input'
 
 
-const Settings = ({ appSettings, handleLogOut }) => (
+const Settings = ({ appSettings, handleLogOut, handleUploadEquip }) => (
   <div>
     <Card>
       <CardTitle
@@ -54,14 +55,30 @@ const Settings = ({ appSettings, handleLogOut }) => (
             }
           }
         )}
+
       </CardText>
     </Card>
+    <FileInput
+      name='equipTemplateFileUpload'
+      accept='.ods,.xls,.xlsx'
+      placeholder='Upload Equipment'
+      onChange={handleUploadEquip}
+    />
   </div>
 )
 
 let styles = {
   block: {
     maxWidth: 250
+  },
+  imageInput: {
+    cursor: 'pointer',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    width: '100%'
   }
 }
 

@@ -21,14 +21,6 @@ const getAppSettings = state => {
       type: 'button'
     },
     {
-      id:2,
-      name:'Upload Equipment',
-      handleClick: e => {
-        
-      },
-      type: 'button'
-    },
-    {
       id:100,
       name: 'This setting',
       value: true,
